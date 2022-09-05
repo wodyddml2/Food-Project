@@ -15,6 +15,10 @@
 		63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE37928C62EEF00257D18 /* BaseTableViewCell.swift */; };
 		63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */; };
 		63FDE37E28C62F0000257D18 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE37D28C62F0000257D18 /* BaseView.swift */; };
+		63FDE38128C6314F00257D18 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE38028C6314F00257D18 /* OnboardingViewController.swift */; };
+		63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE38228C6316C00257D18 /* FirstViewController.swift */; };
+		63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE38428C6317200257D18 /* SecondViewController.swift */; };
+		63FDE38728C6317C00257D18 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE38628C6317C00257D18 /* ThirdViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		63FDE37928C62EEF00257D18 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		63FDE37D28C62F0000257D18 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		63FDE38028C6314F00257D18 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		63FDE38228C6316C00257D18 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		63FDE38428C6317200257D18 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		63FDE38628C6317C00257D18 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				63FDE37628C62ECF00257D18 /* Utility */,
+				63FDE37F28C6311D00257D18 /* Onboarding */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
 				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
@@ -79,6 +88,17 @@
 				63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		63FDE37F28C6311D00257D18 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				63FDE38028C6314F00257D18 /* OnboardingViewController.swift */,
+				63FDE38228C6316C00257D18 /* FirstViewController.swift */,
+				63FDE38428C6317200257D18 /* SecondViewController.swift */,
+				63FDE38628C6317C00257D18 /* ThirdViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,8 +173,12 @@
 			files = (
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
+				63FDE38728C6317C00257D18 /* ThirdViewController.swift in Sources */,
 				63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */,
+				63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */,
+				63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */,
 				63FDE37E28C62F0000257D18 /* BaseView.swift in Sources */,
+				63FDE38128C6314F00257D18 /* OnboardingViewController.swift in Sources */,
 				63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */,
 				63FDE37828C62EE300257D18 /* BaseViewController.swift in Sources */,
 			);
