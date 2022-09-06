@@ -7,14 +7,28 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class FirstViewController: BaseViewController {
+    
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        self.view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
-        
+        let vc = OnboardingPageViewController()
+        vc.onboardingDelegate = self
     }
     
+}
 
+extension FirstViewController: OnboardingPageViewControllerDelegate {
+    func onBoardingPageViewController(didUpdatePageCount count: Int) {
+        mainView.onboardingPageControl.numberOfPages = count
+    }
 
+    func onBoardingPageViewController(didUpdatePageIndex index: Int) {
+        mainView.onboardingPageControl.currentPage = index
+    }
 }

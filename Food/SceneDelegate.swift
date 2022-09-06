@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print("S")
             
         } else {
-            let vc = OnboardingViewController()
+            let vc = OnboardingPageViewController()
             window?.rootViewController = vc
         }
         

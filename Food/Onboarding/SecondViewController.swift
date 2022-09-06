@@ -7,14 +7,19 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class SecondViewController: BaseViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .darkGray
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        self.view = mainView
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .darkGray
+    }
+  
 
 
 }

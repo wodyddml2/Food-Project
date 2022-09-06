@@ -7,8 +7,14 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController {
+class ThirdViewController: BaseViewController {
 
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        self.view = mainView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
