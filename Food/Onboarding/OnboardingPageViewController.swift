@@ -65,9 +65,9 @@ class OnboardingPageViewController: BaseViewController {
             pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
         } else {
             UserDefaults.standard.set(true, forKey: "onboarding")
-            let homeNav = UINavigationController(rootViewController: HomeViewController())
-            homeNav.modalPresentationStyle = .fullScreen
-            present(homeNav, animated: true)
+            let vc = TabViewController()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
             
         }
         
@@ -75,9 +75,9 @@ class OnboardingPageViewController: BaseViewController {
     
     @objc func skipButtonClicked() {
         UserDefaults.standard.set(true, forKey: "onboarding")
-        let homeNav = UINavigationController(rootViewController: HomeViewController())
-        homeNav.modalPresentationStyle = .fullScreen
-        present(homeNav, animated: true)
+        let vc = TabViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
     }
     
@@ -156,7 +156,7 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageView
 
         pageContorl.currentPage = index
         
-        if index == 2 {
+        if index == pageViewControllerList.count - 1 {
             skipButton.isHidden = true
         } else {
             skipButton.isHidden = false

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C3B28CDBC3D007638DC /* HomeViewController.swift */; };
+		63258C4128CDC6A3007638DC /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4028CDC6A3007638DC /* TabViewController.swift */; };
+		63258C4428CDC6B1007638DC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4328CDC6B1007638DC /* MapViewController.swift */; };
+		63258C4728CDC6C0007638DC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4628CDC6C0007638DC /* SearchViewController.swift */; };
+		63258C4A28CDC6F2007638DC /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4928CDC6F2007638DC /* SettingViewController.swift */; };
 		63A9B0AE28C74E4700201418 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0AD28C74E4700201418 /* PageView.swift */; };
 		63A9B0B128C74E6300201418 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63A9B0B028C74E6300201418 /* SnapKit */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
@@ -26,6 +30,10 @@
 
 /* Begin PBXFileReference section */
 		63258C3B28CDBC3D007638DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		63258C4028CDC6A3007638DC /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		63258C4328CDC6B1007638DC /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		63258C4628CDC6C0007638DC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		63258C4928CDC6F2007638DC /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		63A9B0AD28C74E4700201418 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		63FDE35D28C62D5F00257D18 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +63,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63258C3E28CDC630007638DC /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				63258C3B28CDBC3D007638DC /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		63258C3F28CDC660007638DC /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				63258C4028CDC6A3007638DC /* TabViewController.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		63258C4228CDC6A7007638DC /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				63258C4328CDC6B1007638DC /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		63258C4528CDC6B7007638DC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				63258C4628CDC6C0007638DC /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		63258C4828CDC6E2007638DC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				63258C4928CDC6F2007638DC /* SettingViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		63FDE35428C62D5F00257D18 = {
 			isa = PBXGroup;
 			children = (
@@ -77,8 +125,12 @@
 				63FDE37628C62ECF00257D18 /* Utility */,
 				63FDE37F28C6311D00257D18 /* Onboarding */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
-				63258C3B28CDBC3D007638DC /* HomeViewController.swift */,
 				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
+				63258C3E28CDC630007638DC /* Home */,
+				63258C4228CDC6A7007638DC /* Map */,
+				63258C4528CDC6B7007638DC /* Search */,
+				63258C4828CDC6E2007638DC /* Setting */,
+				63258C3F28CDC660007638DC /* Tab */,
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
 				63FDE36E28C62D5F00257D18 /* Info.plist */,
@@ -185,10 +237,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63258C4728CDC6C0007638DC /* SearchViewController.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
+				63258C4A28CDC6F2007638DC /* SettingViewController.swift in Sources */,
 				63FDE38728C6317C00257D18 /* ThirdViewController.swift in Sources */,
 				63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */,
+				63258C4128CDC6A3007638DC /* TabViewController.swift in Sources */,
 				63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */,
 				63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */,
 				63FDE37E28C62F0000257D18 /* BaseView.swift in Sources */,
@@ -197,6 +252,7 @@
 				63FDE37828C62EE300257D18 /* BaseViewController.swift in Sources */,
 				63A9B0AE28C74E4700201418 /* PageView.swift in Sources */,
 				63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */,
+				63258C4428CDC6B1007638DC /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

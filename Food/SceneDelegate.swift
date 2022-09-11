@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         if UserDefaults.standard.bool(forKey: "onboarding") {
-            let homeNav = UINavigationController(rootViewController: HomeViewController())
-            window?.rootViewController = homeNav
+            let vc = TabViewController()
+            window?.rootViewController = vc
             
         } else {
             let vc = OnboardingPageViewController()
