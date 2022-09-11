@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C3B28CDBC3D007638DC /* HomeViewController.swift */; };
 		63A9B0AE28C74E4700201418 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0AD28C74E4700201418 /* PageView.swift */; };
 		63A9B0B128C74E6300201418 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63A9B0B028C74E6300201418 /* SnapKit */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63258C3B28CDBC3D007638DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		63A9B0AD28C74E4700201418 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		63FDE35D28C62D5F00257D18 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				63FDE37628C62ECF00257D18 /* Utility */,
 				63FDE37F28C6311D00257D18 /* Onboarding */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
+				63258C3B28CDBC3D007638DC /* HomeViewController.swift */,
 				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
@@ -193,6 +196,7 @@
 				63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */,
 				63FDE37828C62EE300257D18 /* BaseViewController.swift in Sources */,
 				63A9B0AE28C74E4700201418 /* PageView.swift in Sources */,
+				63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

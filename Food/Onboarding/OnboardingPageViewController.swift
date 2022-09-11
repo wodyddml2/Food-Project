@@ -16,7 +16,7 @@ class OnboardingPageViewController: BaseViewController {
     
     var pageViewControllerList: [UIViewController] = []
     
-    var pageContorl: UIPageControl = {
+    let pageContorl: UIPageControl = {
        let view = UIPageControl()
         view.pageIndicatorTintColor = .lightGray
         view.currentPageIndicatorTintColor = .black
@@ -53,8 +53,34 @@ class OnboardingPageViewController: BaseViewController {
         configurePageViewController()
         
         pageContorl.numberOfPages = pageViewControllerList.count
-
+        
+        continueButton.addTarget(self, action: #selector(continueButtonClicked), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(skipButtonClicked), for: .touchUpInside)
     }
+    
+    @objc func continueButtonClicked() {
+        if pageContorl.currentPage < pageViewControllerList.count - 1 {
+            let nextPage = pageViewControllerList[pageContorl.currentPage + 1]
+            pageContorl.currentPage += 1
+            pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
+        } else {
+            UserDefaults.standard.set(true, forKey: "onboarding")
+            let homeNav = UINavigationController(rootViewController: HomeViewController())
+            homeNav.modalPresentationStyle = .fullScreen
+            present(homeNav, animated: true)
+            
+        }
+        
+    }
+    
+    @objc func skipButtonClicked() {
+        UserDefaults.standard.set(true, forKey: "onboarding")
+        let homeNav = UINavigationController(rootViewController: HomeViewController())
+        homeNav.modalPresentationStyle = .fullScreen
+        present(homeNav, animated: true)
+        
+    }
+    
     override func configureUI() {
         [pageViewController.view, pageContorl, continueButton, skipButton].forEach {
             view.addSubview($0)
@@ -126,11 +152,16 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageView
 
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if let firstView = pageViewController.viewControllers?.first, let index = pageViewControllerList.firstIndex(of: firstView) {
-            pageContorl.currentPage = index
-            print(index)
-        }
+        guard let firstView = pageViewController.viewControllers?.first, let index = pageViewControllerList.firstIndex(of: firstView) else { return }
+
+        pageContorl.currentPage = index
         
+        if index == 2 {
+            skipButton.isHidden = true
+        } else {
+            skipButton.isHidden = false
+        }
+        print(index)
     }
     
 }

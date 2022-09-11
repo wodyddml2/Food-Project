@@ -13,12 +13,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-   
+        UserDefaults.standard.set(false, forKey: "onboarding")
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
         if UserDefaults.standard.bool(forKey: "onboarding") {
-            print("S")
+            let homeNav = UINavigationController(rootViewController: HomeViewController())
+            window?.rootViewController = homeNav
             
         } else {
             let vc = OnboardingPageViewController()
