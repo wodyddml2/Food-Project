@@ -9,7 +9,7 @@ import UIKit
 
 class FirstViewController: BaseViewController {
     
-    let mainView = OnboardingView()
+    let mainView = PageView()
     
     override func loadView() {
         self.view = mainView
@@ -17,18 +17,7 @@ class FirstViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let vc = OnboardingPageViewController()
-        vc.onboardingDelegate = self
+
     }
     
-}
-
-extension FirstViewController: OnboardingPageViewControllerDelegate {
-    func onBoardingPageViewController(didUpdatePageCount count: Int) {
-        mainView.onboardingPageControl.numberOfPages = count
-    }
-
-    func onBoardingPageViewController(didUpdatePageIndex index: Int) {
-        mainView.onboardingPageControl.currentPage = index
-    }
 }

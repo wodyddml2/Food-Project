@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class OnboardingView: BaseView {
+class PageView: BaseView {
     
     let onboardingImageView: UIImageView = {
        let view = UIImageView()
@@ -30,35 +30,7 @@ class OnboardingView: BaseView {
         return view
     }()
     
-    var onboardingPageControl: UIPageControl = {
-        let view = UIPageControl()
 
-        view.pageIndicatorTintColor = .lightGray
-        view.currentPageIndicatorTintColor = .black
-
-        return view
-    }()
-    
-    let continueButton: UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .lightGray
-        
-        view.setTitle("Continue", for: .normal)
-        view.setTitleColor(UIColor.white, for: .normal)
-        
-        view.layer.cornerRadius = 5
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
-        return view
-    }()
-    
-    let skipButton: UIButton = {
-        let view = UIButton()
-        view.setTitle("Skip", for: .normal)
-        view.setTitleColor(UIColor.lightGray, for: .normal)
-        return view
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,7 +42,7 @@ class OnboardingView: BaseView {
     }
     
     override func configureUI() {
-        [onboardingImageView, onboardingTitleLabel, onboardingIntroLabel, onboardingPageControl, continueButton, skipButton].forEach {
+        [onboardingImageView, onboardingTitleLabel, onboardingIntroLabel].forEach {
             self.addSubview($0)
         }
     }
@@ -92,23 +64,6 @@ class OnboardingView: BaseView {
             make.top.equalTo(onboardingTitleLabel.snp.bottom).offset(20)
             make.centerX.equalTo(self)
             make.width.equalTo(UIScreen.main.bounds.width / 1.6)
-        }
-        
-        onboardingPageControl.snp.makeConstraints { make in
-            make.top.equalTo(onboardingIntroLabel.snp.bottom).offset(40)
-            make.centerX.equalTo(self)
-        }
-        
-        continueButton.snp.makeConstraints { make in
-            make.top.equalTo(onboardingPageControl.snp.bottom).offset(40)
-            make.centerX.equalTo(self)
-            make.width.equalTo(UIScreen.main.bounds.width / 1.3)
-            make.height.equalTo(50)
-        }
-        
-        skipButton.snp.makeConstraints { make in
-            make.top.equalTo(continueButton.snp.bottom).offset(30)
-            make.centerX.equalTo(self)
         }
     }
 }

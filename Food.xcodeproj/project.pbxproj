@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63A9B0AE28C74E4700201418 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0AD28C74E4700201418 /* OnboardingView.swift */; };
+		63A9B0AE28C74E4700201418 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0AD28C74E4700201418 /* PageView.swift */; };
 		63A9B0B128C74E6300201418 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63A9B0B028C74E6300201418 /* SnapKit */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
 		63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36228C62D5F00257D18 /* SceneDelegate.swift */; };
@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		63A9B0AD28C74E4700201418 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		63A9B0AD28C74E4700201418 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		63FDE35D28C62D5F00257D18 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FDE36228C62D5F00257D18 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 				63FDE38228C6316C00257D18 /* FirstViewController.swift */,
 				63FDE38428C6317200257D18 /* SecondViewController.swift */,
 				63FDE38628C6317C00257D18 /* ThirdViewController.swift */,
-				63A9B0AD28C74E4700201418 /* OnboardingView.swift */,
+				63A9B0AD28C74E4700201418 /* PageView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -192,7 +192,7 @@
 				63FDE38128C6314F00257D18 /* OnboardingPageViewController.swift in Sources */,
 				63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */,
 				63FDE37828C62EE300257D18 /* BaseViewController.swift in Sources */,
-				63A9B0AE28C74E4700201418 /* OnboardingView.swift in Sources */,
+				63A9B0AE28C74E4700201418 /* PageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

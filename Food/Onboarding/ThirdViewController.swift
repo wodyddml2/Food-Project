@@ -9,7 +9,7 @@ import UIKit
 
 class ThirdViewController: BaseViewController {
 
-    let mainView = OnboardingView()
+    let mainView = PageView()
     
     override func loadView() {
         self.view = mainView

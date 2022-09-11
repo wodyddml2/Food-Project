@@ -7,74 +7,97 @@
 
 import UIKit
 
-protocol OnboardingPageViewControllerDelegate: AnyObject{
-    func onBoardingPageViewController(didUpdatePageCount count: Int)
-    func onBoardingPageViewController(didUpdatePageIndex index: Int)
-}
-
+import SnapKit
+// 스토리보드와 코드 상의 생명주기 시기가 다른 이유는 BaseViewController에 이유가 있을 수 있다.
+// delegate pattern은 서로 다른 메모리 상에 존재하기 때문에 데이터가 전달이 안되는 것 일 수 있다.
+// pageControl은 onBoardingPage에서 하자
 
 class OnboardingPageViewController: BaseViewController {
     
-    weak var onboardingDelegate: OnboardingPageViewControllerDelegate?
-    
     var pageViewControllerList: [UIViewController] = []
     
-    let pageviewcontroller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-//    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
-//        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
+    var pageContorl: UIPageControl = {
+       let view = UIPageControl()
+        view.pageIndicatorTintColor = .lightGray
+        view.currentPageIndicatorTintColor = .black
+        return view
+    }()
+    
+    let continueButton: UIButton = {
+        let view = UIButton()
+        view.backgroundColor = .lightGray
+
+        view.setTitle("Continue", for: .normal)
+        view.setTitleColor(UIColor.white, for: .normal)
+
+        view.layer.cornerRadius = 5
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 10)
+        return view
+    }()
+
+    let skipButton: UIButton = {
+        let view = UIButton()
+        view.setTitle("Skip", for: .normal)
+        view.setTitleColor(UIColor.lightGray, for: .normal)
+        return view
+    }()
+    
+    let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        createPageViewController()
-//        configurePageViewController()
-
+        createPageViewController()
+        configurePageViewController()
         
-        onboardingDelegate?.onBoardingPageViewController(didUpdatePageCount: pageViewControllerList.count)
+        pageContorl.numberOfPages = pageViewControllerList.count
+
     }
     override func configureUI() {
-        view.addSubview(pageviewcontroller.view)
+        [pageViewController.view, pageContorl, continueButton, skipButton].forEach {
+            view.addSubview($0)
+        }
+    }
+    override func setConstraints() {
+        pageViewController.view.snp.makeConstraints { make in
+            make.trailing.leading.top.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(UIScreen.main.bounds.height / 1.7)
+        }
+        pageContorl.snp.makeConstraints { make in
+            make.top.equalTo(pageViewController.view.snp.bottom).offset(20)
+            make.centerX.equalTo(view)
+        }
         
+        continueButton.snp.makeConstraints { make in
+            make.top.equalTo(pageContorl.snp.bottom).offset(40)
+            make.centerX.equalTo(view)
+            make.width.equalTo(UIScreen.main.bounds.width / 1.3)
+            make.height.equalTo(50)
+        }
+        
+        skipButton.snp.makeConstraints { make in
+            make.top.equalTo(continueButton.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+        }
+    }
+    func createPageViewController() {
         let firstVC = FirstViewController()
         let secondVC = SecondViewController()
         let thirdVC = ThirdViewController()
-        
         pageViewControllerList = [firstVC, secondVC, thirdVC]
-        
-        self.pageviewcontroller.delegate = self
-        self.pageviewcontroller.dataSource = self
-//        firstVC.mainView.onboardingPageControl.numberOfPages = 3
-        
+    }
+
+    func configurePageViewController() {
+        self.pageViewController.delegate = self
+        self.pageViewController.dataSource = self
+
+
         guard let firstView = pageViewControllerList.first else { return }
-        
-        pageviewcontroller.setViewControllers([firstView], direction: .forward, animated: true)
+
+        pageViewController.setViewControllers([firstView], direction: .forward, animated: true)
     }
-    override func setConstraints() {
-        pageviewcontroller.view.snp.makeConstraints { make in
-            make.trailing.leading.top.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-//    func createPageViewController() {
-//        let firstVC = FirstViewController()
-//        let secondVC = SecondViewController()
-//        let thirdVC = ThirdViewController()
-//        pageViewControllerList = [firstVC, secondVC, thirdVC]
-//    }
-//
-//    func configurePageViewController() {
-//        self.pageviewcontroller.delegate = self
-//        self.pageviewcontroller.dataSource = self
-//
-//
-//        guard let firstView = pageViewControllerList.first else { return }
-//
-//        pageviewcontroller.setViewControllers([firstView], direction: .forward, animated: true)
-//    }
    
 
 }
@@ -103,8 +126,8 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageView
 
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if let firstView = pageviewcontroller.viewControllers?.first, let index = pageViewControllerList.firstIndex(of: firstView) {
-            onboardingDelegate?.onBoardingPageViewController(didUpdatePageIndex: index)
+        if let firstView = pageViewController.viewControllers?.first, let index = pageViewControllerList.firstIndex(of: firstView) {
+            pageContorl.currentPage = index
             print(index)
         }
         
