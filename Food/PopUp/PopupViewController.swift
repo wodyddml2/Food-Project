@@ -28,6 +28,10 @@ class PopupViewController: BaseViewController {
     }
   
     @objc func popToDetailButtonClicked() {
+        let vc = UINavigationController(rootViewController: DetailViewController())
         
+        vc.modalPresentationStyle = .fullScreen
+        
+        present(vc, animated: true)
     }
 }
