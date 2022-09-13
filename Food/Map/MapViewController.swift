@@ -50,4 +50,11 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         layout.minimumLineSpacing = 20
         return layout
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PopupViewController()
+        
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
 }
