@@ -9,7 +9,7 @@ import UIKit
 
 class SecondViewController: BaseViewController {
 
-    let mainView = PageView()
+    private let mainView = PageView()
     
     override func loadView() {
         self.view = mainView

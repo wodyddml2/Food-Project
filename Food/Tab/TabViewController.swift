@@ -15,6 +15,7 @@ class TabViewController: UITabBarController {
         configureTabBar()
         setupTabBarAppearence()
     }
+    
     func setupTabBar(viewController: UIViewController, title: String, image: String, fillImage: String) -> UINavigationController {
         
         viewController.tabBarItem.title = title
@@ -31,14 +32,13 @@ class TabViewController: UITabBarController {
         let settingVC = setupTabBar(viewController: SettingViewController(), title: "Setting", image: "ellipsis.circle", fillImage: "ellipsis.circle.fill")
         
         setViewControllers([homeVC, mapVC, searchVC, settingVC], animated: true)
-        
     }
  
     func setupTabBarAppearence() {
         let appearence = UITabBarAppearance()
         
         appearence.configureWithTransparentBackground()
-        appearence.backgroundColor = .lightGray
+        appearence.backgroundColor = .darkGray
         tabBar.standardAppearance = appearence
         tabBar.tintColor = .white
     }

@@ -12,7 +12,7 @@ import SnapKit
 // delegate pattern은 서로 다른 메모리 상에 존재하기 때문에 데이터가 전달이 안되는 것 일 수 있다.
 // pageControl은 onBoardingPage에서 하자
 
-class OnboardingPageViewController: BaseViewController {
+final class OnboardingPageViewController: BaseViewController {
     
     var pageViewControllerList: [UIViewController] = []
     
