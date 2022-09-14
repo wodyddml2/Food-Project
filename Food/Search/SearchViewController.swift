@@ -48,9 +48,9 @@ class SearchViewController: BaseViewController {
 }
 
 extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
+//    func updateSearchResults(for searchController: UISearchController) {
+//
+//    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
