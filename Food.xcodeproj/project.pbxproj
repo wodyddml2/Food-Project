@@ -22,6 +22,8 @@
 		6329218428D0D0CE000DC3E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329218328D0D0CE000DC3E5 /* DetailViewController.swift */; };
 		6329218628D0D0D5000DC3E5 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329218528D0D0D5000DC3E5 /* DetailView.swift */; };
 		634C57A128D1D00E0067B44F /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57A028D1D00E0067B44F /* SettingTableViewCell.swift */; };
+		634C57A428D1D3520067B44F /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57A328D1D3520067B44F /* WishListViewController.swift */; };
+		634C57A628D1D35F0067B44F /* WishListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57A528D1D35F0067B44F /* WishListCollectionViewCell.swift */; };
 		6354093028D0732800D03CAD /* MemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */; };
 		6354093228D0733500D03CAD /* MemoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */; };
 		638FCAAD28D1A63500AC84D3 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638FCAAC28D1A63500AC84D3 /* SearchTableViewCell.swift */; };
@@ -61,6 +63,8 @@
 		6329218328D0D0CE000DC3E5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6329218528D0D0D5000DC3E5 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		634C57A028D1D00E0067B44F /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		634C57A328D1D3520067B44F /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
+		634C57A528D1D35F0067B44F /* WishListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionViewCell.swift; sourceTree = "<group>"; };
 		6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewCell.swift; sourceTree = "<group>"; };
 		6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		638FCAAB28D1A08A00AC84D3 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +176,15 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		634C57A228D1D2FC0067B44F /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				634C57A328D1D3520067B44F /* WishListViewController.swift */,
+				634C57A528D1D35F0067B44F /* WishListCollectionViewCell.swift */,
+			);
+			path = WishList;
+			sourceTree = "<group>";
+		};
 		63FDE35428C62D5F00257D18 = {
 			isa = PBXGroup;
 			children = (
@@ -185,21 +198,22 @@
 		63FDE35F28C62D5F00257D18 /* Food */ = {
 			isa = PBXGroup;
 			children = (
+				63258C4F28CDD520007638DC /* ReusableProtocol.swift */,
 				63FDE37628C62ECF00257D18 /* Utility */,
 				63FDE37F28C6311D00257D18 /* Onboarding */,
+				63258C3F28CDC660007638DC /* Tab */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
+				634C57A228D1D2FC0067B44F /* WishList */,
 				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				63258C3E28CDC630007638DC /* Home */,
 				63258C4228CDC6A7007638DC /* Map */,
 				63258C4528CDC6B7007638DC /* Search */,
 				63258C4828CDC6E2007638DC /* Setting */,
-				63258C3F28CDC660007638DC /* Tab */,
-				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				6329218228D0D09E000DC3E5 /* Detail */,
 				6329217D28D0BA75000DC3E5 /* PopUp */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
+				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				63FDE36E28C62D5F00257D18 /* Info.plist */,
-				63258C4F28CDD520007638DC /* ReusableProtocol.swift */,
 			);
 			path = Food;
 			sourceTree = "<group>";
@@ -356,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63258C4728CDC6C0007638DC /* SearchViewController.swift in Sources */,
+				634C57A428D1D3520067B44F /* WishListViewController.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
 				638FCAAF28D1B18500AC84D3 /* SearchView.swift in Sources */,
@@ -372,6 +387,7 @@
 				63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */,
 				638FCAAD28D1A63500AC84D3 /* SearchTableViewCell.swift in Sources */,
 				6329218428D0D0CE000DC3E5 /* DetailViewController.swift in Sources */,
+				634C57A628D1D35F0067B44F /* WishListCollectionViewCell.swift in Sources */,
 				63FDE37E28C62F0000257D18 /* BaseView.swift in Sources */,
 				63FDE38128C6314F00257D18 /* OnboardingPageViewController.swift in Sources */,
 				6329217C28D0AC6C000DC3E5 /* MapCollectionViewCell.swift in Sources */,

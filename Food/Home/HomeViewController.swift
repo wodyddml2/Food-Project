@@ -31,6 +31,14 @@ class HomeViewController: BaseViewController {
         mainView.memoListTableView.delegate = self
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
+        
+        mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func wishListButtonClicked() {
+        let vc = WishListViewController()
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }
