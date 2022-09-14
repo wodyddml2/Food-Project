@@ -11,21 +11,11 @@ import SnapKit
 
 class SearchViewController: BaseViewController {
     
-    private lazy var searchController: UISearchController = {
-        let search = UISearchController(searchResultsController: nil)
-        search.searchBar.delegate = self
-        search.searchResultsUpdater = self
-        return search
-    }()
+    let mainView = SearchView()
     
-    private lazy var searchTableView: UITableView = {
-        let view = UITableView()
-        view.delegate = self
-        view.dataSource = self
-        view.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
-        return view
-    }()
-    
+    override func loadView() {
+        self.view = mainView
+    }
     
 
     override func viewDidLoad() {
@@ -34,23 +24,21 @@ class SearchViewController: BaseViewController {
     
     override func configureUI() {
         navigationItem.title = "Search"
-        navigationItem.searchController = searchController
+        navigationItem.searchController = mainView.searchController
         
-        view.addSubview(searchTableView)
+        mainView.searchController.searchBar.delegate = self
+        mainView.searchController.searchResultsUpdater = self
+        
+        mainView.searchTableView.delegate = self
+        mainView.searchTableView.dataSource = self
+        mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
     }
-    
-    override func setConstraints() {
-        searchTableView.snp.makeConstraints { make in
-            
-        }
-    }
-
 }
 
 extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
-//    func updateSearchResults(for searchController: UISearchController) {
-//
-//    }
+    func updateSearchResults(for searchController: UISearchController) {
+
+    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
