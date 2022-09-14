@@ -34,7 +34,7 @@ class HomeViewController: BaseViewController {
         
         // wishList
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
-        // All
+        // AllMemo
         mainView.memoListAllButton.addTarget(self, action: #selector(memoListAllButtonClicked), for: .touchUpInside)
     }
     

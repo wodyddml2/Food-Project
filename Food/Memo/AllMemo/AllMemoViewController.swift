@@ -47,10 +47,15 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AllMemoCollectionViewCell.reusableIdentifier, for: indexPath) as? AllMemoCollectionViewCell else {
             return UICollectionViewCell()
         }
-
         
 
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = SubMemoViewController()
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {

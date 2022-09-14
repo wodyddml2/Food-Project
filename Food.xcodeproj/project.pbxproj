@@ -26,6 +26,8 @@
 		634C57A628D1D35F0067B44F /* WishListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57A528D1D35F0067B44F /* WishListCollectionViewCell.swift */; };
 		634C57AA28D1D9460067B44F /* AllMemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57A928D1D9460067B44F /* AllMemoCollectionViewCell.swift */; };
 		634C57AC28D1D9510067B44F /* AllMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57AB28D1D9510067B44F /* AllMemoViewController.swift */; };
+		634C57B528D1F1AC0067B44F /* SubMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57B428D1F1AC0067B44F /* SubMemoViewController.swift */; };
+		634C57B728D1F1B90067B44F /* SubMemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57B628D1F1B90067B44F /* SubMemoCollectionViewCell.swift */; };
 		6354093028D0732800D03CAD /* MemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */; };
 		6354093228D0733500D03CAD /* MemoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */; };
 		638FCAAD28D1A63500AC84D3 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638FCAAC28D1A63500AC84D3 /* SearchTableViewCell.swift */; };
@@ -70,6 +72,8 @@
 		634C57A928D1D9460067B44F /* AllMemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		634C57AB28D1D9510067B44F /* AllMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoViewController.swift; sourceTree = "<group>"; };
 		634C57B228D1EAF00067B44F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		634C57B428D1F1AC0067B44F /* SubMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMemoViewController.swift; sourceTree = "<group>"; };
+		634C57B628D1F1B90067B44F /* SubMemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewCell.swift; sourceTree = "<group>"; };
 		6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		638FCAAB28D1A08A00AC84D3 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +197,7 @@
 		634C57A728D1D7600067B44F /* Memo */ = {
 			isa = PBXGroup;
 			children = (
+				634C57B328D1F1870067B44F /* SubMemo */,
 				634C57A828D1D7970067B44F /* AllMemo */,
 			);
 			path = Memo;
@@ -205,6 +210,15 @@
 				634C57A928D1D9460067B44F /* AllMemoCollectionViewCell.swift */,
 			);
 			path = AllMemo;
+			sourceTree = "<group>";
+		};
+		634C57B328D1F1870067B44F /* SubMemo */ = {
+			isa = PBXGroup;
+			children = (
+				634C57B428D1F1AC0067B44F /* SubMemoViewController.swift */,
+				634C57B628D1F1B90067B44F /* SubMemoCollectionViewCell.swift */,
+			);
+			path = SubMemo;
 			sourceTree = "<group>";
 		};
 		63FDE35428C62D5F00257D18 = {
@@ -398,6 +412,7 @@
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
 				638FCAAF28D1B18500AC84D3 /* SearchView.swift in Sources */,
+				634C57B728D1F1B90067B44F /* SubMemoCollectionViewCell.swift in Sources */,
 				6329217A28D0A79E000DC3E5 /* MapView.swift in Sources */,
 				63258C4A28CDC6F2007638DC /* SettingViewController.swift in Sources */,
 				634C57A128D1D00E0067B44F /* SettingTableViewCell.swift in Sources */,
@@ -424,6 +439,7 @@
 				634C57AA28D1D9460067B44F /* AllMemoCollectionViewCell.swift in Sources */,
 				63A9B0AE28C74E4700201418 /* PageView.swift in Sources */,
 				63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */,
+				634C57B528D1F1AC0067B44F /* SubMemoViewController.swift in Sources */,
 				63258C5028CDD520007638DC /* ReusableProtocol.swift in Sources */,
 				63258C4428CDC6B1007638DC /* MapViewController.swift in Sources */,
 				6329217F28D0BAA0000DC3E5 /* PopupViewController.swift in Sources */,
