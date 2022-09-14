@@ -19,6 +19,8 @@ class MapViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(filterButtonClicked))
+        
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
@@ -26,6 +28,11 @@ class MapViewController: BaseViewController {
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
     }
     
+    @objc func filterButtonClicked() {
+        let vc = FilterViewController()
+        
+        present(vc, animated: true)
+    }
 
   
 }
