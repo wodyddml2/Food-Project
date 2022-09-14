@@ -8,5 +8,5 @@
 import UIKit
 
 class SearchView: BaseView {
-    
+    let s = "S"
 }
