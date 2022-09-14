@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class SearchTableViewCell: BaseTableViewCell {
 
     let storeImageView: UIImageView = {

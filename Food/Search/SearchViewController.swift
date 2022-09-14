@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 class SearchViewController: BaseViewController {
     
     let mainView = SearchView()
