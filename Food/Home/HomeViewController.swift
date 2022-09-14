@@ -32,11 +32,20 @@ class HomeViewController: BaseViewController {
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
         
+        // wishList
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
+        // All
+        mainView.memoListAllButton.addTarget(self, action: #selector(memoListAllButtonClicked), for: .touchUpInside)
     }
     
     @objc func wishListButtonClicked() {
         let vc = WishListViewController()
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func memoListAllButtonClicked() {
+        let vc = AllMemoViewController()
         
         navigationController?.pushViewController(vc, animated: true)
     }
