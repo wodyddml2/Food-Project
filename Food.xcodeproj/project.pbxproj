@@ -69,6 +69,7 @@
 		634C57A528D1D35F0067B44F /* WishListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionViewCell.swift; sourceTree = "<group>"; };
 		634C57A928D1D9460067B44F /* AllMemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		634C57AB28D1D9510067B44F /* AllMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMemoViewController.swift; sourceTree = "<group>"; };
+		634C57B228D1EAF00067B44F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewCell.swift; sourceTree = "<group>"; };
 		6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		638FCAAB28D1A08A00AC84D3 /* Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Food.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -209,6 +210,7 @@
 		63FDE35428C62D5F00257D18 = {
 			isa = PBXGroup;
 			children = (
+				634C57B228D1EAF00067B44F /* .gitignore */,
 				63FDE35F28C62D5F00257D18 /* Food */,
 				5DB26B2F993221DFC88B54E6 /* Pods */,
 				E9566148074445C3CD03C8F3 /* Frameworks */,
