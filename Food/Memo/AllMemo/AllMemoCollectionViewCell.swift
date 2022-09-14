@@ -31,13 +31,13 @@ class AllMemoCollectionViewCell: BaseCollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
-    override func configureUI() {
-        [memoImageView, memoCategoryLabel].forEach {
-            self.addSubview($0)
-        }
-    }
-    
+//    
+//    override func configureUI() {
+//        [memoImageView, memoCategoryLabel].forEach {
+//            self.addSubview($0)
+//        }
+//    }
+//    
     override func setConstraints() {
         memoImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
