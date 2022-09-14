@@ -83,10 +83,6 @@ class DetailView: BaseView {
         super.init(frame: frame)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func configureUI() {
         [storeImageView, storeNameLabel, storeRateImageView, storeRateLabel, storeLocationLabel, storeHourOfOperationLabel, storeNumberLabel, detailToMemoLabel, detailToMemoImageView, detailToMemoButton, storeToolBar].forEach {
             self.addSubview($0)

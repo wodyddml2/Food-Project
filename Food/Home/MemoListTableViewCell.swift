@@ -37,10 +37,6 @@ class MemoListTableViewCell: BaseTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func configureUI() {
         [memoListCollectionView,memoListMoreLabel,memoListMoreImageView,memoListMoreButton].forEach {
             self.addSubview($0)

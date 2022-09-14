@@ -45,10 +45,6 @@ class MapView: BaseView {
         super.init(frame: frame)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func configureUI() {
         
         [mapView, mapCollectionView, currentLocationView, currentLocationImageView, currentLocationButton].forEach {

@@ -34,10 +34,6 @@ class MemoListCollectionViewCell: BaseCollectionViewCell {
         super.init(frame: frame)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func configureUI() {
         [memoImageView,memoLabel,memoButton].forEach {
             self.addSubview($0)

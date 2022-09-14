@@ -75,10 +75,6 @@ class HomeView: BaseView {
         super.init(frame: frame)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func configureUI() {
         [bannerCollectionView,bannerPageControl, wishListBackgroundView,memoListLabel,memoListAllLabel, memoListAllImageView ,memoListAllButton, wishListLabel, wishListButton, memoListTableView].forEach {
             self.addSubview($0)
