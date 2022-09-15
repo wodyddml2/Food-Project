@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StoreInfo {
+struct StoreInfo: Equatable {
     let phone: String
     let lat: Double
     let lon: Double

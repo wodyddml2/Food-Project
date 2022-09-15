@@ -39,7 +39,7 @@ class MemoListTableViewCell: BaseTableViewCell {
     
     override func configureUI() {
         [memoListCollectionView,memoListMoreLabel,memoListMoreImageView,memoListMoreButton].forEach {
-            self.addSubview($0)
+            contentView.addSubview($0)
         }
     }
     

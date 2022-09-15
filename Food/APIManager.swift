@@ -23,7 +23,7 @@ class RequestSearchAPIManager {
         let header: HTTPHeaders = ["Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"]
         
         
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .main) { response in
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -55,7 +55,7 @@ class RequestSearchAPIManager {
             "X-NCP-APIGW-API-KEY": APIKey.MapKey
         ]
         
-        AF.request(url, method: .get ,headers: header).validate(statusCode: 200...400).responseData(queue: .main) { response in
+        AF.request(url, method: .get ,headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)

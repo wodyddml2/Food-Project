@@ -28,19 +28,17 @@ class MapCollectionViewCell: BaseCollectionViewCell {
         view.layer.cornerRadius = 5
         return view
     }()
-    // layout issue
-    let storeNameLable: UILabel = {
+   
+    let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.text = "ssss"
-        view.font = .boldSystemFont(ofSize: 30)
+        view.font = .boldSystemFont(ofSize: 20)
         return view
     }()
     
-    let storeLocationLable: UILabel = {
+    let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.text = "SSSSssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd"
         view.numberOfLines = 0
-        view.font = .systemFont(ofSize: 18)
+        view.font = .systemFont(ofSize: 14)
         return view
     }()
     
@@ -50,7 +48,7 @@ class MapCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        [storeListView, storeImageView, storeNameLable, storeLocationLable, storeListButton].forEach {
+        [storeListView, storeImageView, storeNameLabel, storeLocationLabel, storeListButton].forEach {
             self.addSubview($0)
         }
     }
@@ -66,15 +64,15 @@ class MapCollectionViewCell: BaseCollectionViewCell {
             make.height.equalTo(storeListView.snp.height).multipliedBy(0.8)
         }
         
-        storeNameLable.snp.makeConstraints { make in
-            make.top.equalTo(storeImageView.snp.top)
+        storeNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(storeImageView.snp.top).offset(8)
             make.leading.equalTo(storeImageView.snp.trailing).offset(12)
             make.trailing.lessThanOrEqualTo(storeListView.snp.trailing).offset(-8)
         }
         
-        storeLocationLable.snp.makeConstraints { make in
-            make.top.equalTo(storeNameLable.snp.bottom).offset(4)
-            make.top.lessThanOrEqualTo(storeNameLable.snp.bottom).offset(4)
+        storeLocationLabel.snp.makeConstraints { make in
+            make.top.equalTo(storeNameLabel.snp.bottom).offset(12)
+            make.top.lessThanOrEqualTo(storeNameLabel.snp.bottom).offset(4)
             make.leading.equalTo(storeImageView.snp.trailing).offset(12)
             make.trailing.lessThanOrEqualTo(storeListView.snp.trailing).offset(-8)
             make.bottom.lessThanOrEqualTo(storeImageView.snp.bottom)
