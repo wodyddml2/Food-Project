@@ -7,10 +7,13 @@
 
 import UIKit
 
+import CoreLocation
 import NMapsMap
 
 class MapViewController: BaseViewController {
-    let mainView = MapView()
+    private let mainView = MapView()
+    
+    private let locationManager = CLLocationManager()
     
     override func loadView() {
         self.view = mainView
@@ -26,6 +29,11 @@ class MapViewController: BaseViewController {
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
         mainView.mapCollectionView.collectionViewLayout = mapCollectionViewLayout()
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
+    }
+    
+    override func configureUI() {
+        locationManager.delegate = self
+        checkUserDeviceLocationServiceAuthorization()
     }
     
     @objc func filterButtonClicked() {
@@ -63,5 +71,59 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
+    }
+}
+extension MapViewController {
+    func checkUserDeviceLocationServiceAuthorization() {
+        let authorizationStatus: CLAuthorizationStatus
+        
+        if #available(iOS 14.0, *) {
+            authorizationStatus = locationManager.authorizationStatus
+        } else {
+            authorizationStatus = CLLocationManager.authorizationStatus()
+        }
+        
+        if CLLocationManager.locationServicesEnabled() {
+            checkUserCurrentLocationAuthorization(authorizationStatus)
+        } else {
+            showRequestLocationServiceAlert()
+        }
+    }
+    
+    func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+        switch authorizationStatus {
+        case .notDetermined:
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            showRequestLocationServiceAlert() 
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        default: print("default")
+        }
+    }
+    
+    
+    
+}
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coordinate = locations.last?.coordinate {
+            
+        }
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")
+    }
+    
+    // iOS 14 이후
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkUserDeviceLocationServiceAuthorization()
+    }
+    // iOS 14 미만
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
     }
 }
