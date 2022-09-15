@@ -17,13 +17,15 @@ class MapViewController: BaseViewController {
     
     var currentLocation: CLLocationCoordinate2D?
     
+    let geocoder = CLGeocoder()
+    
     override func loadView() {
         self.view = mainView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        RequestSearchAPIManager.shared.requestStore(query: "중랑구 맛집")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(filterButtonClicked))
         
         mainView.mapCollectionView.delegate = self
@@ -59,6 +61,14 @@ class MapViewController: BaseViewController {
         marker.position = NMGLatLng(from: coordinate)
         marker.mapView = mainView.mapView
     }
+    
+//    func localInfo() {
+//        let location = CLLocation(latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude)
+//        let locale = Locale(identifier: "Ko_kr")
+//        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
+//            <#code#>
+//        }
+//    }
 }
 
 extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

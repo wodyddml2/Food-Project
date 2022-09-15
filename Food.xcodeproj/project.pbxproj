@@ -16,6 +16,9 @@
 		63258C4E28CDD266007638DC /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4D28CDD266007638DC /* BannerCollectionViewCell.swift */; };
 		63258C5028CDD520007638DC /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4F28CDD520007638DC /* ReusableProtocol.swift */; };
 		63261AE528D2D32B005E8501 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63261AE428D2D32B005E8501 /* APIKey.swift */; };
+		63261AE828D3032A005E8501 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 63261AE728D3032A005E8501 /* Alamofire */; };
+		63261AEA28D3089E005E8501 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63261AE928D3089E005E8501 /* APIManager.swift */; };
+		63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 63261AEC28D30A3A005E8501 /* SwiftyJSON */; };
 		6329217A28D0A79E000DC3E5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329217928D0A79E000DC3E5 /* MapView.swift */; };
 		6329217C28D0AC6C000DC3E5 /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329217B28D0AC6C000DC3E5 /* MapCollectionViewCell.swift */; };
 		6329217F28D0BAA0000DC3E5 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329217E28D0BAA0000DC3E5 /* PopupViewController.swift */; };
@@ -68,6 +71,7 @@
 		63258C4D28CDD266007638DC /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		63258C4F28CDD520007638DC /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		63261AE428D2D32B005E8501 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		63261AE928D3089E005E8501 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		6329217928D0A79E000DC3E5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		6329217B28D0AC6C000DC3E5 /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
 		6329217E28D0BAA0000DC3E5 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +119,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63261AE828D3032A005E8501 /* Alamofire in Frameworks */,
 				63A9B0B128C74E6300201418 /* SnapKit in Frameworks */,
+				63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */,
 				C21CD95C1C651E063C2F0996 /* Pods_Food.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				63258C4F28CDD520007638DC /* ReusableProtocol.swift */,
+				63261AE928D3089E005E8501 /* APIManager.swift */,
 				63261AE328D2D314005E8501 /* Resources */,
 				63FDE37628C62ECF00257D18 /* Utility */,
 				63FDE37F28C6311D00257D18 /* Onboarding */,
@@ -352,6 +359,8 @@
 			name = Food;
 			packageProductDependencies = (
 				63A9B0B028C74E6300201418 /* SnapKit */,
+				63261AE728D3032A005E8501 /* Alamofire */,
+				63261AEC28D30A3A005E8501 /* SwiftyJSON */,
 			);
 			productName = Food;
 			productReference = 638FCAAB28D1A08A00AC84D3 /* Food.app */;
@@ -383,6 +392,8 @@
 			mainGroup = 63FDE35428C62D5F00257D18;
 			packageReferences = (
 				63A9B0AF28C74E6300201418 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = 63FDE35428C62D5F00257D18;
 			projectDirPath = "";
@@ -456,6 +467,7 @@
 				634C57A428D1D3520067B44F /* WishListViewController.swift in Sources */,
 				634C57BA28D1FB360067B44F /* WriteMemoViewController.swift in Sources */,
 				63261AE528D2D32B005E8501 /* APIKey.swift in Sources */,
+				63261AEA28D3089E005E8501 /* APIManager.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				634C57C328D235690067B44F /* MetropolitanCityTableViewCell.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
@@ -714,6 +726,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		63A9B0AF28C74E6300201418 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -725,6 +753,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		63261AE728D3032A005E8501 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		63261AEC28D30A3A005E8501 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
 		63A9B0B028C74E6300201418 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63A9B0AF28C74E6300201418 /* XCRemoteSwiftPackageReference "SnapKit" */;
