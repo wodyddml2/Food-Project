@@ -15,6 +15,8 @@ class MapViewController: BaseViewController {
     
     private let locationManager = CLLocationManager()
     
+    var currentLocation: CLLocationCoordinate2D?
+    
     override func loadView() {
         self.view = mainView
     }
@@ -34,7 +36,9 @@ class MapViewController: BaseViewController {
     override func configureUI() {
         locationManager.delegate = self
         checkUserDeviceLocationServiceAuthorization()
+        
     }
+ 
     
     @objc func filterButtonClicked() {
         let vc = FilterViewController()
@@ -43,6 +47,18 @@ class MapViewController: BaseViewController {
     }
 
   
+    func setCamera() {
+        guard let coordinate = currentLocation else {
+            return
+        }
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(from: coordinate))
+        cameraUpdate.animation = .easeIn
+        mainView.mapView.moveCamera(cameraUpdate)
+        
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(from: coordinate)
+        marker.mapView = mainView.mapView
+    }
 }
 
 extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -109,9 +125,10 @@ extension MapViewController {
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
-            
+            currentLocation = coordinate
         }
         locationManager.stopUpdatingLocation()
+        setCamera()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
