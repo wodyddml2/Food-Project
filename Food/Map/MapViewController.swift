@@ -17,7 +17,8 @@ class MapViewController: BaseViewController {
     
     var currentLocation: CLLocationCoordinate2D?
     
-    let geocoder = CLGeocoder()
+    var regionData: RegionInfo?
+    
     
     override func loadView() {
         self.view = mainView
@@ -25,7 +26,9 @@ class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        RequestSearchAPIManager.shared.requestStore(query: "중랑구 맛집")
+  
+        // 카카오 검색
+//        RequestSearchAPIManager.shared.requestStore(query: "서울 중랑구 맛집")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(filterButtonClicked))
         
         mainView.mapCollectionView.delegate = self
@@ -40,7 +43,8 @@ class MapViewController: BaseViewController {
         checkUserDeviceLocationServiceAuthorization()
         
     }
- 
+    
+   
     
     @objc func filterButtonClicked() {
         let vc = FilterViewController()
@@ -62,13 +66,7 @@ class MapViewController: BaseViewController {
         marker.mapView = mainView.mapView
     }
     
-//    func localInfo() {
-//        let location = CLLocation(latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude)
-//        let locale = Locale(identifier: "Ko_kr")
-//        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
-//            <#code#>
-//        }
-//    }
+
 }
 
 extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -138,6 +136,19 @@ extension MapViewController: CLLocationManagerDelegate {
             currentLocation = coordinate
         }
         locationManager.stopUpdatingLocation()
+        guard let coordinate = currentLocation else {
+            return
+        }
+
+        // 현재 위치 지역 데이터
+        RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
+            self.regionData = region
+            DispatchQueue.main.async {
+                print(self.regionData!)
+            }
+        }
+        
+        // 현재 위치 지도 설정
         setCamera()
     }
     
