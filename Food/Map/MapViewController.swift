@@ -17,8 +17,8 @@ class MapViewController: BaseViewController {
     
     var currentLocation: CLLocationCoordinate2D?
     
-    var regionData: RegionInfo?
-    
+//    var regionData: RegionInfo?
+    var storeData: [StoreInfo] = []
     
     override func loadView() {
         self.view = mainView
@@ -26,9 +26,7 @@ class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-        // 카카오 검색
-//        RequestSearchAPIManager.shared.requestStore(query: "서울 중랑구 맛집")
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(filterButtonClicked))
         
         mainView.mapCollectionView.delegate = self
@@ -60,10 +58,6 @@ class MapViewController: BaseViewController {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(from: coordinate))
         cameraUpdate.animation = .easeIn
         mainView.mapView.moveCamera(cameraUpdate)
-        
-        let marker = NMFMarker()
-        marker.position = NMGLatLng(from: coordinate)
-        marker.mapView = mainView.mapView
     }
     
 
@@ -132,25 +126,37 @@ extension MapViewController {
 }
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         if let coordinate = locations.last?.coordinate {
             currentLocation = coordinate
         }
+        // 이따 수정
         locationManager.stopUpdatingLocation()
+        
         guard let coordinate = currentLocation else {
             return
         }
-
-        // 현재 위치 지역 데이터
-        RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
-            self.regionData = region
-            DispatchQueue.main.async {
-                print(self.regionData!)
-            }
-        }
         
-        // 현재 위치 지도 설정
+       
+        RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
+            
+            RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집") { store in
+                self.storeData = store
+                print(self.storeData)
+                
+                for store in store {
+                    let marker = NMFMarker()
+                    marker.position = NMGLatLng(lat: store.lon, lng: store.lat)
+                    marker.mapView = self.mainView.mapView
+                }
+
+            }
+
+        }
         setCamera()
     }
+    
+
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")

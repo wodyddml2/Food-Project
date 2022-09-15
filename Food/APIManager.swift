@@ -15,21 +15,31 @@ class RequestSearchAPIManager {
     
     private init() { }
     
-    func requestStore(query: String) {
+    func requestStore(query: String, _ completionHandler: @escaping([StoreInfo]) -> Void) {
         let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         let url = EndPoint.url + "query=\(text ?? "맛집")&category_group_code=FD6"
         
         let header: HTTPHeaders = ["Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"]
         
-        AF.request(url, method: .get ,headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
+        
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .main) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
                  print("JSON: \(json)")
               
-              
+                let storeData = json["documents"].arrayValue.map {
+                    StoreInfo(
+                        phone: $0["phone"].stringValue,
+                        lat: Double($0["x"].stringValue) ?? 0.0,
+                        lon: Double($0["y"].stringValue) ?? 0.0,
+                        adress: $0["address_name"].stringValue,
+                        name: $0["place_name"].stringValue
+                    )
+                }
                 
+                completionHandler(storeData)
             case .failure(let error):
                 print(error)
             }
@@ -45,11 +55,11 @@ class RequestSearchAPIManager {
             "X-NCP-APIGW-API-KEY": APIKey.MapKey
         ]
         
-        AF.request(url, method: .get ,headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
+        AF.request(url, method: .get ,headers: header).validate(statusCode: 200...400).responseData(queue: .main) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                 print("JSON: \(json)")
+//                 print("JSON: \(json)")
                 
                 let region = json["results"][0]["region"]
                 
