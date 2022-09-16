@@ -19,6 +19,11 @@ class MapView: BaseView {
     
     let currentLocationView: UIView = {
         let view = UIView()
+        
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 5
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.darkGray.cgColor
         view.backgroundColor = .white
         return view
     }()
@@ -26,6 +31,7 @@ class MapView: BaseView {
     let currentLocationImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "scope")
+        view.tintColor = .darkGray
         return view
     }()
     
@@ -57,10 +63,10 @@ class MapView: BaseView {
             make.top.bottom.trailing.leading.equalTo(self.safeAreaLayoutGuide)
         }
         currentLocationView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(12)
-            make.leading.equalTo(self.safeAreaLayoutGuide).offset(8)
-            make.width.equalTo(30)
-            make.height.equalTo(30)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
         }
         currentLocationImageView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(currentLocationView)

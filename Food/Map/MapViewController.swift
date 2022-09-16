@@ -29,8 +29,9 @@ class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(filterButtonClicked))
+        navigationController?.navigationBar.tintColor = .darkGray
+        navigationItem.title = "맛집 지도"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(filterButtonClicked))
         
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
@@ -134,7 +135,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         markers.forEach {
             $0.iconImage = NMF_MARKER_IMAGE_RED
         }
-        
+        //
         markers[Int(currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
         
         updateCamera(latLang: markers[Int(currentIndex)].position)

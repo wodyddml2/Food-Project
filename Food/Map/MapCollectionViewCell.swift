@@ -13,31 +13,22 @@ class MapCollectionViewCell: BaseCollectionViewCell {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 15
-        return view
-    }()
-    
-    let storeListButton: UIButton = {
-        let view = UIButton()
-        
-        return view
-    }()
-    
-    let storeImageView: UIImageView = {
-        let view = UIImageView()
-        view.backgroundColor = .blue
-        view.layer.cornerRadius = 5
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.darkGray.cgColor
         return view
     }()
    
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 20)
+        view.font = .boldSystemFont(ofSize: 24)
+        view.textAlignment = .center
         return view
     }()
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
+        view.textAlignment = .center
         view.font = .systemFont(ofSize: 14)
         return view
     }()
@@ -48,7 +39,7 @@ class MapCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        [storeListView, storeImageView, storeNameLabel, storeLocationLabel, storeListButton].forEach {
+        [storeListView, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)
         }
     }
@@ -57,25 +48,20 @@ class MapCollectionViewCell: BaseCollectionViewCell {
         storeListView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self)
         }
-        storeImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(storeListView)
-            make.leading.equalTo(storeListView.snp.leading).offset(10)
-            make.width.equalTo(storeListView.snp.width).multipliedBy(0.3)
-            make.height.equalTo(storeListView.snp.height).multipliedBy(0.8)
-        }
+    
         
         storeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(storeImageView.snp.top).offset(8)
-            make.leading.equalTo(storeImageView.snp.trailing).offset(12)
-            make.trailing.lessThanOrEqualTo(storeListView.snp.trailing).offset(-8)
+            make.centerX.equalTo(self)
+            make.top.equalTo(12)
+            make.trailing.lessThanOrEqualTo(-4)
+            make.leading.lessThanOrEqualTo(4)
         }
         
         storeLocationLabel.snp.makeConstraints { make in
-            make.top.equalTo(storeNameLabel.snp.bottom).offset(12)
-            make.top.lessThanOrEqualTo(storeNameLabel.snp.bottom).offset(4)
-            make.leading.equalTo(storeImageView.snp.trailing).offset(12)
-            make.trailing.lessThanOrEqualTo(storeListView.snp.trailing).offset(-8)
-            make.bottom.lessThanOrEqualTo(storeImageView.snp.bottom)
+            make.centerX.equalTo(self)
+            make.bottom.equalTo(-18)
+            make.trailing.lessThanOrEqualTo(-4)
+            make.leading.lessThanOrEqualTo(4)
         }
     }
 }
