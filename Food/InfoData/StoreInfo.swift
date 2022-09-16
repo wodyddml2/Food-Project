@@ -14,4 +14,5 @@ struct StoreInfo: Equatable {
     let adress: String
     let name: String
     let ID: String
+    let webID: String
 }

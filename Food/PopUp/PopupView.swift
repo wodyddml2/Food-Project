@@ -29,7 +29,7 @@ class PopupView: BaseView {
     let storeImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
-        view.backgroundColor = .blue
+        view.backgroundColor = .lightGray
         return view
     }()
     

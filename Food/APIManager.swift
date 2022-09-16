@@ -36,7 +36,8 @@ class RequestSearchAPIManager {
                         lon: Double($0["y"].stringValue) ?? 0.0,
                         adress: $0["address_name"].stringValue,
                         name: $0["place_name"].stringValue,
-                        ID: $0["id"].stringValue
+                        ID: $0["id"].stringValue,
+                        webID: $0["place_url"].stringValue
                     )
                 }
                 
@@ -61,7 +62,7 @@ class RequestSearchAPIManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                 print("JSON: \(json)")
+//                 print("JSON: \(json)")
               
                 let imageData = json["documents"][0]["image_url"].stringValue
                 

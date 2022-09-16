@@ -49,10 +49,12 @@ class PopupViewController: BaseViewController {
     }
   
     @objc func popToDetailButtonClicked() {
-        let vc = UINavigationController(rootViewController: DetailViewController())
+        let vc = DetailViewController()
+        vc.webID = storeData?.webID
+        let nav = UINavigationController(rootViewController: vc)
         
-        vc.modalPresentationStyle = .fullScreen
+        nav.modalPresentationStyle = .fullScreen
         
-        present(vc, animated: true)
+        present(nav, animated: true)
     }
 }
