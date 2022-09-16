@@ -70,8 +70,9 @@ class MapView: BaseView {
         }
         
         mapCollectionView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalTo(UIScreen.main.bounds.height / 5)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-35)
+            make.leading.trailing.equalTo(self.safeAreaLayoutGuide)
+            make.height.equalTo(UIScreen.main.bounds.height / 8.5)
         }
     }
 }

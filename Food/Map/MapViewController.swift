@@ -61,11 +61,9 @@ class MapViewController: BaseViewController {
     }
 
   
-    func setCamera() {
-        guard let coordinate = currentLocation else {
-            return
-        }
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(from: coordinate))
+    func updateCamera(latLang: NMGLatLng) {
+
+        let cameraUpdate = NMFCameraUpdate(scrollTo: latLang)
         cameraUpdate.animation = .easeIn
         mainView.mapView.moveCamera(cameraUpdate)
     }
@@ -86,7 +84,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height / 1.7)
+        return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height)
     }
     func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -136,7 +134,10 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         markers.forEach {
             $0.iconImage = NMF_MARKER_IMAGE_RED
         }
+        
         markers[Int(currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
+        
+        updateCamera(latLang: markers[Int(currentIndex)].position)
     }
   
 }
@@ -207,8 +208,8 @@ extension MapViewController: CLLocationManagerDelegate {
                                 }
                                 marker.iconImage = NMF_MARKER_IMAGE_YELLOW
                             }
-                            
-                            print("마커 터치")
+                            self.updateCamera(latLang: marker.position)
+                         
                             return true
                         }
                         self.markers.append(marker)
@@ -219,7 +220,7 @@ extension MapViewController: CLLocationManagerDelegate {
                 }
             }
         }
-        setCamera()
+        updateCamera(latLang: NMGLatLng(from: coordinate))
     }
     
 
