@@ -29,6 +29,7 @@ class PopupViewController: BaseViewController {
     override func configureUI() {
         mainView.storeNameLabel.text = storeData?.name
         mainView.storeLocationLabel.text = storeData?.adress
+        mainView.storePhoneLabel.text = storeData?.phone
     }
     
     @objc func popToMapButtonClicked() {
