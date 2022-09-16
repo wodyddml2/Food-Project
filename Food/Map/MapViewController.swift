@@ -37,17 +37,22 @@ class MapViewController: BaseViewController {
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
         mainView.mapCollectionView.collectionViewLayout = mapCollectionViewLayout()
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
-//        mainView.mapCollectionView.isPagingEnabled = true
+
+        mainView.currentLocationButton.addTarget(self, action: #selector(currentLocationButtonClicked) , for: .touchUpInside)
     }
     
     override func configureUI() {
-        
         locationManager.delegate = self
         
         checkUserDeviceLocationServiceAuthorization()
-        
     }
     
+    @objc func currentLocationButtonClicked() {
+        markers.forEach {
+            $0.mapView = nil
+        }
+        checkUserDeviceLocationServiceAuthorization()
+    }
     
     @objc func filterButtonClicked() {
         let vc = FilterViewController()
