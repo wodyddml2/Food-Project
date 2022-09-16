@@ -19,6 +19,7 @@ class MapViewController: BaseViewController {
     
     var markers = [NMFMarker]()
     
+    var regionData: RegionInfo?
     var storeData: [StoreInfo] = []
     
     var currentIndex: CGFloat = 0
@@ -97,7 +98,8 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = PopupViewController()
-        
+        vc.regionData = regionData
+        vc.storeData = storeData[indexPath.item]
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
     }
@@ -190,7 +192,7 @@ extension MapViewController: CLLocationManagerDelegate {
         
       
         RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
-            
+            self.regionData = region
             RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집") { store in
                 self.storeData = store
                

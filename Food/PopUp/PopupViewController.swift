@@ -10,6 +10,9 @@ import UIKit
 class PopupViewController: BaseViewController {
     let mainView = PopupView()
     
+    var regionData: RegionInfo?
+    var storeData: StoreInfo?
+    
     override func loadView() {
         self.view = mainView
     }
@@ -21,6 +24,11 @@ class PopupViewController: BaseViewController {
         
         mainView.popToMapButton.addTarget(self, action: #selector(popToMapButtonClicked), for: .touchUpInside)
         mainView.popToDetailButton.addTarget(self, action: #selector(popToDetailButtonClicked), for: .touchUpInside)
+    }
+    
+    override func configureUI() {
+        mainView.storeNameLabel.text = storeData?.name
+        mainView.storeLocationLabel.text = storeData?.adress
     }
     
     @objc func popToMapButtonClicked() {
