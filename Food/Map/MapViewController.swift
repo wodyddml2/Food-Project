@@ -128,8 +128,10 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         offset = CGPoint(x: (roundedIndex * cellWidthIncludingSpacing) - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
-        
-        markers[Int(currentIndex)].iconTintColor = .red
+        markers.forEach {
+            $0.iconImage = NMF_MARKER_IMAGE_RED
+        }
+        markers[Int(currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
     }
   
 }
@@ -189,15 +191,18 @@ extension MapViewController: CLLocationManagerDelegate {
                     for stores in store {
                         let marker = NMFMarker()
                         marker.position = NMGLatLng(lat: stores.lon, lng: stores.lat)
+                        marker.iconImage = NMF_MARKER_IMAGE_RED
                         marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-                            
-                            marker.iconTintColor = UIColor.blue
-                            
+                
                             if let firstIndex = store.firstIndex(of: stores) {
                                 self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
                                 self.currentIndex = CGFloat(firstIndex)
+                                self.markers.forEach {
+                                    $0.iconImage = NMF_MARKER_IMAGE_RED
+                                }
+                                marker.iconImage = NMF_MARKER_IMAGE_YELLOW
                             }
-      
+                            
                             print("마커 터치")
                             return true
                         }
@@ -212,16 +217,7 @@ extension MapViewController: CLLocationManagerDelegate {
         setCamera()
     }
     
-//    func markerSetup(completionHandler: @escaping(_ overlay: NMFOverlay) -> Bool) {
-//
-//        for store in storeData {
-//            let marker = NMFMarker()
-//            marker.position = NMGLatLng(lat: store.lon, lng: store.lat)
-//            marker.touchHandler = completionHandler
-//            markers.append(marker)
-//        }
-//    }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")
     }
