@@ -27,7 +27,7 @@ class RequestSearchAPIManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                 print("JSON: \(json)")
+//                 print("JSON: \(json)")
               
                 let storeData = json["documents"].arrayValue.map {
                     StoreInfo(
@@ -46,11 +46,11 @@ class RequestSearchAPIManager {
             }
         }
     }
-    
-    func requestStoreImage(query: String) {
+//
+    func requestStoreImage(query: String, completionHandler: @escaping (String) -> Void) {
         let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-        let url = EndPoint.imageURL + "query=\(text ?? "맛집")"
+        let url = EndPoint.imageURL + "query=\(text ?? "맛집")&size=1"
         
         let header: HTTPHeaders = [
             "Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"
@@ -63,6 +63,9 @@ class RequestSearchAPIManager {
                 let json = JSON(value)
                  print("JSON: \(json)")
               
+                let imageData = json["documents"][0]["image_url"].stringValue
+                
+                completionHandler(imageData)
                 
             case .failure(let error):
                 print(error)

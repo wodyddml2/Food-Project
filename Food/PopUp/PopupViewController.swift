@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 class PopupViewController: BaseViewController {
     let mainView = PopupView()
     
@@ -27,6 +29,16 @@ class PopupViewController: BaseViewController {
     }
     
     override func configureUI() {
+        guard let regionData = regionData else {
+            return
+        }
+
+        RequestSearchAPIManager.shared.requestStoreImage(query: "\(regionData.firstArea) \(regionData.secondArea) \(regionData.thirdArea) \(storeData?.name ?? "")") { image in
+            DispatchQueue.main.async {
+                self.mainView.storeImageView.kf.setImage(with: URL(string: image))
+            }
+            
+        }
         mainView.storeNameLabel.text = storeData?.name
         mainView.storeLocationLabel.text = storeData?.adress
         mainView.storePhoneLabel.text = storeData?.phone
