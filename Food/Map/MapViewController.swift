@@ -20,7 +20,9 @@ class MapViewController: BaseViewController {
     var markers = [NMFMarker]()
     
     var storeData: [StoreInfo] = []
-    var nowPage = 0
+    
+    var currentIndex: CGFloat = 0
+    
     override func loadView() {
         self.view = mainView
     }
@@ -35,6 +37,7 @@ class MapViewController: BaseViewController {
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
         mainView.mapCollectionView.collectionViewLayout = mapCollectionViewLayout()
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
+//        mainView.mapCollectionView.isPagingEnabled = true
     }
     
     override func configureUI() {
@@ -94,16 +97,41 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.x < scrollView.frame.width {
-//            nowPage = (Int(scrollView.contentOffset.x) / (Int(mainView.mapCollectionView.frame.size.width / 1.4)))
-//        } else {
-//            nowPage = Int(scrollView.contentOffset.x) / (Int(scrollView.frame.width))
-//        }
-           
-//        markers[nowPage].iconTintColor = UIColor.brown
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let layout = mainView.mapCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        //320 : 셀사이즈
+        let cellWidthIncludingSpacing = mainView.mapCollectionView.frame.size.width / 1.4 + layout.minimumLineSpacing
+        // UnsafeMutablePointer<CGPoint>: 특정 유형의 데이터에 엑세스하고 조작하기위한 포인터(메모리 주솟값?)
+        // pointee: 포인터가 참조하는 인스턴스에 엑세스
+        // contentInset: 스크롤 뷰 모서리에 삽입되는 사용자 지정거리
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        var roundedIndex = round(index)
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
             
+        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+            roundedIndex = ceil(index)
+        } else {
+            roundedIndex = round(index)
+        }
+        
+        if currentIndex > roundedIndex {
+            currentIndex -= 1
+            roundedIndex = currentIndex
+        } else if currentIndex < roundedIndex {
+            currentIndex += 1
+            roundedIndex = currentIndex
+        }
+        
+        offset = CGPoint(x: (roundedIndex * cellWidthIncludingSpacing) - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+        
+        markers[Int(currentIndex)].iconTintColor = .red
     }
+  
 }
 extension MapViewController {
     func checkUserDeviceLocationServiceAuthorization() {
@@ -166,7 +194,8 @@ extension MapViewController: CLLocationManagerDelegate {
                             marker.iconTintColor = UIColor.blue
                             
                             if let firstIndex = store.firstIndex(of: stores) {
-                                self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .right, animated: true)
+                                self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
+                                self.currentIndex = CGFloat(firstIndex)
                             }
       
                             print("마커 터치")

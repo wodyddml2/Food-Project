@@ -13,4 +13,5 @@ struct StoreInfo: Equatable {
     let lon: Double
     let adress: String
     let name: String
+    let ID: String
 }

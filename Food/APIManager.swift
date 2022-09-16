@@ -35,11 +35,35 @@ class RequestSearchAPIManager {
                         lat: Double($0["x"].stringValue) ?? 0.0,
                         lon: Double($0["y"].stringValue) ?? 0.0,
                         adress: $0["address_name"].stringValue,
-                        name: $0["place_name"].stringValue
+                        name: $0["place_name"].stringValue,
+                        ID: $0["id"].stringValue
                     )
                 }
                 
                 completionHandler(storeData)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func requestStoreImage(query: String) {
+        let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        let url = EndPoint.imageURL + "query=\(text ?? "맛집")"
+        
+        let header: HTTPHeaders = [
+            "Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"
+        ]
+        
+        
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                 print("JSON: \(json)")
+              
+                
             case .failure(let error):
                 print(error)
             }
@@ -72,4 +96,6 @@ class RequestSearchAPIManager {
             }
         }
     }
+    
+    
 }
