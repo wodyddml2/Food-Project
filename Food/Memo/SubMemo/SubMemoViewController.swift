@@ -50,9 +50,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = WriteMemoViewController()
-        
-        present(vc, animated: true)
+        transition(WriteMemoViewController(), transitionStyle: .present)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {

@@ -40,21 +40,12 @@ class HomeViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.title = "홈"
-       
-        // AllMemo
-//        mainView.memoListAllButton.addTarget(self, action: #selector(memoListAllButtonClicked), for: .touchUpInside)
     }
     
     @objc func wishListButtonClicked() {
-        let vc = WishListViewController()
         
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc func memoListAllButtonClicked() {
-        let vc = AllMemoViewController()
-        
-        navigationController?.pushViewController(vc, animated: true)
+        transition(WishListViewController(), transitionStyle: .push)
+       
     }
 
 }

@@ -65,20 +65,16 @@ final class OnboardingPageViewController: BaseViewController {
             pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
         } else {
             UserDefaults.standard.set(true, forKey: "onboarding")
-            let vc = TabViewController()
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
             
+            transition(TabViewController(), transitionStyle: .presentFull)
         }
         
     }
     
     @objc func skipButtonClicked() {
         UserDefaults.standard.set(true, forKey: "onboarding")
-        let vc = TabViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-        
+
+        transition(TabViewController(), transitionStyle: .presentFull)
     }
     
     override func configureUI() {

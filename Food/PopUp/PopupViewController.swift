@@ -55,11 +55,7 @@ class PopupViewController: BaseViewController {
     @objc func popToDetailButtonClicked() {
         let vc = DetailViewController()
         vc.webID = storeData?.webID
-        let nav = UINavigationController(rootViewController: vc)
-        
-        nav.modalPresentationStyle = .fullScreen
-        
-        present(nav, animated: true)
+        transition(vc, transitionStyle: .presentFullNavigation)
     }
     
     @objc func wishListButtonClicked() {

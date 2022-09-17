@@ -44,9 +44,8 @@ class MapViewController: BaseViewController {
     }
     
     @objc func seatchButtonClicked() {
-        let vc = UINavigationController(rootViewController: SearchViewController()) 
-        
-        present(vc, animated: true)
+    
+        transition(SearchViewController(), transitionStyle: .presentNavigation)
     }
 
     
@@ -102,8 +101,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         let vc = PopupViewController()
         vc.regionData = regionData
         vc.storeData = storeData[indexPath.item]
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: true)
+        transition(vc, transitionStyle: .presentOverFull)
     }
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {

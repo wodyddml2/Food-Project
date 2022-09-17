@@ -55,9 +55,7 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = SubMemoViewController()
-        
-        navigationController?.pushViewController(vc, animated: true)
+        transition(SubMemoViewController(), transitionStyle: .push)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
