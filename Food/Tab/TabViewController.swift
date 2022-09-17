@@ -38,7 +38,7 @@ class TabViewController: UITabBarController {
         let appearence = UITabBarAppearance()
         
         appearence.configureWithTransparentBackground()
-        appearence.backgroundColor = .darkGray
+        appearence.backgroundColor = .white
         tabBar.standardAppearance = appearence
         tabBar.tintColor = .darkGray
     }

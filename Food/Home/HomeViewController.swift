@@ -38,6 +38,7 @@ class HomeViewController: BaseViewController {
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
+        navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.title = "홈"
        
         // AllMemo

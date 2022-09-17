@@ -22,7 +22,7 @@ class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storePickImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(systemName: "heart.fill")
+        view.image = UIImage(systemName: "xmark.circle.fill")
         view.tintColor = .red
         return view
     }()
@@ -33,15 +33,32 @@ class WishListCollectionViewCell: BaseCollectionViewCell {
         return view
     }()
     
+    let storeNameLabel: UILabel = {
+        let view = UILabel()
+        view.text = "상봉개성냉면"
+        view.textAlignment = .center
+        view.font = .boldSystemFont(ofSize: 16)
+        return view
+    }()
+    
+    let storeLocationLabel: UILabel = {
+        let view = UILabel()
+        view.text = "부산광역시 해운대구"
+        view.textAlignment = .center
+        view.font = .boldSystemFont(ofSize: 16)
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     
     override func configureUI() {
-        [storeImageView, storePickImageView, storePickButton].forEach {
+        [storeImageView, storePickImageView, storePickButton, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)
         }
+        
     }
     
     override func setConstraints() {
@@ -55,7 +72,21 @@ class WishListCollectionViewCell: BaseCollectionViewCell {
             make.top.equalTo(storeImageView.snp.top).offset(14)
         }
         storePickButton.snp.makeConstraints { make in
-            make.edges.equalTo(storeImageView)
+            make.edges.equalTo(storePickImageView)
+        }
+        
+        storeNameLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.leading.lessThanOrEqualTo(4)
+            make.trailing.lessThanOrEqualTo(-4)
+            make.centerY.equalTo(self).offset(-20)
+        }
+        
+        storeLocationLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.leading.lessThanOrEqualTo(4)
+            make.trailing.lessThanOrEqualTo(-4)
+            make.centerY.equalTo(self).offset(20)
         }
         
     }
