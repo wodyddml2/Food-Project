@@ -35,11 +35,28 @@ class UserWishListRepository: UserWishListRepositoryType {
         }
     }
     
+    func addRealm(item: UserWishList) {
+        do {
+            try localRealm.write {
+                localRealm.add(item)
+            }
+        } catch {
+            print("저장 불가")
+        }
+    }
+    
+    
+    
     func deleteRecord(item: UserWishList) {
         removeImageFromDocument(fileName: "\(item.objectId).jpg")
-        try! localRealm.write {
-            localRealm.delete(item)
+        do {
+            try localRealm.write {
+                localRealm.delete(item)
+            }
+        } catch {
+            print("삭제 안됨")
         }
+        
     }
     
 }

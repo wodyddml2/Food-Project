@@ -62,13 +62,7 @@ final class PopupViewController: BaseViewController {
         
         let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
         
-        do {
-            try repository.localRealm.write {
-                repository.localRealm.add(task)
-            }
-        } catch {
-            print("저장 불가")
-        }
+        repository.addRealm(item: task)
         
         if let image = mainView.storeImageView.image {
             saveImageToDocument(fileName: "\(task.objectId).jpg", image: image)
