@@ -27,6 +27,8 @@ class AllMemoViewController: BaseViewController {
 
     override func configureUI() {
         view.addSubview(allMemoCollectionView)
+        
+        navigationItem.title = "메모"
     }
     
     override func setConstraints() {

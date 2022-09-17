@@ -15,7 +15,7 @@ class HomeViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         
        
     }
@@ -32,10 +32,11 @@ class HomeViewController: BaseViewController {
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
         
-        // wishList
-        mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
+        navigationItem.title = "홈"
+       
         // AllMemo
-        mainView.memoListAllButton.addTarget(self, action: #selector(memoListAllButtonClicked), for: .touchUpInside)
+//        mainView.memoListAllButton.addTarget(self, action: #selector(memoListAllButtonClicked), for: .touchUpInside)
     }
     
     @objc func wishListButtonClicked() {

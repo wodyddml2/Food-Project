@@ -28,10 +28,10 @@ class TabViewController: UITabBarController {
     func configureTabBar() {
         let homeVC = setupTabBar(viewController: HomeViewController(), title: "Home", image: "house", fillImage: "house.fill")
         let mapVC = setupTabBar(viewController: MapViewController(), title: "Map", image: "map", fillImage: "map.fill")
-        let searchVC = setupTabBar(viewController: SearchViewController(), title: "Search", image: "magnifyingglass.circle", fillImage: "magnifyingglass.circle.fill")
+        let memoVC = setupTabBar(viewController: AllMemoViewController(), title: "Memo", image: "square.and.pencil", fillImage: "square.and.pencil")
         let settingVC = setupTabBar(viewController: SettingViewController(), title: "Setting", image: "ellipsis.circle", fillImage: "ellipsis.circle.fill")
         
-        setViewControllers([homeVC, mapVC, searchVC, settingVC], animated: true)
+        setViewControllers([homeVC, mapVC, memoVC, settingVC], animated: true)
     }
  
     func setupTabBarAppearence() {
@@ -40,7 +40,7 @@ class TabViewController: UITabBarController {
         appearence.configureWithTransparentBackground()
         appearence.backgroundColor = .darkGray
         tabBar.standardAppearance = appearence
-        tabBar.tintColor = .white
+        tabBar.tintColor = .darkGray
     }
 
 }
