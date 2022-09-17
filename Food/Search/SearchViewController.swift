@@ -12,6 +12,7 @@ class SearchViewController: BaseViewController {
     let mainView = SearchView()
     
     var storeData: [StoreInfo] = []
+    var pageCount = 1
     
     override func loadView() {
         self.view = mainView
@@ -34,6 +35,7 @@ class SearchViewController: BaseViewController {
         
         mainView.searchTableView.delegate = self
         mainView.searchTableView.dataSource = self
+        mainView.searchTableView.prefetchDataSource = self
         mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
     }
 }
@@ -43,8 +45,9 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
 
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: 1) { store in
-            self.storeData = store
+        pageCount = 1
+        RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: pageCount) { store in
+            self.storeData.append(contentsOf: store)
             DispatchQueue.main.async {
                 self.mainView.searchTableView.reloadData()
                 self.mainView.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -80,6 +83,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if storeData.count - 1 == indexPath.item && storeData.count < 45 {
+                pageCount += 1
+                print("S")
+                RequestSearchAPIManager.shared.requestStore(query: mainView.searchController.searchBar.text ?? "", page: pageCount) { store in
+                    self.storeData.append(contentsOf: store)
+                    
+                    DispatchQueue.main.async {
+                        self.mainView.searchTableView.reloadData()
+
+                    }
+                }
+            }
+        }
         
     }
 }

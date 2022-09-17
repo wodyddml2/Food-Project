@@ -27,7 +27,7 @@ class RequestSearchAPIManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-//                 print("JSON: \(json)")
+                 print("JSON: \(json)")
               
                 let storeData = json["documents"].arrayValue.map {
                     StoreInfo(
