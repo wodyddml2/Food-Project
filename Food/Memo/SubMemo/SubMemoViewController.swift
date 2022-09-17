@@ -18,7 +18,6 @@ class SubMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
     
@@ -32,9 +31,7 @@ class SubMemoViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
-
-   
-
+     
 }
 extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -45,7 +42,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubMemoCollectionViewCell.reusableIdentifier, for: indexPath) as? SubMemoCollectionViewCell else {
             return UICollectionViewCell()
         }
-
+        
         return cell
     }
     
@@ -56,11 +53,11 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width / 1.3
-    
+        
         layout.itemSize = CGSize(width: width, height: width * 1.3)
         layout.sectionInset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
         layout.minimumLineSpacing = 40
-       
+        
         return layout
     }
 }

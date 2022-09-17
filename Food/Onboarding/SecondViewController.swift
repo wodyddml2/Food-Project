@@ -8,7 +8,7 @@
 import UIKit
 
 class SecondViewController: BaseViewController {
-
+    
     private let mainView = PageView()
     
     override func loadView() {
@@ -19,7 +19,5 @@ class SecondViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .darkGray
     }
-  
-
-
+    
 }

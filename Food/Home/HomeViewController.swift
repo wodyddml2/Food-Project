@@ -20,11 +20,21 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        bannerTimer()
-       
     }
     
     override func configureUI() {
+        bannerCollectionSetup()
+        memoListTableViewSetup()
+        bannerTimer()
+    }
+    
+    override func navigationSetup() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
+        navigationController?.navigationBar.tintColor = .darkGray
+        navigationItem.title = "홈"
+    }
+    
+    func bannerCollectionSetup() {
         mainView.bannerCollectionView.delegate = self
         mainView.bannerCollectionView.dataSource = self
         mainView.bannerCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
@@ -32,22 +42,18 @@ class HomeViewController: BaseViewController {
         mainView.bannerCollectionView.showsHorizontalScrollIndicator = false
         
         mainView.bannerCollectionView.collectionViewLayout = bannerCollectionViewLayout()
-        
+    }
+    
+    func memoListTableViewSetup() {
         mainView.memoListTableView.delegate = self
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
-        navigationController?.navigationBar.tintColor = .darkGray
-        navigationItem.title = "홈"
     }
     
     @objc func wishListButtonClicked() {
-        
         transition(WishListViewController(), transitionStyle: .push)
-       
     }
-
+    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -56,7 +62,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
+        
         
         if collectionView == mainView.bannerCollectionView {
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.reusableIdentifier, for: indexPath) as? BannerCollectionViewCell else {
@@ -65,7 +71,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
             bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
-
             
             return bannerCell
         } else {
@@ -79,13 +84,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: mainView.bannerCollectionView.frame.size.width, height: mainView.bannerCollectionView.frame.size.height) 이건 왜 안될까...??
+        //        layout.itemSize = CGSize(width: mainView.bannerCollectionView.frame.size.width, height: mainView.bannerCollectionView.frame.size.height) 이건 왜 안될까...??
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
         return layout
     }
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == mainView.bannerCollectionView {
             return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
@@ -118,7 +123,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             self.bannerMove()
         }
     }
-
+    
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {

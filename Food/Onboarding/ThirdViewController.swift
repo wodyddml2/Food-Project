@@ -8,7 +8,7 @@
 import UIKit
 
 class ThirdViewController: BaseViewController {
-
+    
     private let mainView = PageView()
     
     override func loadView() {
@@ -17,11 +17,8 @@ class ThirdViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .brown
     }
     
-
-   
-
 }

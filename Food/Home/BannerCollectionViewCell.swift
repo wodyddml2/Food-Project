@@ -10,7 +10,7 @@ import UIKit
 class BannerCollectionViewCell: BaseCollectionViewCell {
     
     let bannerImageView: UIImageView = {
-       let view = UIImageView()
+        let view = UIImageView()
         
         return view
     }()
@@ -43,7 +43,5 @@ class BannerCollectionViewCell: BaseCollectionViewCell {
             make.trailing.equalTo(self).offset(-15)
             make.leading.lessThanOrEqualTo(self).offset(15)
         }
-       
     }
-   
 }

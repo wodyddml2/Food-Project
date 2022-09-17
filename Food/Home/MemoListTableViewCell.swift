@@ -8,7 +8,7 @@
 import UIKit
 
 class MemoListTableViewCell: BaseTableViewCell {
-
+    
     let memoListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         view.backgroundColor = .white
@@ -17,9 +17,9 @@ class MemoListTableViewCell: BaseTableViewCell {
     
     let memoListMoreLabel: UILabel = {
         let view = UILabel()
-         view.text = "더보기"
+        view.text = "더보기"
         view.font = .boldSystemFont(ofSize: 14)
-         return view
+        return view
     }()
     let memoListMoreImageView: UIImageView = {
         let view = UIImageView()
@@ -27,7 +27,7 @@ class MemoListTableViewCell: BaseTableViewCell {
         return view
     }()
     let memoListMoreButton: UIButton = {
-       let view = UIButton()
+        let view = UIButton()
         
         return view
     }()
@@ -69,5 +69,5 @@ class MemoListTableViewCell: BaseTableViewCell {
     }
     
     
-
+    
 }

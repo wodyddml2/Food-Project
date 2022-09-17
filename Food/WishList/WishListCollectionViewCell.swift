@@ -58,7 +58,6 @@ class WishListCollectionViewCell: BaseCollectionViewCell {
         [storeImageView, storePickImageView, storePickButton, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)
         }
-        
     }
     
     override func setConstraints() {

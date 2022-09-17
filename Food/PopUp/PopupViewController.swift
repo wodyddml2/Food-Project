@@ -24,34 +24,31 @@ class PopupViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func configureUI() {
         mainView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
+        
+        guard let regionData = regionData else { return }
+        
+        RequestSearchAPIManager.shared.requestStoreImage(query: "\(regionData.firstArea) \(regionData.secondArea) \(regionData.thirdArea) \(storeData?.name ?? "")") { image in
+            DispatchQueue.main.async {
+                self.mainView.storeImageView.kf.setImage(with: URL(string: image))
+            }
+        }
+        mainView.storeNameLabel.text = storeData?.name
+        mainView.storeLocationLabel.text = storeData?.adress
+        mainView.storePhoneLabel.text = storeData?.phone
         
         mainView.popToMapButton.addTarget(self, action: #selector(popToMapButtonClicked), for: .touchUpInside)
         mainView.popToDetailButton.addTarget(self, action: #selector(popToDetailButtonClicked), for: .touchUpInside)
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
     }
     
-    override func configureUI() {
-        guard let regionData = regionData else {
-            return
-        }
-
-        RequestSearchAPIManager.shared.requestStoreImage(query: "\(regionData.firstArea) \(regionData.secondArea) \(regionData.thirdArea) \(storeData?.name ?? "")") { image in
-            DispatchQueue.main.async {
-                self.mainView.storeImageView.kf.setImage(with: URL(string: image))
-            }
-            
-        }
-        mainView.storeNameLabel.text = storeData?.name
-        mainView.storeLocationLabel.text = storeData?.adress
-        mainView.storePhoneLabel.text = storeData?.phone
-    }
-    
     @objc func popToMapButtonClicked() {
         self.dismiss(animated: true)
     }
-  
+    
     @objc func popToDetailButtonClicked() {
         let vc = DetailViewController()
         vc.webID = storeData?.webID
@@ -77,7 +74,7 @@ class PopupViewController: BaseViewController {
             saveImageToDocument(fileName: "\(task.objectId).jpg", image: image)
         }
         
-      
+        
         self.dismiss(animated: true)
     }
 }

@@ -5,13 +5,13 @@ import SnapKit
 class PageView: BaseView {
     
     let onboardingImageView: UIImageView = {
-       let view = UIImageView()
+        let view = UIImageView()
         view.backgroundColor = .black
         return view
     }()
     
     let onboardingTitleLabel: UILabel = {
-       let view = UILabel()
+        let view = UILabel()
         view.text = "맛집을 탐방해보세요!!"
         view.font = .boldSystemFont(ofSize: 20)
         return view
@@ -30,7 +30,7 @@ class PageView: BaseView {
         return view
     }()
     
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

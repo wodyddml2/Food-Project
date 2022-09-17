@@ -12,7 +12,7 @@ import NMapsMap
 class MapView: BaseView {
     
     let mapView: NMFMapView = {
-       let view = NMFMapView()
+        let view = NMFMapView()
         
         return view
     }()
@@ -41,7 +41,6 @@ class MapView: BaseView {
         return view
     }()
     
-    
     let mapCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         return view
@@ -60,7 +59,7 @@ class MapView: BaseView {
     
     override func setConstraints() {
         mapView.snp.makeConstraints { make in
-            make.top.bottom.trailing.leading.equalTo(self.safeAreaLayoutGuide)
+            make.edges.equalTo(self.safeAreaLayoutGuide)
         }
         currentLocationView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
@@ -69,10 +68,10 @@ class MapView: BaseView {
             make.height.equalTo(40)
         }
         currentLocationImageView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(currentLocationView)
+            make.edges.equalTo(currentLocationView)
         }
         currentLocationButton.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(currentLocationView)
+            make.edges.equalTo(currentLocationView)
         }
         
         mapCollectionView.snp.makeConstraints { make in

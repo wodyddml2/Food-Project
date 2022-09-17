@@ -23,17 +23,17 @@ class SettingTableViewCell: BaseTableViewCell {
         view.tintColor = .black
         return view
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-
+    
     override func configureUI() {
         [settingLabel, settingImageView].forEach {
             self.addSubview($0)
         }
     }
-
+    
     override func setConstraints() {
         settingLabel.snp.makeConstraints { make in
             make.leading.equalTo(14)

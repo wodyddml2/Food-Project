@@ -8,16 +8,13 @@
 import UIKit
 
 import SnapKit
-// 스토리보드와 코드 상의 생명주기 시기가 다른 이유는 BaseViewController에 이유가 있을 수 있다.
-// delegate pattern은 서로 다른 메모리 상에 존재하기 때문에 데이터가 전달이 안되는 것 일 수 있다.
-// pageControl은 onBoardingPage에서 하자
 
 final class OnboardingPageViewController: BaseViewController {
     
     var pageViewControllerList: [UIViewController] = []
     
     let pageContorl: UIPageControl = {
-       let view = UIPageControl()
+        let view = UIPageControl()
         view.pageIndicatorTintColor = .lightGray
         view.currentPageIndicatorTintColor = .black
         return view
@@ -26,17 +23,17 @@ final class OnboardingPageViewController: BaseViewController {
     let continueButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .lightGray
-
+        
         view.setTitle("Continue", for: .normal)
         view.setTitleColor(UIColor.white, for: .normal)
-
+        
         view.layer.cornerRadius = 5
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.2
         view.layer.shadowOffset = CGSize(width: 0, height: 10)
         return view
     }()
-
+    
     let skipButton: UIButton = {
         let view = UIButton()
         view.setTitle("Skip", for: .normal)
@@ -58,6 +55,22 @@ final class OnboardingPageViewController: BaseViewController {
         skipButton.addTarget(self, action: #selector(skipButtonClicked), for: .touchUpInside)
     }
     
+    func createPageViewController() {
+        let firstVC = FirstViewController()
+        let secondVC = SecondViewController()
+        let thirdVC = ThirdViewController()
+        pageViewControllerList = [firstVC, secondVC, thirdVC]
+    }
+    
+    func configurePageViewController() {
+        self.pageViewController.delegate = self
+        self.pageViewController.dataSource = self
+        
+        guard let firstView = pageViewControllerList.first else { return }
+        
+        pageViewController.setViewControllers([firstView], direction: .forward, animated: true)
+    }
+    
     @objc func continueButtonClicked() {
         if pageContorl.currentPage < pageViewControllerList.count - 1 {
             let nextPage = pageViewControllerList[pageContorl.currentPage + 1]
@@ -73,7 +86,7 @@ final class OnboardingPageViewController: BaseViewController {
     
     @objc func skipButtonClicked() {
         UserDefaults.standard.set(true, forKey: "onboarding")
-
+        
         transition(TabViewController(), transitionStyle: .presentFull)
     }
     
@@ -104,32 +117,12 @@ final class OnboardingPageViewController: BaseViewController {
             make.centerX.equalTo(view)
         }
     }
-    func createPageViewController() {
-        let firstVC = FirstViewController()
-        let secondVC = SecondViewController()
-        let thirdVC = ThirdViewController()
-        pageViewControllerList = [firstVC, secondVC, thirdVC]
-    }
-
-    func configurePageViewController() {
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
-
-
-        guard let firstView = pageViewControllerList.first else { return }
-
-        pageViewController.setViewControllers([firstView], direction: .forward, animated: true)
-    }
-   
-
 }
 
 extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else {
-            return nil
-        }
+        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else { return nil }
         
         let previousIndex = viewControllerIndex - 1
         
@@ -137,19 +130,17 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageView
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else {
-            return nil
-        }
+        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else { return nil }
         
         let nextIndex = viewControllerIndex + 1
         
         return nextIndex >= pageViewControllerList.count ? nil : pageViewControllerList[nextIndex]
     }
-
+    
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let firstView = pageViewController.viewControllers?.first, let index = pageViewControllerList.firstIndex(of: firstView) else { return }
-
+        
         pageContorl.currentPage = index
         
         if index == pageViewControllerList.count - 1 {

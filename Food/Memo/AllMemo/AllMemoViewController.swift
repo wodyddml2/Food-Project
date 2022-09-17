@@ -17,14 +17,13 @@ class AllMemoViewController: BaseViewController {
         view.register(AllMemoCollectionViewCell.self, forCellWithReuseIdentifier: AllMemoCollectionViewCell.reusableIdentifier)
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         allMemoCollectionView.collectionViewLayout = collectionViewLayout()
-        
     }
-
+    
     override func configureUI() {
         view.addSubview(allMemoCollectionView)
         
@@ -36,8 +35,6 @@ class AllMemoViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
-    
-
 }
 
 extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -50,7 +47,7 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
         
-
+        
         return cell
     }
     
@@ -65,8 +62,6 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         layout.itemSize = CGSize(width: width, height: width * 1.3)
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        
-        
         
         return layout
     }

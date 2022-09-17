@@ -10,35 +10,32 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: BaseTableViewCell {
-
+    
     let storeNameLabel: UILabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 24)
-        view.text = "Dining J"
         return view
     }()
     
     let storeNumberLabel: UILabel = {
         let view = UILabel()
-        view.text = "0000-0000"
         return view
     }()
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.text = "부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)"
         view.numberOfLines = 0
         return view
     }()
     
-   
+    
     let searchToDetailImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.right")
         view.tintColor = .darkGray
         return view
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -50,7 +47,7 @@ class SearchTableViewCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
-     
+        
         searchToDetailImageView.snp.makeConstraints { make in
             make.trailing.equalTo(-12)
             make.width.equalTo(12)
@@ -74,7 +71,7 @@ class SearchTableViewCell: BaseTableViewCell {
             make.leading.equalTo(14)
             make.trailing.lessThanOrEqualTo(searchToDetailImageView.snp.leading).offset(-4)
             make.bottom.lessThanOrEqualTo(self).offset(-8)
-         }
+        }
         
         
     }

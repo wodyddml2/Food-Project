@@ -17,7 +17,7 @@ class MapCollectionViewCell: BaseCollectionViewCell {
         view.layer.borderColor = UIColor.darkGray.cgColor
         return view
     }()
-   
+    
     let storeNameLabel: UILabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 24)
@@ -48,7 +48,7 @@ class MapCollectionViewCell: BaseCollectionViewCell {
         storeListView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self)
         }
-    
+        
         
         storeNameLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self)

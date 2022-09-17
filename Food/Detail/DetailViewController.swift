@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailViewController: BaseViewController {
-
+    
     let mainView = DetailView()
     
     var webID: String?
@@ -16,39 +16,32 @@ class DetailViewController: BaseViewController {
     override func loadView() {
         self.view = mainView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .white
-        
+    }
+    
+    override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(leftBarButtonClicked))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
     }
-    
     
     @objc func leftBarButtonClicked() {
         self.dismiss(animated: true)
     }
     
     @objc func rightBarButtonClicked() {
-        let vc = WriteMemoViewController()
-        
-        self.present(vc, animated: true)
+        transition(WriteMemoViewController(), transitionStyle: .present)
     }
     
     override func configureUI() {
         
-        guard let webID = webID else {
-            return
-        }
+        guard let webID = webID else { return }
         let url = URL(string: webID)
         
-        guard let url = url else {
-            return
-        }
-
+        guard let url = url else { return }
         let request = URLRequest(url: url)
         mainView.webView.load(request)
         
@@ -81,5 +74,5 @@ class DetailViewController: BaseViewController {
         }
     }
     
-
+    
 }

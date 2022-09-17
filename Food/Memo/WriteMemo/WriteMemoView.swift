@@ -44,8 +44,8 @@ class WriteMemoView: BaseView {
         view.font = .boldSystemFont(ofSize: 20)
         view.text = "부산광역시"
         view.textAlignment = .center
-//        view.layer.borderColor = UIColor.black.cgColor
-//        view.layer.borderWidth = 2
+        //        view.layer.borderColor = UIColor.black.cgColor
+        //        view.layer.borderWidth = 2
         return view
     }()
     

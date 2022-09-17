@@ -33,7 +33,6 @@ class SearchView: BaseView {
     }
     
     override func setConstraints() {
-     
         searchTableView.snp.makeConstraints { make in
             make.edges.equalTo(self.safeAreaLayoutGuide)
         }

@@ -8,10 +8,10 @@
 import UIKit
 
 class TabViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureTabBar()
         setupTabBarAppearence()
     }
@@ -21,10 +21,11 @@ class TabViewController: UITabBarController {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = UIImage(systemName: image)
         viewController.tabBarItem.selectedImage = UIImage(systemName: fillImage)
-        let navigationViewController = UINavigationController(rootViewController: viewController)
         
+        let navigationViewController = UINavigationController(rootViewController: viewController)
         return navigationViewController
     }
+    
     func configureTabBar() {
         let homeVC = setupTabBar(viewController: HomeViewController(), title: "Home", image: "house", fillImage: "house.fill")
         let mapVC = setupTabBar(viewController: MapViewController(), title: "Map", image: "map", fillImage: "map.fill")
@@ -33,14 +34,14 @@ class TabViewController: UITabBarController {
         
         setViewControllers([homeVC, mapVC, memoVC, settingVC], animated: true)
     }
- 
+    
     func setupTabBarAppearence() {
         let appearence = UITabBarAppearance()
-        
         appearence.configureWithTransparentBackground()
         appearence.backgroundColor = .white
+        
         tabBar.standardAppearance = appearence
         tabBar.tintColor = .darkGray
     }
-
+    
 }

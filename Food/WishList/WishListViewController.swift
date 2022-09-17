@@ -25,14 +25,14 @@ class WishListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tasks = repository.fecth()
-        wishListCollectionView.collectionViewLayout = collectionViewLayout()
-        
-       
     }
     
     override func configureUI() {
         view.addSubview(wishListCollectionView)
+        
+        tasks = repository.fecth()
+        
+        wishListCollectionView.collectionViewLayout = collectionViewLayout()
     }
     
     override func setConstraints() {
@@ -40,8 +40,6 @@ class WishListViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
-    
-    
 }
 
 extension WishListViewController: UICollectionViewDelegate, UICollectionViewDataSource {

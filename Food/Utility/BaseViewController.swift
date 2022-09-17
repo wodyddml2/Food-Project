@@ -8,20 +8,22 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         configureUI()
         setConstraints()
-        
+        navigationSetup()
     }
     
     func configureUI() { }
     
     func setConstraints() { }
-
+    
+    func navigationSetup() { }
+    
     func showRequestLocationServiceAlert() {
         let alert = UIAlertController(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
         
@@ -48,5 +50,5 @@ class BaseViewController: UIViewController {
         
         self.present(alert, animated: true)
     }
- 
+    
 }

@@ -18,21 +18,29 @@ class SearchViewController: BaseViewController {
         self.view = mainView
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func configureUI() {
+        searchControllerSetup()
+        searchTableViewSetup()
+    }
+    
+    override func navigationSetup() {
         navigationItem.title = "맛집 검색"
         navigationItem.searchController = mainView.searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.navigationBar.tintColor = .darkGray
-
+    }
+    
+    func searchControllerSetup() {
         mainView.searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         mainView.searchController.searchBar.delegate = self
         mainView.searchController.searchResultsUpdater = self
-        
+    }
+    
+    func searchTableViewSetup() {
         mainView.searchTableView.delegate = self
         mainView.searchTableView.dataSource = self
         mainView.searchTableView.prefetchDataSource = self
@@ -42,7 +50,7 @@ class SearchViewController: BaseViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-
+        
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         storeData.removeAll()
@@ -93,7 +101,7 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
                     self.storeData.append(contentsOf: store)
                     DispatchQueue.main.async {
                         self.mainView.searchTableView.reloadData()
-
+                        
                     }
                 }
             }

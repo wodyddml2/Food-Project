@@ -6,12 +6,10 @@
 //
 
 import UIKit
-
-
 // 별점, 텍스트 뷰 추가!
 
 class WriteMemoViewController: BaseViewController {
-
+    
     let mainView = WriteMemoView()
     
     override func loadView() {
@@ -22,7 +20,5 @@ class WriteMemoViewController: BaseViewController {
         super.viewDidLoad()
         
         mainView.storeNameTextView.isScrollEnabled = false
-    }
-
-
+    }  
 }

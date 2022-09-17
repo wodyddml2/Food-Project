@@ -27,7 +27,7 @@ class MemoListCollectionViewCell: BaseCollectionViewCell {
     }()
     
     let memoButton: UIButton = {
-       let view = UIButton()
+        let view = UIButton()
         return view
     }()
     override init(frame: CGRect) {
