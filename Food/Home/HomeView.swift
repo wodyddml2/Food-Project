@@ -15,14 +15,7 @@ class HomeView: BaseView {
         return view
     }()
     
-    let bannerPageControl: UIPageControl = {
-        let view = UIPageControl()
-        view.numberOfPages = 3
-        view.backgroundColor = .black
-        return view
-    }()
-    
-    
+
     let memoListLabel: UILabel = {
        let view = UILabel()
         view.text = "Memo List"
@@ -54,7 +47,7 @@ class HomeView: BaseView {
     }
     
     override func configureUI() {
-        [bannerCollectionView,bannerPageControl, memoListLabel, memoListTableView].forEach {
+        [bannerCollectionView, memoListLabel, memoListTableView].forEach {
             self.addSubview($0)
         }
         
@@ -65,12 +58,6 @@ class HomeView: BaseView {
             make.top.leading.trailing.equalTo(self.safeAreaLayoutGuide)
             make.height.equalTo(UIScreen.main.bounds.height / 4.5)
         }
-        
-        bannerPageControl.snp.makeConstraints { make in
-            make.centerX.equalTo(bannerCollectionView)
-            make.bottom.equalTo(bannerCollectionView.snp.bottom).offset(-20)
-        }
-        
       
        
         memoListLabel.snp.makeConstraints { make in

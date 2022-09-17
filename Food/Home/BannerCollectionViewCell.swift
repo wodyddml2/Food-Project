@@ -17,11 +17,11 @@ class BannerCollectionViewCell: BaseCollectionViewCell {
     
     let bannerIntroLable: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 35)
+        view.font = .boldSystemFont(ofSize: 25)
         view.textColor = .white
-        view.text = "ssssss"
         return view
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +41,9 @@ class BannerCollectionViewCell: BaseCollectionViewCell {
         bannerIntroLable.snp.makeConstraints { make in
             make.top.equalTo(self).offset(15)
             make.trailing.equalTo(self).offset(-15)
+            make.leading.lessThanOrEqualTo(self).offset(15)
         }
+       
     }
    
 }

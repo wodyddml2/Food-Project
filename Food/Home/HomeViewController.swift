@@ -10,13 +10,17 @@ import UIKit
 class HomeViewController: BaseViewController {
     private let mainView = HomeView()
     
+    let bannerInfo = Banner()
+    
+    var nowPage = 0
+    
     override func loadView() {
         self.view = mainView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        bannerTimer()
        
     }
     
@@ -25,7 +29,8 @@ class HomeViewController: BaseViewController {
         mainView.bannerCollectionView.dataSource = self
         mainView.bannerCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
         mainView.bannerCollectionView.isPagingEnabled = true
-       
+        mainView.bannerCollectionView.showsHorizontalScrollIndicator = false
+        
         mainView.bannerCollectionView.collectionViewLayout = bannerCollectionViewLayout()
         
         mainView.memoListTableView.delegate = self
@@ -55,7 +60,7 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        collectionView == mainView.bannerCollectionView ? bannerInfo.bannerList.count : 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,11 +70,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.reusableIdentifier, for: indexPath) as? BannerCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            if indexPath.item == 0 {
-                bannerCell.bannerImageView.backgroundColor = .white
-            } else {
-                bannerCell.bannerImageView.backgroundColor = .lightGray
-            }
+            
+            bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
+            bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+
+            
             return bannerCell
         } else {
             guard let memoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier, for: indexPath) as? MemoListCollectionViewCell else {
@@ -98,7 +103,29 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-   
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == mainView.bannerCollectionView {
+            nowPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        }
+        
+    }
+    
+    func bannerMove() {
+        if nowPage == bannerInfo.bannerList.count - 1 {
+            mainView.bannerCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .right, animated: true)
+            nowPage = 0
+            return
+        }
+        
+        nowPage += 1
+        mainView.bannerCollectionView.scrollToItem(at: IndexPath(item: nowPage, section: 0), at: .right, animated: true)
+    }
+    
+    func bannerTimer() {
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
+            self.bannerMove()
+        }
+    }
 
 }
 
