@@ -21,8 +21,10 @@ class SearchViewController: BaseViewController {
     }
     
     override func configureUI() {
-        navigationItem.title = "Search"
+        navigationItem.title = "맛집 검색"
         navigationItem.searchController = mainView.searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+
         
         mainView.searchController.searchBar.delegate = self
         mainView.searchController.searchResultsUpdater = self
@@ -51,9 +53,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height / 3.6
+        return mainView.frame.height / 6
     }
     
 }

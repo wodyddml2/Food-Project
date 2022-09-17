@@ -7,16 +7,11 @@
 
 import UIKit
 
-import WebKit
-
 class DetailViewController: BaseViewController {
-    
-
-    
-
-    var webID: String?
 
     let mainView = DetailView()
+    
+    var webID: String?
     
     override func loadView() {
         self.view = mainView
@@ -27,8 +22,20 @@ class DetailViewController: BaseViewController {
 
         view.backgroundColor = .white
         
+        navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(leftBarButtonClicked))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
+    }
+    
+    
+    @objc func leftBarButtonClicked() {
+        self.dismiss(animated: true)
+    }
+    
+    @objc func rightBarButtonClicked() {
+        let vc = WriteMemoViewController()
+        
+        self.present(vc, animated: true)
     }
     
     override func configureUI() {
@@ -44,6 +51,8 @@ class DetailViewController: BaseViewController {
 
         let request = URLRequest(url: url)
         mainView.webView.load(request)
+        
+        
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let stopButton = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(stopButtonClicked))
         let gobackButton = UIBarButtonItem(image: UIImage(systemName: "lessthan"), style: .plain, target: self, action: #selector(gobackButtonClicked))
@@ -52,7 +61,9 @@ class DetailViewController: BaseViewController {
         
         let items: [UIBarButtonItem] = [stopButton, flexibleSpace, gobackButton, flexibleSpace, reloadButton, flexibleSpace, goFowardButton]
         mainView.toolBar.setItems(items, animated: true)
+        mainView.toolBar.tintColor = .darkGray
     }
+    
     @objc func stopButtonClicked() {
         mainView.webView.stopLoading()
     }
@@ -71,11 +82,4 @@ class DetailViewController: BaseViewController {
     }
     
 
-    @objc func leftBarButtonClicked() {
-        self.dismiss(animated: true)
-    }
-    
-    @objc func rightBarButtonClicked() {
-        
-    }
 }

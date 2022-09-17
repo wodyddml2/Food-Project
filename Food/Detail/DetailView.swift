@@ -35,7 +35,7 @@ class DetailView: BaseView {
     override func setConstraints() {
         webView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalTo(self.snp.height).multipliedBy(0.85)
+            make.height.equalTo(self.snp.height).multipliedBy(0.8)
         }
         
         toolBar.snp.makeConstraints { make in

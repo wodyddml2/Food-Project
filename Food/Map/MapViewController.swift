@@ -32,7 +32,7 @@ class MapViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.title = "맛집 지도"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(filterButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(seatchButtonClicked))
         
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
@@ -42,6 +42,13 @@ class MapViewController: BaseViewController {
 
         mainView.currentLocationButton.addTarget(self, action: #selector(currentLocationButtonClicked) , for: .touchUpInside)
     }
+    
+    @objc func seatchButtonClicked() {
+        let vc = UINavigationController(rootViewController: SearchViewController()) 
+        
+        present(vc, animated: true)
+    }
+
     
     override func configureUI() {
         locationManager.delegate = self
@@ -56,12 +63,7 @@ class MapViewController: BaseViewController {
         checkUserDeviceLocationServiceAuthorization()
     }
     
-    @objc func filterButtonClicked() {
-        let vc = FilterViewController()
-        
-        present(vc, animated: true)
-    }
-
+   
   
     func updateCamera(latLang: NMGLatLng) {
 
@@ -106,7 +108,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let layout = mainView.mapCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        //320 : 셀사이즈
+        
         let cellWidthIncludingSpacing = mainView.mapCollectionView.frame.size.width / 1.4 + layout.minimumLineSpacing
         // UnsafeMutablePointer<CGPoint>: 특정 유형의 데이터에 엑세스하고 조작하기위한 포인터(메모리 주솟값?)
         // pointee: 포인터가 참조하는 인스턴스에 엑세스
