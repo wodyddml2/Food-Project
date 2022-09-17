@@ -195,7 +195,7 @@ extension MapViewController: CLLocationManagerDelegate {
       
         RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
             self.regionData = region
-            RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집") { store in
+            RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1) { store in
                 self.storeData = store
                
                 DispatchQueue.main.async {

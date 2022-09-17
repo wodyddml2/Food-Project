@@ -15,10 +15,10 @@ class RequestSearchAPIManager {
     
     private init() { }
     
-    func requestStore(query: String, _ completionHandler: @escaping([StoreInfo]) -> Void) {
+    func requestStore(query: String, page: Int, _ completionHandler: @escaping([StoreInfo]) -> Void) {
         let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-        let url = EndPoint.url + "query=\(text ?? "맛집")&category_group_code=FD6&page=1"
+        let url = EndPoint.url + "query=\(text ?? "맛집")&category_group_code=FD6&page=\(page)"
         
         let header: HTTPHeaders = ["Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"]
         

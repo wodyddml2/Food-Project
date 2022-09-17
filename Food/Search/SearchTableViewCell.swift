@@ -35,6 +35,7 @@ class SearchTableViewCell: BaseTableViewCell {
     let searchToDetailImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.right")
+        view.tintColor = .darkGray
         return view
     }()
 
@@ -58,7 +59,7 @@ class SearchTableViewCell: BaseTableViewCell {
         }
         
         storeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(8)
+            make.top.equalTo(10)
             make.leading.equalTo(16)
             make.trailing.lessThanOrEqualTo(searchToDetailImageView.snp.leading).offset(4)
         }
