@@ -18,6 +18,7 @@ class SearchView: BaseView {
     
     let searchTableView: UITableView = {
         let view = UITableView()
+        view.keyboardDismissMode = .onDrag
         return view
     }()
     

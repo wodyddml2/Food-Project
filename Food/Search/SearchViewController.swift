@@ -21,15 +21,15 @@ class SearchViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        RequestSearchAPIManager.shared.requestStore(query: <#T##String#>, <#T##completionHandler: ([StoreInfo]) -> Void##([StoreInfo]) -> Void#>)
     }
     
     override func configureUI() {
         navigationItem.title = "맛집 검색"
         navigationItem.searchController = mainView.searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.tintColor = .darkGray
 
-        
+        mainView.searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         mainView.searchController.searchBar.delegate = self
         mainView.searchController.searchResultsUpdater = self
         
@@ -45,6 +45,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
 
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        storeData.removeAll()
         pageCount = 1
         RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: pageCount) { store in
             self.storeData.append(contentsOf: store)
@@ -73,7 +74,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.webID = storeData[indexPath.row].webID
+        let nav = UINavigationController(rootViewController: vc)
         
+        nav.modalPresentationStyle = .fullScreen
+        
+        present(nav, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return mainView.frame.height / 7
@@ -86,10 +93,8 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
         for indexPath in indexPaths {
             if storeData.count - 1 == indexPath.item && storeData.count < 45 {
                 pageCount += 1
-                print("S")
                 RequestSearchAPIManager.shared.requestStore(query: mainView.searchController.searchBar.text ?? "", page: pageCount) { store in
                     self.storeData.append(contentsOf: store)
-                    
                     DispatchQueue.main.async {
                         self.mainView.searchTableView.reloadData()
 
