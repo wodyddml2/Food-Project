@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class AllMemoCollectionViewCell: BaseCollectionViewCell {
+final class AllMemoCollectionViewCell: BaseCollectionViewCell {
     
     let memoImageView: UIImageView = {
         let view = UIImageView()

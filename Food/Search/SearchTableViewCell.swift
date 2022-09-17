@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SearchTableViewCell: BaseTableViewCell {
+final class SearchTableViewCell: BaseTableViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()

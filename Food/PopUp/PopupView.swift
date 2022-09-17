@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PopupView: BaseView {
+final class PopupView: BaseView {
     
     let popToMapButton: UIButton = {
         let view = UIButton()

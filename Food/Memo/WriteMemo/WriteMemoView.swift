@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WriteMemoView: BaseView {
+final class WriteMemoView: BaseView {
     
     let indicatorView: UIView = {
         let view = UIView()

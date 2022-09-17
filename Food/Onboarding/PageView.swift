@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class PageView: BaseView {
+final class PageView: BaseView {
     
     let onboardingImageView: UIImageView = {
         let view = UIImageView()

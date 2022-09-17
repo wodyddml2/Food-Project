@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SubMemoCollectionViewCell: BaseCollectionViewCell {
+final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     
     let memoView: UIView = {
         let view = UIView()

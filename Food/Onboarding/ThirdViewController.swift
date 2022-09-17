@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ThirdViewController: BaseViewController {
+final class ThirdViewController: BaseViewController {
     
     private let mainView = PageView()
     

@@ -9,11 +9,11 @@ import UIKit
 
 import RealmSwift
 
-class WishListViewController: BaseViewController {
+final class WishListViewController: BaseViewController {
     
-    let repository = UserWishListRepository()
+    private let repository = UserWishListRepository()
     
-    var tasks: Results<UserWishList>?
+    private var tasks: Results<UserWishList>?
     
     private lazy var wishListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())

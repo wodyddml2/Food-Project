@@ -8,9 +8,9 @@
 import UIKit
 // 별점, 텍스트 뷰 추가!
 
-class WriteMemoViewController: BaseViewController {
+final class WriteMemoViewController: BaseViewController {
     
-    let mainView = WriteMemoView()
+    private let mainView = WriteMemoView()
     
     override func loadView() {
         self.view = mainView

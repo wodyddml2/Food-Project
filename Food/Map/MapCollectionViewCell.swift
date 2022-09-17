@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MapCollectionViewCell: BaseCollectionViewCell {
+final class MapCollectionViewCell: BaseCollectionViewCell {
     
     let storeListView: UIView = {
         let view = UIView()

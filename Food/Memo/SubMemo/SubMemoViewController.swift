@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SubMemoViewController: BaseViewController {
+final class SubMemoViewController: BaseViewController {
     private lazy var subMemoCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         view.delegate = self
@@ -17,8 +17,7 @@ class SubMemoViewController: BaseViewController {
     }()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad() 
     }
     
     override func configureUI() {

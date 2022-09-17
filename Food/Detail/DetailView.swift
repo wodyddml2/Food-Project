@@ -9,7 +9,7 @@ import Foundation
 
 import WebKit
 
-class DetailView: BaseView {
+final class DetailView: BaseView {
     let webView: WKWebView = {
         let view = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
         

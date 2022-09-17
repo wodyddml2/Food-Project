@@ -10,17 +10,17 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-class MapViewController: BaseViewController {
+final class MapViewController: BaseViewController {
     private let mainView = MapView()
     
     private let locationManager = CLLocationManager()
     
-    var markers = [NMFMarker]()
+    private var markers = [NMFMarker]()
     
-    var regionData: RegionInfo?
-    var storeData: [StoreInfo] = []
+    private var regionData: RegionInfo?
+    private var storeData: [StoreInfo] = []
     
-    var currentIndex: CGFloat = 0
+    private var currentIndex: CGFloat = 0
     
     override func loadView() {
         self.view = mainView
@@ -44,7 +44,7 @@ class MapViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(seatchButtonClicked))
     }
     
-    func mapCollectionViewSetup() {
+    private func mapCollectionViewSetup() {
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
@@ -52,11 +52,11 @@ class MapViewController: BaseViewController {
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
     }
     
-    @objc func seatchButtonClicked() {
+    @objc private func seatchButtonClicked() {
         transition(SearchViewController(), transitionStyle: .presentNavigation)
     }
     
-    @objc func currentLocationButtonClicked() {
+    @objc private func currentLocationButtonClicked() {
         markers.forEach {
             $0.mapView = nil
         }
@@ -81,7 +81,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height)
     }
-    func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
@@ -137,7 +137,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     
 }
 extension MapViewController {
-    func checkUserDeviceLocationServiceAuthorization() {
+    private func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         
         if #available(iOS 14.0, *) {
@@ -153,7 +153,7 @@ extension MapViewController {
         }
     }
     
-    func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+    private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined:
             locationManager.desiredAccuracy = kCLLocationAccuracyBest

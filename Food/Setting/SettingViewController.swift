@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController {
     
-    let settingArr: [String] = ["앱 소개글", "앱 평가하기", "백업 / 복구", "버전 정보"]
+    private let settingArr: [String] = ["앱 소개글", "앱 평가하기", "백업 / 복구", "버전 정보"]
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()

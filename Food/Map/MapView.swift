@@ -9,7 +9,7 @@ import UIKit
 
 import NMapsMap
 
-class MapView: BaseView {
+final class MapView: BaseView {
     
     let mapView: NMFMapView = {
         let view = NMFMapView()

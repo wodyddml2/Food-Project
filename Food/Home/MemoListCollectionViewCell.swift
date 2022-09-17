@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemoListCollectionViewCell: BaseCollectionViewCell {
+final class MemoListCollectionViewCell: BaseCollectionViewCell {
     let memoImageView: UIImageView = {
         let view = UIImageView()
         view.layer.shadowRadius = 15

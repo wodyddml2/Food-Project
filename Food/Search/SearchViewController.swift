@@ -7,12 +7,12 @@
 
 import UIKit
 
-class SearchViewController: BaseViewController {
+final class SearchViewController: BaseViewController {
     
-    let mainView = SearchView()
+    private let mainView = SearchView()
     
-    var storeData: [StoreInfo] = []
-    var pageCount = 1
+    private var storeData: [StoreInfo] = []
+    private var pageCount = 1
     
     override func loadView() {
         self.view = mainView
@@ -34,13 +34,13 @@ class SearchViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .darkGray
     }
     
-    func searchControllerSetup() {
+    private func searchControllerSetup() {
         mainView.searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         mainView.searchController.searchBar.delegate = self
         mainView.searchController.searchResultsUpdater = self
     }
     
-    func searchTableViewSetup() {
+    private func searchTableViewSetup() {
         mainView.searchTableView.delegate = self
         mainView.searchTableView.dataSource = self
         mainView.searchTableView.prefetchDataSource = self

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class HomeViewController: BaseViewController {
+final class HomeViewController: BaseViewController {
     private let mainView = HomeView()
     
-    let bannerInfo = Banner()
+    private let bannerInfo = Banner()
     
-    var nowPage = 0
+    private var nowPage = 0
     
     override func loadView() {
         self.view = mainView
@@ -34,7 +34,7 @@ class HomeViewController: BaseViewController {
         navigationItem.title = "홈"
     }
     
-    func bannerCollectionSetup() {
+    private func bannerCollectionSetup() {
         mainView.bannerCollectionView.delegate = self
         mainView.bannerCollectionView.dataSource = self
         mainView.bannerCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
@@ -44,7 +44,7 @@ class HomeViewController: BaseViewController {
         mainView.bannerCollectionView.collectionViewLayout = bannerCollectionViewLayout()
     }
     
-    func memoListTableViewSetup() {
+    private func memoListTableViewSetup() {
         mainView.memoListTableView.delegate = self
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
@@ -107,7 +107,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-    func bannerMove() {
+    private func bannerMove() {
         if nowPage == bannerInfo.bannerList.count - 1 {
             mainView.bannerCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .right, animated: true)
             nowPage = 0
@@ -118,7 +118,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         mainView.bannerCollectionView.scrollToItem(at: IndexPath(item: nowPage, section: 0), at: .right, animated: true)
     }
     
-    func bannerTimer() {
+    private func bannerTimer() {
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
             self.bannerMove()
         }
@@ -148,7 +148,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height / 4
     }
-    func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8

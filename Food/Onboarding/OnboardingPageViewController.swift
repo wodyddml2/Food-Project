@@ -11,16 +11,16 @@ import SnapKit
 
 final class OnboardingPageViewController: BaseViewController {
     
-    var pageViewControllerList: [UIViewController] = []
+    private var pageViewControllerList: [UIViewController] = []
     
-    let pageContorl: UIPageControl = {
+    private let pageContorl: UIPageControl = {
         let view = UIPageControl()
         view.pageIndicatorTintColor = .lightGray
         view.currentPageIndicatorTintColor = .black
         return view
     }()
     
-    let continueButton: UIButton = {
+    private let continueButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .lightGray
         
@@ -34,14 +34,14 @@ final class OnboardingPageViewController: BaseViewController {
         return view
     }()
     
-    let skipButton: UIButton = {
+    private let skipButton: UIButton = {
         let view = UIButton()
         view.setTitle("Skip", for: .normal)
         view.setTitleColor(UIColor.lightGray, for: .normal)
         return view
     }()
     
-    let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,14 +55,14 @@ final class OnboardingPageViewController: BaseViewController {
         skipButton.addTarget(self, action: #selector(skipButtonClicked), for: .touchUpInside)
     }
     
-    func createPageViewController() {
+    private func createPageViewController() {
         let firstVC = FirstViewController()
         let secondVC = SecondViewController()
         let thirdVC = ThirdViewController()
         pageViewControllerList = [firstVC, secondVC, thirdVC]
     }
     
-    func configurePageViewController() {
+    private func configurePageViewController() {
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
         
@@ -71,7 +71,7 @@ final class OnboardingPageViewController: BaseViewController {
         pageViewController.setViewControllers([firstView], direction: .forward, animated: true)
     }
     
-    @objc func continueButtonClicked() {
+    @objc private func continueButtonClicked() {
         if pageContorl.currentPage < pageViewControllerList.count - 1 {
             let nextPage = pageViewControllerList[pageContorl.currentPage + 1]
             pageContorl.currentPage += 1
@@ -84,7 +84,7 @@ final class OnboardingPageViewController: BaseViewController {
         
     }
     
-    @objc func skipButtonClicked() {
+    @objc private func skipButtonClicked() {
         UserDefaults.standard.set(true, forKey: "onboarding")
         
         transition(TabViewController(), transitionStyle: .presentFull)
@@ -148,7 +148,6 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageView
         } else {
             skipButton.isHidden = false
         }
-        print(index)
     }
     
 }

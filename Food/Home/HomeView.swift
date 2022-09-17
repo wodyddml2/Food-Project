@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeView: BaseView {
+final class HomeView: BaseView {
     
     let bannerCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())

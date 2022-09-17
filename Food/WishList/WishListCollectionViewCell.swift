@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishListCollectionViewCell: BaseCollectionViewCell {
+final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeImageView: UIImageView = {
         let view = UIImageView()

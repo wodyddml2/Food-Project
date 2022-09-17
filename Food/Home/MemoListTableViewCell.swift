@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemoListTableViewCell: BaseTableViewCell {
+final class MemoListTableViewCell: BaseTableViewCell {
     
     let memoListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())

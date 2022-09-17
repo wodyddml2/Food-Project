@@ -10,10 +10,10 @@ import UIKit
 import RealmSwift
 import Kingfisher
 
-class PopupViewController: BaseViewController {
-    let mainView = PopupView()
+final class PopupViewController: BaseViewController {
+    private let mainView = PopupView()
     
-    let repository = UserWishListRepository()
+    private let repository = UserWishListRepository()
     
     var regionData: RegionInfo?
     var storeData: StoreInfo?
@@ -45,17 +45,17 @@ class PopupViewController: BaseViewController {
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
     }
     
-    @objc func popToMapButtonClicked() {
+    @objc private func popToMapButtonClicked() {
         self.dismiss(animated: true)
     }
     
-    @objc func popToDetailButtonClicked() {
+    @objc private func popToDetailButtonClicked() {
         let vc = DetailViewController()
         vc.webID = storeData?.webID
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     
-    @objc func wishListButtonClicked() {
+    @objc private func wishListButtonClicked() {
         guard let storeData = storeData else { return }
         
         guard let regionData = regionData else { return }

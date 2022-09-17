@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class AllMemoViewController: BaseViewController {
+final class AllMemoViewController: BaseViewController {
     private lazy var allMemoCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         view.delegate = self

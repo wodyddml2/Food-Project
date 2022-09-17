@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DetailViewController: BaseViewController {
+final class DetailViewController: BaseViewController {
     
-    let mainView = DetailView()
+    private let mainView = DetailView()
     
     var webID: String?
     
@@ -28,11 +28,11 @@ class DetailViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
     }
     
-    @objc func leftBarButtonClicked() {
+    @objc private func leftBarButtonClicked() {
         self.dismiss(animated: true)
     }
     
-    @objc func rightBarButtonClicked() {
+    @objc private func rightBarButtonClicked() {
         transition(WriteMemoViewController(), transitionStyle: .present)
     }
     
@@ -57,18 +57,18 @@ class DetailViewController: BaseViewController {
         mainView.toolBar.tintColor = .darkGray
     }
     
-    @objc func stopButtonClicked() {
+    @objc private func stopButtonClicked() {
         mainView.webView.stopLoading()
     }
-    @objc func gobackButtonClicked() {
+    @objc private func gobackButtonClicked() {
         if mainView.webView.canGoBack {
             mainView.webView.goBack()
         }
     }
-    @objc func reloadButtonClicked() {
+    @objc private func reloadButtonClicked() {
         mainView.webView.reload()
     }
-    @objc func goFowardButtonClicked() {
+    @objc private func goFowardButtonClicked() {
         if mainView.webView.canGoForward {
             mainView.webView.goForward()
         }

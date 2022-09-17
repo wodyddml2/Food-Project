@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BannerCollectionViewCell: BaseCollectionViewCell {
+final class BannerCollectionViewCell: BaseCollectionViewCell {
     
     let bannerImageView: UIImageView = {
         let view = UIImageView()
