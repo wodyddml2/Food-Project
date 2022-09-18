@@ -25,7 +25,6 @@ final class WriteMemoViewController: BaseViewController {
         return view
     }()
     
-    
     let configuration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -72,8 +71,6 @@ final class WriteMemoViewController: BaseViewController {
         
     }
     @objc func galleryButtonClicked() {
-      
-        
         
     }
     @objc func resaveButtonClicked() {
@@ -83,6 +80,7 @@ final class WriteMemoViewController: BaseViewController {
     
     }
     
+
     override func configureUI() {
         if tasks?.isEmpty == true {
             

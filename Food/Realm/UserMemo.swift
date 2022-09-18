@@ -24,6 +24,4 @@ class UserMemo: Object {
     @Persisted var storeAdress: String?
     @Persisted var storeRate: Int
     @Persisted var storeCategory: CategoryEnum
-    
-    
 }
