@@ -8,7 +8,6 @@
 import UIKit
 
 import RealmSwift
-import Kingfisher
 
 final class PopupViewController: BaseViewController {
     private let mainView = PopupView()
@@ -29,16 +28,11 @@ final class PopupViewController: BaseViewController {
     override func configureUI() {
         mainView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
         
-        guard let regionData = regionData else { return }
-        
-        RequestSearchAPIManager.shared.requestStoreImage(query: "\(regionData.firstArea) \(regionData.secondArea) \(regionData.thirdArea) \(storeData?.name ?? "")") { image in
-            DispatchQueue.main.async {
-                self.mainView.storeImageView.kf.setImage(with: URL(string: image))
-            }
-        }
+        mainView.storeImageView.image = UIImage(named: "dishes")
         mainView.storeNameLabel.text = storeData?.name
         mainView.storeLocationLabel.text = storeData?.adress
         mainView.storePhoneLabel.text = storeData?.phone
+        mainView.storeCategoryLabel.text = storeData?.category
         
         mainView.popToMapButton.addTarget(self, action: #selector(popToMapButtonClicked), for: .touchUpInside)
         mainView.popToDetailButton.addTarget(self, action: #selector(popToDetailButtonClicked), for: .touchUpInside)
@@ -63,11 +57,6 @@ final class PopupViewController: BaseViewController {
         let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
         
         repository.addRealm(item: task)
-        
-        if let image = mainView.storeImageView.image {
-            saveImageToDocument(fileName: "\(task.objectId).jpg", image: image)
-        }
-        
         
         self.dismiss(animated: true)
     }

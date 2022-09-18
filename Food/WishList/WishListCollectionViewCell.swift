@@ -11,6 +11,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
+        view.backgroundColor = .white
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 15
         return view
@@ -31,7 +32,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.textColor = .white
+        view.textColor = .orange
         view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 16)
         return view
@@ -39,7 +40,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.textColor = .white
+        view.textColor = .black
         view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 16)
         return view

@@ -23,3 +23,4 @@ class UserWishList: Object {
         self.storeAdress = storeAdress
     }
 }
+

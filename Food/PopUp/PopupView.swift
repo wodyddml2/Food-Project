@@ -40,6 +40,13 @@ final class PopupView: BaseView {
         return view
     }()
     
+    let storeCategoryLabel: UILabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 14)
+        view.textAlignment = .center
+        view.text = "가정,생활 > 문구,사무용품 > 디자인문구 > 카카오프렌즈"
+        return view
+    }()
     
     let sectionLineView: UIView = {
         let view = UIView()
@@ -89,7 +96,7 @@ final class PopupView: BaseView {
     }
     
     override func configureUI() {
-        [popToMapButton, popupBackgroundView, storeImageView, storeNameLabel, sectionLineView, storeLocationLabel, storePhoneLabel, popToDetailButton, wishListButton].forEach {
+        [popToMapButton, popupBackgroundView, storeImageView, storeNameLabel, storeCategoryLabel, sectionLineView, storeLocationLabel, storePhoneLabel, popToDetailButton, wishListButton].forEach {
             self.addSubview($0)
         }
     }
@@ -111,7 +118,7 @@ final class PopupView: BaseView {
             make.centerX.equalTo(popupBackgroundView)
             make.top.equalTo(popupBackgroundView.snp.top).offset(16)
             make.width.equalTo(popupBackgroundView.snp.width).multipliedBy(0.8)
-            make.height.equalTo(popupBackgroundView.snp.height).multipliedBy(0.4)
+            make.height.equalTo(popupBackgroundView.snp.height).multipliedBy(0.3)
         }
         
         storeNameLabel.snp.makeConstraints { make in
@@ -121,8 +128,15 @@ final class PopupView: BaseView {
             make.leading.lessThanOrEqualTo(storeImageView.snp.leading).offset(4)
         }
         
-        storePhoneLabel.snp.makeConstraints { make in
+        storeCategoryLabel.snp.makeConstraints { make in
             make.top.equalTo(storeNameLabel.snp.bottom).offset(10)
+            make.centerX.equalTo(self)
+            make.leading.lessThanOrEqualTo(storeImageView.snp.leading)
+            make.trailing.lessThanOrEqualTo(storeImageView.snp.trailing)
+        }
+        
+        storePhoneLabel.snp.makeConstraints { make in
+            make.top.equalTo(storeCategoryLabel.snp.bottom).offset(10)
             make.centerX.equalTo(self)
         }
         sectionLineView.snp.makeConstraints { make in

@@ -14,7 +14,7 @@ protocol UserWishListRepositoryType {
 }
 
 class UserWishListRepository: UserWishListRepositoryType {
-
+    
     let localRealm = try! Realm()
     
     func fecth() -> Results<UserWishList> {

@@ -52,7 +52,7 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
             return UICollectionViewCell()
         }
         if let tasks = tasks {
-            cell.storeImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
+            cell.storeImageView.image = UIImage(named: "dishes")
             cell.storeNameLabel.text = tasks[indexPath.item].storeName
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
         }
@@ -68,6 +68,15 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
             repository.deleteRecord(item: tasks[sender.tag])
         }
         wishListCollectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        if let tasks = tasks {
+            vc.webID = tasks[indexPath.item].storeURL
+        }
+        
+        transition(vc, transitionStyle: .presentFullNavigation)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {

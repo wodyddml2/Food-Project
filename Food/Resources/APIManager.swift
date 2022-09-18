@@ -35,7 +35,8 @@ class RequestSearchAPIManager {
                         lon: Double($0["y"].stringValue) ?? 0.0,
                         adress: $0["address_name"].stringValue,
                         name: $0["place_name"].stringValue,
-                        webID: $0["place_url"].stringValue
+                        webID: $0["place_url"].stringValue,
+                        category: $0["category_name"].stringValue
                     )
                 }
                 
@@ -45,31 +46,31 @@ class RequestSearchAPIManager {
             }
         }
     }
+
+//    func requestStoreImage(query: String, completionHandler: @escaping (String) -> Void) {
+//        let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 //
-    func requestStoreImage(query: String, completionHandler: @escaping (String) -> Void) {
-        let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        let url = EndPoint.imageURL + "query=\(text ?? "맛집")&size=1"
-        
-        let header: HTTPHeaders = [
-            "Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"
-        ]
-        
-        
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-              
-                let imageData = json["documents"][0]["image_url"].stringValue
-                
-                completionHandler(imageData)
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//        let url = EndPoint.imageURL + "query=\(text ?? "맛집")&size=1"
+//
+//        let header: HTTPHeaders = [
+//            "Authorization": "KakaoAK \(APIKey.Kakao_SECRET)"
+//        ]
+//
+//
+//        AF.request(url, method: .get, headers: header).validate(statusCode: 200...400).responseData(queue: .global()) { response in
+//            switch response.result {
+//            case .success(let value):
+//                let json = JSON(value)
+//
+//                let imageData = json["documents"][0]["image_url"].stringValue
+//
+//                completionHandler(imageData)
+//
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
     func requestRegion(lat: Double, lon: Double, _ completionHandler: @escaping (RegionInfo) -> Void) {
  

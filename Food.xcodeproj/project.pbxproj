@@ -53,6 +53,8 @@
 		63D700EC28D5ECC9006E10B7 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700EB28D5ECC9006E10B7 /* APIKey.swift */; };
 		63D700EE28D5ECF1006E10B7 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700ED28D5ECF1006E10B7 /* FileManager+Extension.swift */; };
 		63D700F028D62C7D006E10B7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */; };
+		63D8891F28D729A6002EDC7C /* UserMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8891E28D729A6002EDC7C /* UserMemo.swift */; };
+		63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8892028D73022002EDC7C /* UIButton+Extension.swift */; };
 		63F6153328D4E6230062C9FA /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F6153228D4E6230062C9FA /* DetailView.swift */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
 		63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36228C62D5F00257D18 /* SceneDelegate.swift */; };
@@ -114,6 +116,8 @@
 		63D700EB28D5ECC9006E10B7 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		63D700ED28D5ECF1006E10B7 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
 		63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		63D8891E28D729A6002EDC7C /* UserMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMemo.swift; sourceTree = "<group>"; };
+		63D8892028D73022002EDC7C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		63F6153228D4E6230062C9FA /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FDE36228C62D5F00257D18 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				63D700E728D5D95A006E10B7 /* UserWishList.swift */,
+				63D8891E28D729A6002EDC7C /* UserMemo.swift */,
 				63D700E928D5EA61006E10B7 /* UserRepository.swift */,
 			);
 			path = Realm;
@@ -358,6 +363,7 @@
 				63FDE37D28C62F0000257D18 /* BaseView.swift */,
 				63FDE37928C62EEF00257D18 /* BaseTableViewCell.swift */,
 				63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */,
+				63D8892028D73022002EDC7C /* UIButton+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 				63261AF028D33947005E8501 /* RegionInfo.swift in Sources */,
 				63D700E828D5D95A006E10B7 /* UserWishList.swift in Sources */,
 				63261AEA28D3089E005E8501 /* APIManager.swift in Sources */,
+				63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63D700EE28D5ECF1006E10B7 /* FileManager+Extension.swift in Sources */,
 				634C57C328D235690067B44F /* MetropolitanCityTableViewCell.swift in Sources */,
@@ -537,6 +544,7 @@
 				6329218128D0BAA9000DC3E5 /* PopupView.swift in Sources */,
 				63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */,
 				63258C4128CDC6A3007638DC /* TabViewController.swift in Sources */,
+				63D8891F28D729A6002EDC7C /* UserMemo.swift in Sources */,
 				63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */,
 				63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */,
 				638FCAAD28D1A63500AC84D3 /* SearchTableViewCell.swift in Sources */,
@@ -711,7 +719,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -743,7 +751,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

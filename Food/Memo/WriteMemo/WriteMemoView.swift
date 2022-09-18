@@ -9,25 +9,39 @@ import UIKit
 
 final class WriteMemoView: BaseView {
     
-    let indicatorView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 0.5
-        view.backgroundColor = .black
+    let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fillEqually
         return view
     }()
     
-    let saveAndResaveButton: UIButton = {
+    let memoRateButton_1: UIButton = {
         let view = UIButton()
-        view.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
+        view.rateButtonUI()
         return view
     }()
-    
-    let galleryAndDeleteButton: UIButton = {
+    let memoRateButton_2: UIButton = {
         let view = UIButton()
-        view.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
+        view.rateButtonUI()
         return view
     }()
-    
+    let memoRateButton_3: UIButton = {
+        let view = UIButton()
+        view.rateButtonUI()
+        return view
+    }()
+    let memoRateButton_4: UIButton = {
+        let view = UIButton()
+        view.rateButtonUI()
+        return view
+    }()
+    let memoRateButton_5: UIButton = {
+        let view = UIButton()
+        view.rateButtonUI()
+        return view
+    }()
     
     let memoImageView: UIImageView = {
         let view = UIImageView()
@@ -37,8 +51,8 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    let storeNameTextView: UITextView = {
-        let view = UITextView()
+    let storeNameField: UITextField = {
+        let view = UITextField()
         view.font = .boldSystemFont(ofSize: 20)
         view.text = "부산광역시"
         view.textAlignment = .center
@@ -76,7 +90,12 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    
+    let memoTextView: UITextView = {
+        let view = UITextView()
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,65 +106,67 @@ final class WriteMemoView: BaseView {
     override func configureUI() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
         self.addGestureRecognizer(tapGesture)
-        [indicatorView, saveAndResaveButton, galleryAndDeleteButton, memoImageView, storeNameTextView, storeLocationTextView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton].forEach {
+        [ memoImageView, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, memoTextView].forEach {
             self.addSubview($0)
         }
+        
+        [memoRateButton_1, memoRateButton_2, memoRateButton_3, memoRateButton_4, memoRateButton_5].map {
+            self.stackView.addArrangedSubview($0)
+        }
+        
     }
     
     override func setConstraints() {
-        indicatorView.snp.makeConstraints { make in
-            make.top.equalTo(8)
-            make.width.equalTo(30)
-            make.height.equalTo(2)
-            make.centerX.equalTo(self)
-        }
-        
-        saveAndResaveButton.snp.makeConstraints { make in
-            make.top.equalTo(14)
-            make.trailing.equalTo(-12)
-            make.width.height.equalTo(30)
-        }
-        galleryAndDeleteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(saveAndResaveButton)
-            make.trailing.equalTo(saveAndResaveButton.snp.leading).offset(-8)
-            make.width.height.equalTo(30)
-        }
+      
         
         storeVisitLabel.snp.makeConstraints { make in
-            make.top.equalTo(indicatorView.snp.bottom).offset(50)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(15)
             make.centerX.equalTo(self)
         }
         
         storeVisitMinusButton.snp.makeConstraints { make in
             make.centerY.equalTo(storeVisitLabel)
             make.trailing.equalTo(storeLocationTextView.snp.trailing).offset(-20)
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(25)
         }
         
         storeVisitPlusButton.snp.makeConstraints { make in
             make.centerY.equalTo(storeVisitLabel)
             make.trailing.equalTo(storeVisitMinusButton.snp.leading).offset(-8)
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(25)
         }
         memoImageView.snp.makeConstraints { make in
             make.top.equalTo(storeVisitLabel.snp.bottom).offset(20)
             make.centerX.equalTo(self)
             make.width.equalTo(self.snp.width).multipliedBy(0.8)
-            make.height.equalTo(memoImageView.snp.width).multipliedBy(0.6)
+            make.height.equalTo(memoImageView.snp.width).multipliedBy(0.7)
         }
         
-        storeNameTextView.snp.makeConstraints { make in
+        storeNameField.snp.makeConstraints { make in
             make.top.equalTo(memoImageView.snp.bottom).offset(20)
             make.centerX.equalTo(self)
             make.width.equalTo(memoImageView.snp.width)
-            make.height.equalTo(65)
+            make.height.equalTo(30)
         }
         
         storeLocationTextView.snp.makeConstraints { make in
-            make.top.equalTo(storeNameTextView.snp.bottom).offset(4)
+            make.top.equalTo(storeNameField.snp.bottom).offset(10)
             make.centerX.equalTo(self)
             make.width.equalTo(memoImageView.snp.width)
             make.height.equalTo(50)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)
+            make.centerX.equalTo(self)
+            make.width.equalTo(memoImageView.snp.width).multipliedBy(0.8)
+        }
+        
+        memoTextView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(20)
+            make.centerX.equalTo(self)
+            make.width.equalTo(memoImageView.snp.width)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-10)
         }
         
         

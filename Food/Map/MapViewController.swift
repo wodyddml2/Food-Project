@@ -129,7 +129,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         markers.forEach {
             $0.iconImage = NMF_MARKER_IMAGE_RED
         }
-        //
+
         markers[Int(currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
         
         updateCamera(latLang: markers[Int(currentIndex)].position)
@@ -140,11 +140,7 @@ extension MapViewController {
     private func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         
-        if #available(iOS 14.0, *) {
-            authorizationStatus = locationManager.authorizationStatus
-        } else {
-            authorizationStatus = CLLocationManager.authorizationStatus()
-        }
+        authorizationStatus = locationManager.authorizationStatus
         
         if CLLocationManager.locationServicesEnabled() {
             checkUserCurrentLocationAuthorization(authorizationStatus)
@@ -221,12 +217,8 @@ extension MapViewController: CLLocationManagerDelegate {
         showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")
     }
     
-    // iOS 14 이후
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkUserDeviceLocationServiceAuthorization()
     }
-    // iOS 14 미만
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkUserDeviceLocationServiceAuthorization()
-    }
+   
 }
