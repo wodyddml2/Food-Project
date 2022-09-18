@@ -77,16 +77,22 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-        
+        showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
+            self.dismiss(animated: true)
+        }
     }
     @objc func galleryButtonClicked() {
         
     }
     @objc func resaveButtonClicked() {
-        
+        showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
+            
+        }
     }
     @objc func deleteButtonClicked() {
-    
+        showMemoAlert(title: "메모를 삭제하시겠습니까?") { _ in
+            
+        }
     }
     
 
@@ -185,8 +191,6 @@ extension WriteMemoViewController: UITextViewDelegate {
         } else {
             return true
         }
-        
-       
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
