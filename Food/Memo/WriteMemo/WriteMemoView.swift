@@ -47,7 +47,8 @@ final class WriteMemoView: BaseView {
     let storeNameField: UITextField = {
         let view = UITextField()
         view.font = .boldSystemFont(ofSize: 20)
-        view.text = "부산광역시"
+        view.placeholder = "음식점 상호명을 적어주세요"
+        view.tintColor = .lightGray
         view.textAlignment = .center
         return view
     }()
@@ -55,7 +56,9 @@ final class WriteMemoView: BaseView {
     let storeLocationTextView: UITextView = {
         let view = UITextView()
         view.font = .boldSystemFont(ofSize: 16)
-        view.text = "부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)'"
+        view.text = TextViewPlaceholder.locationPlaceholder.rawValue
+        view.textColor = .lightGray
+//        view.text = "부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)'"
         view.textAlignment = .center
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 2
@@ -83,8 +86,11 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    let memoTextView: UITextView = {
+    let storeReviewTextView: UITextView = {
         let view = UITextView()
+        view.font = .systemFont(ofSize: 16)
+        view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
+        view.textColor = .lightGray
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
         return view
@@ -102,7 +108,7 @@ final class WriteMemoView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
         self.addGestureRecognizer(tapGesture)
         
-        [ memoImageView, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, memoTextView].forEach {
+        [ memoImageView, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, storeReviewTextView].forEach {
             self.addSubview($0)
         }
         starNumber = 5
@@ -195,7 +201,7 @@ final class WriteMemoView: BaseView {
             make.width.equalTo(memoImageView.snp.width).multipliedBy(0.8)
         }
         
-        memoTextView.snp.makeConstraints { make in
+        storeReviewTextView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(20)
             make.centerX.equalTo(self)
             make.width.equalTo(memoImageView.snp.width)
