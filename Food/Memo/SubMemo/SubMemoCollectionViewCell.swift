@@ -11,12 +11,9 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     
     let memoView: UIView = {
         let view = UIView()
-        view.layer.shadowRadius = 8
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
-        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
         view.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner)
+        view.layer.cornerRadius = 15
         view.backgroundColor = .white
         return view
     }()
@@ -24,6 +21,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     let memoImageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .blue
+        view.layer.masksToBounds = true
         view.layer.cornerRadius = 15
         view.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner)
         return view
@@ -60,6 +58,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
+        self.shadowSetup(radius: 15)
         [memoView, memoImageView, storeNameLabel, storeRateImageView, storeRateLabel, storeVisitLabel].forEach {
             self.addSubview($0)
         }

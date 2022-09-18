@@ -11,12 +11,8 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
-        view.layer.shadowRadius = 8
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
+        view.layer.masksToBounds = true
         view.layer.cornerRadius = 15
-        view.backgroundColor = .white
         return view
     }()
     
@@ -35,7 +31,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.text = "상봉개성냉면"
+        view.textColor = .white
         view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 16)
         return view
@@ -43,7 +39,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.text = "부산광역시 해운대구"
+        view.textColor = .white
         view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 16)
         return view
@@ -55,12 +51,16 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     
     override func configureUI() {
+        self.shadowSetup(radius: 15)
+
         [storeImageView, storePickImageView, storePickButton, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)
         }
+        
     }
     
     override func setConstraints() {
+       
         storeImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

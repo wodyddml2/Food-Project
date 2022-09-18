@@ -84,7 +84,7 @@ class RequestSearchAPIManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                
+      
                 let region = json["results"][0]["region"]
                 
                 let regionData = RegionInfo(firstArea: region["area1"]["alias"].stringValue, secondArea: region["area2"]["name"].stringValue, thirdArea: region["area3"]["name"].stringValue)

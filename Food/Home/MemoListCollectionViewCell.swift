@@ -10,12 +10,9 @@ import UIKit
 final class MemoListCollectionViewCell: BaseCollectionViewCell {
     let memoImageView: UIImageView = {
         let view = UIImageView()
-        view.layer.shadowRadius = 15
-        view.layer.shadowOpacity = 0.7
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
-        view.layer.cornerRadius = 15
         view.backgroundColor = .white
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -35,6 +32,7 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
+        self.shadowSetup(radius: 15)
         [memoImageView,memoLabel,memoButton].forEach {
             self.addSubview($0)
         }

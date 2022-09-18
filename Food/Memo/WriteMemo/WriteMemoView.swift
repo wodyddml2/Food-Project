@@ -28,12 +28,10 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
+    
     let memoImageView: UIImageView = {
         let view = UIImageView()
-        view.layer.shadowRadius = 8
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
+        view.layer.masksToBounds = true
         view.layer.cornerRadius = 15
         view.backgroundColor = .blue
         return view
@@ -129,7 +127,6 @@ final class WriteMemoView: BaseView {
             make.trailing.equalTo(storeVisitMinusButton.snp.leading).offset(-8)
             make.width.height.equalTo(30)
         }
-        
         memoImageView.snp.makeConstraints { make in
             make.top.equalTo(storeVisitLabel.snp.bottom).offset(20)
             make.centerX.equalTo(self)

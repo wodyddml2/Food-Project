@@ -51,9 +51,12 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishListCollectionViewCell.reusableIdentifier, for: indexPath) as? WishListCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.storeImageView.image = loadImageFromDocument(fileName: "\(String(describing: tasks?[indexPath.item].objectId)).jpg")
-        cell.storeNameLabel.text = tasks?[indexPath.item].storeName
-        cell.storeLocationLabel.text = tasks?[indexPath.item].storeAdress
+        if let tasks = tasks {
+            cell.storeImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
+            cell.storeNameLabel.text = tasks[indexPath.item].storeName
+            cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
+        }
+        
         cell.storePickButton.tag = indexPath.item
         cell.storePickButton.addTarget(self, action: #selector(storePickButtonClicked), for: .touchUpInside)
         
