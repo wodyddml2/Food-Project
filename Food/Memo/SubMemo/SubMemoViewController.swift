@@ -33,7 +33,7 @@ final class SubMemoViewController: BaseViewController {
         view.register(SubMemoCollectionViewCell.self, forCellWithReuseIdentifier: SubMemoCollectionViewCell.reusableIdentifier)
         return view
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +42,9 @@ final class SubMemoViewController: BaseViewController {
             return
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
+        let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(filterButtonClicked))
+        navigationItem.rightBarButtonItems = [plusButton, filterButton]
         navigationItem.title = category
         navigationController?.navigationBar.tintColor = .black
     }
@@ -52,6 +54,10 @@ final class SubMemoViewController: BaseViewController {
         vc.categoryKey = categoryKey
         vc.delegate = self
         transition(vc, transitionStyle: .presentNavigation)
+    }
+    
+    @objc func filterButtonClicked() {
+        
     }
     
     override func configureUI() {
@@ -81,6 +87,8 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeRateLabel.text = "\(tasks[indexPath.item].storeRate)"
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
             cell.storeReviewLabel.text = tasks[indexPath.item].storeReview
+            cell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
+            
         }
 
         return cell

@@ -87,6 +87,11 @@ final class WriteMemoViewController: BaseViewController {
                 let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
                 
                 self.repository.addRealm(item: task)
+                
+                if let image = UIImage(named: "dishes") {
+                    self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                }
+                
                 self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
                 self.dismiss(animated: true)
             }
@@ -99,22 +104,31 @@ final class WriteMemoViewController: BaseViewController {
   
     @objc func resaveButtonClicked() {
         
-        
-        if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
-            showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
-                self.repository.fetchUpdate {
-                    self.task?.storeName = self.mainView.storeNameField.text ?? "없음"
-                    self.task?.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
-                    self.task?.storeRate = self.mainView.currentRate
-                    self.task?.storeVisit = self.mainView.visitCount
-                    self.task?.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+        if let task = task {
+            if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+                showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
+                    self.repository.removeImageFromDocument(fileName: "\(task.objectId).jpg" )
+                    self.repository.fetchUpdate {
+                        task.storeName = self.mainView.storeNameField.text ?? "없음"
+                        task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
+                        task.storeRate = self.mainView.currentRate
+                        task.storeVisit = self.mainView.visitCount
+                        task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+                    }
+                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+
+                    if let image = UIImage(named: "dishes") {
+                        self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                    }
+                    
+                    self.dismiss(animated: true)
                 }
-                self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
-                self.dismiss(animated: true)
+            } else {
+                showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
             }
-        } else {
-            showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
         }
+        
+        
         
                
     }
@@ -124,19 +138,19 @@ final class WriteMemoViewController: BaseViewController {
                 self.repository.deleteRecord(item: task)
             }
             self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+            
             self.dismiss(animated: true)
         }
     }
     
 
     override func configureUI() {
-        
-        if task != nil {
-            mainView.storeNameField.text = task?.storeName
-            mainView.storeLocationTextView.text = task?.storeAdress
-            mainView.storeReviewTextView.text = task?.storeReview
-            mainView.visitCount = task?.storeVisit ?? 0
-            mainView.currentRate = task?.storeRate ?? 0
+        if let task = task {
+            mainView.storeNameField.text = task.storeName
+            mainView.storeLocationTextView.text = task.storeAdress
+            mainView.storeReviewTextView.text = task.storeReview
+            mainView.visitCount = task.storeVisit
+            mainView.currentRate = task.storeRate
             
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
@@ -144,10 +158,8 @@ final class WriteMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            
+            mainView.memoImageView.image = loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
-        
-      
     }
     
     func menuImageButtonClicked() -> UIMenu {

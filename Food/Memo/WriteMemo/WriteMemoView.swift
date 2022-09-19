@@ -40,7 +40,8 @@ final class WriteMemoView: BaseView {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 15
-        view.backgroundColor = .blue
+        view.image = UIImage(named: "dishes")
+        view.backgroundColor = .lightGray
         return view
     }()
     
