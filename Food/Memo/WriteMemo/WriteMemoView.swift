@@ -59,7 +59,6 @@ final class WriteMemoView: BaseView {
         view.font = .boldSystemFont(ofSize: 16)
         view.text = TextViewPlaceholder.locationPlaceholder.rawValue
         view.textColor = .lightGray
-//        view.text = "부산광역시 강서구 녹산산단382로14번가길 10~29번지(송정동)'"
         view.textAlignment = .center
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 2

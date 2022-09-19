@@ -14,6 +14,8 @@ final class HomeViewController: BaseViewController {
     
     private var nowPage = 0
     
+    let category = CategoryInfo()
+    
     override func loadView() {
         self.view = mainView
     }
@@ -129,7 +131,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return category.categoryInfo.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -157,6 +159,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return layout
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Ss"
+        return category.categoryInfo[section]
     }
 }

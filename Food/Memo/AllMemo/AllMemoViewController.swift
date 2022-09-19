@@ -17,8 +17,7 @@ final class AllMemoViewController: BaseViewController {
         view.register(AllMemoCollectionViewCell.self, forCellWithReuseIdentifier: AllMemoCollectionViewCell.reusableIdentifier)
         return view
     }()
-    
-    let categoryName: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "술집"]
+    let category = CategoryInfo()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +40,7 @@ final class AllMemoViewController: BaseViewController {
 
 extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoryName.count
+        return category.categoryInfo.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -49,7 +48,7 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
         
-        cell.memoCategoryLabel.text = categoryName[indexPath.item]
+        cell.memoCategoryLabel.text = category.categoryInfo[indexPath.item]
         
         return cell
     }
