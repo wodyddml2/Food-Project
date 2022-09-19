@@ -115,5 +115,15 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
     }
     
+    func fetchUpdate(completionHandler: @escaping () -> Void) {
+        do {
+            try localRealm.write {
+                completionHandler()
+            }
+        } catch {
+            print("error")
+        }
+    }
+    
     
 }

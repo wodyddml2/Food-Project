@@ -88,14 +88,23 @@ final class WriteMemoViewController: BaseViewController {
             self.repository.addRealm(item: task)
             self.dismiss(animated: true)
         }
+        
     }
     @objc func galleryButtonClicked() {
         
     }
     @objc func resaveButtonClicked() {
         showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
-            
+            self.repository.fetchUpdate {
+                self.task?.storeName = self.mainView.storeNameField.text ?? "없음"
+                self.task?.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
+                self.task?.storeRate = self.mainView.currentRate
+                self.task?.storeVisit = self.mainView.visitCount
+                self.task?.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+            }
+            self.dismiss(animated: true)
         }
+       
     }
     @objc func deleteButtonClicked() {
         showMemoAlert(title: "메모를 삭제하시겠습니까?") { _ in
