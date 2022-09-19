@@ -60,3 +60,60 @@ class UserWishListRepository: UserWishListRepositoryType {
     }
     
 }
+
+protocol UserMemoListRepositoryType {
+    func fecth() -> Results<UserMemo>
+}
+
+class UserMemoListRepository: UserMemoListRepositoryType {
+ 
+    let localRealm = try! Realm()
+    
+    func fecth() -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self)
+    }
+    
+    func removeImageFromDocument(fileName: String) {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return
+        }
+        let imageDirectory = documentDirectory.appendingPathComponent("Image")
+        let fileURL = imageDirectory.appendingPathComponent(fileName)
+        
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func addRealm(item: UserMemo) {
+        do {
+            try localRealm.write {
+                localRealm.add(item)
+            }
+        } catch {
+            print("저장 불가")
+        }
+    }
+    
+    
+    
+    func deleteRecord(item: UserMemo) {
+        removeImageFromDocument(fileName: "\(item.objectId).jpg")
+        do {
+            try localRealm.write {
+                localRealm.delete(item)
+            }
+        } catch {
+            print("삭제 안됨")
+        }
+        
+    }
+    
+    func fetchCategory(category: Int) -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
+    }
+    
+    
+}

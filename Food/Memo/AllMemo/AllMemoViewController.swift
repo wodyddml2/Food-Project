@@ -18,9 +18,11 @@ final class AllMemoViewController: BaseViewController {
         return view
     }()
     
+    let categoryName: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "디져트", "술집"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         allMemoCollectionView.collectionViewLayout = collectionViewLayout()
     }
     
@@ -39,7 +41,7 @@ final class AllMemoViewController: BaseViewController {
 
 extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return categoryName.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -47,12 +49,21 @@ extension AllMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
         
+        cell.memoCategoryLabel.text = categoryName[indexPath.item]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        transition(SubMemoViewController(), transitionStyle: .push)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AllMemoCollectionViewCell else {return}
+        
+        let vc = SubMemoViewController()
+        
+        vc.category = cell.memoCategoryLabel.text
+        
+        vc.categoryKey = indexPath.item
+        
+        transition(vc, transitionStyle: .push)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {

@@ -19,12 +19,11 @@ final class WriteMemoViewController: BaseViewController {
     
     private let mainView = WriteMemoView()
     
-    let repository = UserWishListRepository()
+    let repository = UserMemoListRepository()
     
     var tasks: Results<UserMemo>?
-//    
-//    let locationPlaceholder = "음식점 주소를 적어주세요"
-//    let reviewPlaceholder = "음식점에 대한 리뷰를 남겨주세요"
+
+    var categoryKey: Int?
     
     lazy var imagePicker: UIImagePickerController = {
         let view = UIImagePickerController()
@@ -52,6 +51,9 @@ final class WriteMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tasks = repository.fetchCategory(category: categoryKey ?? 0)
+       
         mainView.storeNameField.delegate = self
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
@@ -77,7 +79,11 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
+
         showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
+            let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
+            
+            self.repository.addRealm(item: task)
             self.dismiss(animated: true)
         }
     }

@@ -30,25 +30,34 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     let storeNameLabel: UILabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 25)
-        view.text = "TTTTTTssssssssssssssss Buger"
+
+        return view
+    }()
+    let storeLocationLabel: UILabel = {
+        let view = UILabel()
+
+        return view
+    }()
+    let storeReviewLabel: UILabel = {
+        let view = UILabel()
+
         return view
     }()
     
     let storeRateImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "star.fill")
+        view.tintColor = .red
         return view
     }()
     
     let storeRateLabel: UILabel = {
         let view = UILabel()
-        view.text = "4.9"
         return view
     }()
     
     let storeVisitLabel: UILabel = {
         let view = UILabel()
-        view.text = "34번 방문하셨습니다!"
         return view
     }()
     
@@ -59,7 +68,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     
     override func configureUI() {
         self.shadowSetup(radius: 15)
-        [memoView, memoImageView, storeNameLabel, storeRateImageView, storeRateLabel, storeVisitLabel].forEach {
+        [memoView, memoImageView, storeNameLabel, storeLocationLabel, storeReviewLabel, storeRateImageView, storeRateLabel, storeVisitLabel].forEach {
             self.addSubview($0)
         }
     }
@@ -71,17 +80,29 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
         
         memoImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(self).multipliedBy(0.65)
+            make.height.equalTo(self).multipliedBy(0.57)
         }
         
         storeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(memoImageView.snp.bottom).offset(14)
+            make.top.equalTo(memoImageView.snp.bottom).offset(12)
             make.leading.equalTo(12)
             make.trailing.lessThanOrEqualTo(self)
         }
         
+        storeLocationLabel.snp.makeConstraints { make in
+            make.top.equalTo(storeNameLabel.snp.bottom).offset(8)
+            make.leading.equalTo(12)
+            make.trailing.lessThanOrEqualTo(-12)
+        }
+        
+        storeReviewLabel.snp.makeConstraints { make in
+            make.top.equalTo(storeLocationLabel.snp.bottom).offset(18)
+            make.leading.equalTo(12)
+            make.trailing.lessThanOrEqualTo(-12)
+        }
+        
         storeRateImageView.snp.makeConstraints { make in
-            make.top.equalTo(storeNameLabel.snp.bottom).offset(12)
+            make.bottom.equalTo(-14)
             make.leading.equalTo(12)
         }
         
