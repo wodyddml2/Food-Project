@@ -81,28 +81,39 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-
-        showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
-            let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
-            
-            self.repository.addRealm(item: task)
-            self.dismiss(animated: true)
+        if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+            showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
+                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
+                
+                self.repository.addRealm(item: task)
+                self.dismiss(animated: true)
+            }
+        } else {
+            showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
         }
+        
         
     }
   
     @objc func resaveButtonClicked() {
-        showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
-            self.repository.fetchUpdate {
-                self.task?.storeName = self.mainView.storeNameField.text ?? "없음"
-                self.task?.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
-                self.task?.storeRate = self.mainView.currentRate
-                self.task?.storeVisit = self.mainView.visitCount
-                self.task?.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+        
+        
+        if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+            showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
+                self.repository.fetchUpdate {
+                    self.task?.storeName = self.mainView.storeNameField.text ?? "없음"
+                    self.task?.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
+                    self.task?.storeRate = self.mainView.currentRate
+                    self.task?.storeVisit = self.mainView.visitCount
+                    self.task?.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+                }
+                self.dismiss(animated: true)
             }
-            self.dismiss(animated: true)
+        } else {
+            showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
         }
-       
+        
+               
     }
     @objc func deleteButtonClicked() {
         showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { _ in

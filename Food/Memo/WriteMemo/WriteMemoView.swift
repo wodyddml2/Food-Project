@@ -32,7 +32,7 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    var visitCount: Int = 0 {
+    var visitCount: Int = 1 {
         didSet { visitButtonSetup() }
     }
 
@@ -112,7 +112,7 @@ final class WriteMemoView: BaseView {
             self.addSubview($0)
         }
         starNumber = 5
-        visitCount = 0
+        visitCount = 1
     }
     
     func rateButtonSetup() {
@@ -157,7 +157,7 @@ final class WriteMemoView: BaseView {
     }
     
     @objc private func storeVisitMinusButtonClicked() {
-        if visitCount > 0 {
+        if visitCount > 1 {
             visitCount -= 1
         }
     }

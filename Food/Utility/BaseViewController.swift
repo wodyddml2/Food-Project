@@ -44,7 +44,7 @@ class BaseViewController: UIViewController {
     func showMemoAlert(title: String, button: String = "저장", completionHandler: @escaping (UIAlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
-        let ok = UIAlertAction(title: "저장", style: .default, handler: completionHandler)
+        let ok = UIAlertAction(title: button, style: .default, handler: completionHandler)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         [ok, cancel].forEach {
@@ -53,8 +53,8 @@ class BaseViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    func showCautionAlert(title: String) {
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+    func showCautionAlert(title: String, message: String? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "확인", style: .default)
         
