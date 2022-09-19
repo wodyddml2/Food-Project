@@ -21,7 +21,7 @@ final class WriteMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
-    var tasks: Results<UserMemo>?
+    var task: UserMemo?
 
     var categoryKey: Int?
     
@@ -51,23 +51,25 @@ final class WriteMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tasks = repository.fetchCategory(category: categoryKey ?? 0)
        
         mainView.storeNameField.delegate = self
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
+        
     }
     
     override func navigationSetup() {
+        navigationController?.navigationBar.tintColor = .black
         
-        if ((tasks?.isEmpty) == nil) {
+        if task == nil {
+ 
             navigationItem.title = "메모 작성"
             let saveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(saveButtonClicked))
             let galleryButton = UIBarButtonItem(image: UIImage(systemName: "photo"), primaryAction: nil, menu: menuImageButtonClicked())
             navigationItem.rightBarButtonItems = [saveButton, galleryButton]
             
         } else {
+
             navigationItem.title = "메모 수정"
             let resaveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(resaveButtonClicked))
             let galleryButton = UIBarButtonItem(image: UIImage(systemName: "photo"), primaryAction: nil, menu: menuImageButtonClicked())
@@ -103,8 +105,18 @@ final class WriteMemoViewController: BaseViewController {
     
 
     override func configureUI() {
-        if tasks?.isEmpty == true {
+        
+        if task != nil {
+            mainView.storeNameField.text = task?.storeName
+            mainView.storeLocationTextView.text = task?.storeAdress
+            mainView.storeReviewTextView.text = task?.storeReview
+            mainView.visitCount = task?.storeVisit ?? 0
+            mainView.currentRate = task?.storeRate ?? 0
             
+            mainView.storeLocationTextView.textColor = .black
+            mainView.storeReviewTextView.textColor = .black
+            
+            mainView.rateUpdate(tag: mainView.currentRate - 1)
         }
         
       
@@ -209,6 +221,7 @@ extension WriteMemoViewController: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        
         if textView == mainView.storeLocationTextView {
             if mainView.storeLocationTextView.textColor == .lightGray {
                 mainView.storeLocationTextView.text = nil

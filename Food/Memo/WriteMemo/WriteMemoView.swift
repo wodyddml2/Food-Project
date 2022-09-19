@@ -127,15 +127,20 @@ final class WriteMemoView: BaseView {
         }
     }
     
+    func rateUpdate(tag: Int) {
+        for i in 0...tag {
+            rateButtonArr[i].setImage(starFillImage, for: .normal)
+        }
+        for i in tag + 1 ..< starNumber {
+            rateButtonArr[i].setImage(starImage, for: .normal)
+        }
+    }
+    
     @objc private func rateButtonClicked(sender: UIButton) {
          let endTag = sender.tag
 
-         for i in 0...endTag {
-             rateButtonArr[i].setImage(starFillImage, for: .normal)
-         }
-         for i in endTag + 1 ..< starNumber {
-             rateButtonArr[i].setImage(starImage, for: .normal)
-         }
+         rateUpdate(tag: endTag)
+        
          currentRate = endTag + 1
      }
     

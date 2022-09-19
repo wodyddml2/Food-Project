@@ -73,13 +73,18 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
             cell.storeReviewLabel.text = tasks[indexPath.item].storeReview
         }
-        
-        
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        transition(WriteMemoViewController(), transitionStyle: .presentNavigation)
+//        guard let cell = collectionView.cellForItem(at: indexPath) as? SubMemoCollectionViewCell else {return}
+        guard let tasks = tasks else { return }
+       
+        let vc = WriteMemoViewController()
+        vc.categoryKey = categoryKey
+        vc.task = tasks[indexPath.item]
+        transition(vc, transitionStyle: .presentNavigation)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
