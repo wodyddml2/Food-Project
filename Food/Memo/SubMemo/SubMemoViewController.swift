@@ -9,6 +9,10 @@ import UIKit
 
 import RealmSwift
 
+protocol UserMemoDelegate {
+    func reloadUserMemo(updateTasks: Results<UserMemo>)
+}
+
 final class SubMemoViewController: BaseViewController {
     
     var category: String?
@@ -16,7 +20,11 @@ final class SubMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
-    var tasks: Results<UserMemo>?
+    var tasks: Results<UserMemo>? {
+        didSet {
+            subMemoCollectionView.reloadData()
+        }
+    }
     
     private lazy var subMemoCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -28,7 +36,7 @@ final class SubMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        
         tasks = repository.fetchCategory(category: categoryKey ?? 0)
         guard let category = category else {
             return
@@ -42,6 +50,7 @@ final class SubMemoViewController: BaseViewController {
     @objc func plusButtonClicked() {
         let vc = WriteMemoViewController()
         vc.categoryKey = categoryKey
+        vc.delegate = self
         transition(vc, transitionStyle: .presentNavigation)
     }
     
@@ -78,12 +87,13 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        guard let cell = collectionView.cellForItem(at: indexPath) as? SubMemoCollectionViewCell else {return}
+
         guard let tasks = tasks else { return }
        
         let vc = WriteMemoViewController()
         vc.categoryKey = categoryKey
         vc.task = tasks[indexPath.item]
+        vc.delegate = self
         transition(vc, transitionStyle: .presentNavigation)
     }
     
@@ -96,5 +106,11 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         layout.minimumLineSpacing = 40
         
         return layout
+    }
+}
+
+extension SubMemoViewController: UserMemoDelegate {
+    func reloadUserMemo(updateTasks: Results<UserMemo>) {
+        tasks = updateTasks
     }
 }

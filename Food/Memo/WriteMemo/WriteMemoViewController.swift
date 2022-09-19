@@ -22,6 +22,7 @@ final class WriteMemoViewController: BaseViewController {
     let repository = UserMemoListRepository()
     
     var task: UserMemo?
+    var delegate: UserMemoDelegate?
 
     var categoryKey: Int?
     
@@ -86,6 +87,7 @@ final class WriteMemoViewController: BaseViewController {
                 let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
                 
                 self.repository.addRealm(item: task)
+                self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
                 self.dismiss(animated: true)
             }
         } else {
@@ -107,6 +109,7 @@ final class WriteMemoViewController: BaseViewController {
                     self.task?.storeVisit = self.mainView.visitCount
                     self.task?.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                 }
+                self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
                 self.dismiss(animated: true)
             }
         } else {
@@ -120,6 +123,7 @@ final class WriteMemoViewController: BaseViewController {
             if let task = self.task {
                 self.repository.deleteRecord(item: task)
             }
+            self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
             self.dismiss(animated: true)
         }
     }

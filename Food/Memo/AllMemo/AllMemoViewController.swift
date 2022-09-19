@@ -18,7 +18,7 @@ final class AllMemoViewController: BaseViewController {
         return view
     }()
     
-    let categoryName: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "디져트", "술집"]
+    let categoryName: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "술집"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
