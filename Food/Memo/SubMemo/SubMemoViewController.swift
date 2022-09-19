@@ -43,7 +43,7 @@ final class SubMemoViewController: BaseViewController {
         }
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
-        let filterButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(filterButtonClicked))
+        let filterButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "slider.horizontal.3"), primaryAction: nil, menu: filterButtonClicked())
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
         navigationItem.title = category
         navigationController?.navigationBar.tintColor = .black
@@ -56,8 +56,18 @@ final class SubMemoViewController: BaseViewController {
         transition(vc, transitionStyle: .presentNavigation)
     }
     
-    @objc func filterButtonClicked() {
+    func filterButtonClicked() -> UIMenu {
+        let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
+            self.tasks = self.repository.fetchSort(sort: "storeRate", category: self.categoryKey ?? 0)
+        }
         
+        let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
+            self.tasks = self.repository.fetchSort(sort: "storeVisit", category: self.categoryKey ?? 0)
+        }
+        
+        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [rate, visit])
+        
+        return menu
     }
     
     override func configureUI() {

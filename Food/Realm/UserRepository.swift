@@ -125,5 +125,8 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         }
     }
     
+    func fetchSort(sort: String, category: Int) -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category).sorted(byKeyPath: sort, ascending: false)
+    }
     
 }
