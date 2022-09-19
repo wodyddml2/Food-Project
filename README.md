@@ -24,3 +24,7 @@
 [2022.09.15](https://www.notion.so/2022-09-15-0ae2a67b20d84bd8b6fccde118859b06)
 <br/>
 [2022.09.16](https://www.notion.so/2022-09-16-8a9562250bb04f6a8adde191ded2f5a4)
+<br/>
+[2022.09.17](https://www.notion.so/2022-09-17-b1a1bce81b954ef3ad025e96f4622b9a)
+<br/>
+[2022.09.18](https://www.notion.so/2022-09-18-91b4b53796cf4065a9485e6d85862960)
