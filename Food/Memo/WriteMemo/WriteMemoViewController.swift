@@ -90,9 +90,7 @@ final class WriteMemoViewController: BaseViewController {
         }
         
     }
-    @objc func galleryButtonClicked() {
-        
-    }
+  
     @objc func resaveButtonClicked() {
         showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
             self.repository.fetchUpdate {
@@ -107,8 +105,11 @@ final class WriteMemoViewController: BaseViewController {
        
     }
     @objc func deleteButtonClicked() {
-        showMemoAlert(title: "메모를 삭제하시겠습니까?") { _ in
-            
+        showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { _ in
+            if let task = self.task {
+                self.repository.deleteRecord(item: task)
+            }
+            self.dismiss(animated: true)
         }
     }
     
@@ -125,7 +126,10 @@ final class WriteMemoViewController: BaseViewController {
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             
-            mainView.rateUpdate(tag: mainView.currentRate - 1)
+            if mainView.currentRate > 0 {
+                mainView.rateUpdate(tag: mainView.currentRate - 1)
+            }
+            
         }
         
       

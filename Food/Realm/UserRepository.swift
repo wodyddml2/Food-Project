@@ -100,7 +100,7 @@ class UserMemoListRepository: UserMemoListRepositoryType {
     
     
     func deleteRecord(item: UserMemo) {
-        removeImageFromDocument(fileName: "\(item.objectId).jpg")
+//        removeImageFromDocument(fileName: "\(item.objectId).jpg")
         do {
             try localRealm.write {
                 localRealm.delete(item)

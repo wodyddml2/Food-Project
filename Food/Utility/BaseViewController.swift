@@ -41,7 +41,7 @@ class BaseViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    func showMemoAlert(title: String, completionHandler: @escaping (UIAlertAction) -> Void) {
+    func showMemoAlert(title: String, button: String = "저장", completionHandler: @escaping (UIAlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "저장", style: .default, handler: completionHandler)
