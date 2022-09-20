@@ -90,10 +90,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 return UICollectionViewCell()
             }
             memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
+            memoCell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
             
             return memoCell
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView != mainView.bannerCollectionView {
+            let vc = FixMemoViewController()
+            vc.task = tasks[collectionView.tag][indexPath.item]
+           
+            
+            transition(vc, transitionStyle: .present)
+        }
     }
     func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
