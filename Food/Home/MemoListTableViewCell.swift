@@ -25,6 +25,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     let memoListMoreImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.right")
+        view.tintColor = .black
         return view
     }()
     let memoListMoreButton: UIButton = {

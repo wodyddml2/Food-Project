@@ -168,13 +168,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListCollectionView.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
         cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
         
+        cell.memoListMoreButton.tag = indexPath.section
+        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
+        
         cell.selectionStyle = .none
         
         cell.memoListCollectionView.tag = indexPath.section
     
         cell.memoListCollectionView.reloadData()
-     
+
         return cell
+    }
+    
+    @objc func memoListMoreButtonClicked(sender: UIButton) {
+        let vc = SubMemoViewController()
+        vc.category = category.categoryInfo[sender.tag]
+        vc.categoryKey = sender.tag
+        
+        transition(vc, transitionStyle: .push)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
