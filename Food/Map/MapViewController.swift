@@ -58,15 +58,20 @@ final class MapViewController: BaseViewController {
     }
     
     @objc private func currentLocationButtonClicked() {
-        currentIndex = 0
-        mainView.mapCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
-    
-        markers.forEach {
-            $0.mapView = nil
-        }
-        markers.removeAll()
+        if locationManager.authorizationStatus != .denied {
+            currentIndex = 0
+            mainView.mapCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        
+            markers.forEach {
+                $0.mapView = nil
+            }
+            markers.removeAll()
 
-        checkUserDeviceLocationServiceAuthorization()
+            checkUserDeviceLocationServiceAuthorization()
+        } else {
+            showRequestLocationServiceAlert()
+        }
+        
     }
     
 }
@@ -145,44 +150,9 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     
 }
 extension MapViewController {
-    private func checkUserDeviceLocationServiceAuthorization() {
-        let authorizationStatus: CLAuthorizationStatus
-        
-        authorizationStatus = locationManager.authorizationStatus
-        
-        if CLLocationManager.locationServicesEnabled() {
-            checkUserCurrentLocationAuthorization(authorizationStatus)
-        } else {
-            showRequestLocationServiceAlert()
-        }
-    }
     
-    private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
-        switch authorizationStatus {
-        case .notDetermined:
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted, .denied:
-
-//        lat: 37.571323, lon: 126.977511
-            showRequestLocationServiceAlert()
-        case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-        default: print("default")
-        }
-    }
-}
-
-extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard let coordinate = locations.last?.coordinate  else { return }
-        
-        locationManager.stopUpdatingLocation()
-        
-        locationManager.distanceFilter = 100000
-  
-        RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
+    private func requestLocationStore(lat: Double, lng: Double) {
+        RequestSearchAPIManager.shared.requestRegion(lat: lat, lon: lng) { region in
             self.regionData = region
             RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1) { store in
                 self.storeData = store
@@ -217,7 +187,48 @@ extension MapViewController: CLLocationManagerDelegate {
             }
         }
        
-        updateCamera(latLang: NMGLatLng(from: coordinate))
+        updateCamera(latLang: NMGLatLng(lat: lat, lng: lng))
+    }
+
+    private func checkUserDeviceLocationServiceAuthorization() {
+        let authorizationStatus: CLAuthorizationStatus
+        
+        authorizationStatus = locationManager.authorizationStatus
+        
+        if CLLocationManager.locationServicesEnabled() {
+            checkUserCurrentLocationAuthorization(authorizationStatus)
+        } else {
+            showRequestLocationServiceAlert()
+        }
+    }
+    
+    private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+        switch authorizationStatus {
+        case .notDetermined:
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            
+            requestLocationStore(lat: 37.571323, lng: 126.977511)
+
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        default: print("default")
+        }
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        guard let coordinate = locations.last?.coordinate  else { return }
+        
+        locationManager.stopUpdatingLocation()
+        
+        locationManager.distanceFilter = 100000
+  
+        requestLocationStore(lat: coordinate.latitude, lng: coordinate.longitude)
+        
         
     }
  
