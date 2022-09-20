@@ -27,6 +27,7 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
         let view = UIButton()
         return view
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

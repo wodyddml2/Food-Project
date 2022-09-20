@@ -12,6 +12,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     let memoListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         view.backgroundColor = .white
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
     
@@ -31,6 +32,15 @@ final class MemoListTableViewCell: BaseTableViewCell {
         
         return view
     }()
+    
+    // 셀이 화면에 자주 그려져서 문제일 수 있다.
+    // 잠재적인 성능 문제를 방지하려면 콘텐츠와 관련이 없는 셀의 속성만 재설정해야한다.
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        memoListCollectionView.reloadData()
+    }
+    
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
