@@ -18,8 +18,8 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     
     let memoLabel: UILabel = {
         let view = UILabel()
+        view.textAlignment = .center
         view.text = "Sssssssssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsds"
-        view.numberOfLines = 0
         return view
     }()
     

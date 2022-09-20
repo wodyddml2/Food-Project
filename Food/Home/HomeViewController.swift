@@ -20,7 +20,8 @@ final class HomeViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
-    var tasks: [Results<UserMemo>]?
+    // optional로 변수를 선언해준 상태에서는 초기화가 되어 있지 않기 때문에 append가 불가
+    var tasks = [Results<UserMemo>]()
     
     override func loadView() {
         self.view = mainView
@@ -28,8 +29,12 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        for i in 0...category.categoryInfo.count - 1 {
+            tasks.append(repository.fetchSort(sort: "storeRate", category: i))
+        }
     }
-    
+  
     override func configureUI() {
         bannerCollectionSetup()
         memoListTableViewSetup()
@@ -66,7 +71,9 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        collectionView == mainView.bannerCollectionView ? bannerInfo.bannerList.count : 6
+        print(tasks[collectionView.tag].count)
+        return collectionView == mainView.bannerCollectionView ? bannerInfo.bannerList.count : tasks[collectionView.tag].count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,7 +93,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 return UICollectionViewCell()
             }
             
-            collectionView.tag == 0
+            memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
             
             return memoCell
         }
@@ -154,9 +161,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListCollectionView.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
         cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
         cell.memoListCollectionView.tag = indexPath.section
-//        if let tasks = tasks {
-//           let s = tasks[indexPath.section]
-//        }
+        cell.memoListCollectionView.reloadData()
         return cell
     }
 
