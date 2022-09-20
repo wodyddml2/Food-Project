@@ -26,6 +26,10 @@ final class WishListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.popViewController(animated: true)
+    }
     
     override func configureUI() {
         view.addSubview(wishListCollectionView)

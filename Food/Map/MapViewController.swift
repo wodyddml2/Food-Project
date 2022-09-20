@@ -6,11 +6,12 @@
 //
 
 import UIKit
-
 import CoreLocation
+
 import NMapsMap
 
 final class MapViewController: BaseViewController {
+
     private let mainView = MapView()
     
     private let locationManager = CLLocationManager()
@@ -34,7 +35,7 @@ final class MapViewController: BaseViewController {
         
         mapCollectionViewSetup()
         checkUserDeviceLocationServiceAuthorization()
-        
+  
         mainView.currentLocationButton.addTarget(self, action: #selector(currentLocationButtonClicked) , for: .touchUpInside)
     }
     
@@ -57,9 +58,14 @@ final class MapViewController: BaseViewController {
     }
     
     @objc private func currentLocationButtonClicked() {
+        currentIndex = 0
+        mainView.mapCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+    
         markers.forEach {
             $0.mapView = nil
         }
+        markers.removeAll()
+
         checkUserDeviceLocationServiceAuthorization()
     }
     
@@ -126,6 +132,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         offset = CGPoint(x: (roundedIndex * cellWidthIncludingSpacing) - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+        
         markers.forEach {
             $0.iconImage = NMF_MARKER_IMAGE_RED
         }
@@ -134,6 +141,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         updateCamera(latLang: markers[Int(currentIndex)].position)
     }
+    
     
 }
 extension MapViewController {
@@ -155,16 +163,16 @@ extension MapViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
+
+//        lat: 37.571323, lon: 126.977511
             showRequestLocationServiceAlert()
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
         default: print("default")
         }
     }
-    
-    
-    
 }
+
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -172,6 +180,8 @@ extension MapViewController: CLLocationManagerDelegate {
         
         locationManager.stopUpdatingLocation()
         
+        locationManager.distanceFilter = 100000
+  
         RequestSearchAPIManager.shared.requestRegion(lat: coordinate.latitude, lon: coordinate.longitude) { region in
             self.regionData = region
             RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1) { store in
@@ -200,13 +210,17 @@ extension MapViewController: CLLocationManagerDelegate {
                         
                         marker.mapView = self.mainView.mapView
                     }
+                    self.markers[Int(self.currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
                     self.mainView.mapCollectionView.reloadData()
                 }
+                
             }
         }
+       
         updateCamera(latLang: NMGLatLng(from: coordinate))
+        
     }
-    
+ 
     func updateCamera(latLang: NMGLatLng) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: latLang)
         cameraUpdate.animation = .easeIn

@@ -215,7 +215,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         transition(vc, transitionStyle: .push)
     }
-
+ 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height / 4
     }
