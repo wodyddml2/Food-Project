@@ -73,6 +73,14 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         return localRealm.objects(UserMemo.self)
     }
     
+    func fetchCategory(category: Int) -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
+    }
+    
+    func fetchSort(sort: String, category: Int) -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category).sorted(byKeyPath: sort, ascending: false)
+    }
+    
     func removeImageFromDocument(fileName: String) {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return
@@ -111,10 +119,7 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         
     }
     
-    func fetchCategory(category: Int) -> Results<UserMemo> {
-        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
-    }
-    
+  
     func fetchUpdate(completionHandler: @escaping () -> Void) {
         do {
             try localRealm.write {
@@ -125,8 +130,6 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         }
     }
     
-    func fetchSort(sort: String, category: Int) -> Results<UserMemo> {
-        return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category).sorted(byKeyPath: sort, ascending: false)
-    }
+    
     
 }

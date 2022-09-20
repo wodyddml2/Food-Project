@@ -20,8 +20,21 @@ final class HomeViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
+    var allTask: Results<UserMemo>? {
+        didSet {
+            mainView.bannerCollectionView.reloadData()
+        }
+    }
+    
     // optional로 변수를 선언해준 상태에서는 초기화가 되어 있지 않기 때문에 append가 불가
-    var tasks = [Results<UserMemo>]() 
+    var tasks = [Results<UserMemo>]() {
+        didSet {
+            randomBanner = allTask?.shuffled()
+            mainView.memoListTableView.reloadData()
+        }
+    }
+    
+    lazy var randomBanner = allTask?.shuffled()
     
     override func loadView() {
         self.view = mainView
@@ -29,12 +42,16 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         for i in 0...category.categoryInfo.count - 1 {
             tasks.append(repository.fetchSort(sort: "storeRate", category: i))
         }
+        allTask = repository.fecth()
     }
-    
     override func configureUI() {
         bannerCollectionSetup()
         memoListTableViewSetup()
@@ -81,8 +98,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 return UICollectionViewCell()
             }
             
-            bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
-            bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+            if let randomBanner = randomBanner {
+                if randomBanner.count >= 3 {
+                    
+                    bannerCell.bannerImageView.image = loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
+                    bannerCell.bannerIntroLable.text = randomBanner[indexPath.item].storeName
+                } else {
+                    bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
+                    bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+                }
+            } else {
+                bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
+                bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+            }
+            
+            
             
             return bannerCell
         } else {
@@ -101,8 +131,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView != mainView.bannerCollectionView {
             let vc = FixMemoViewController()
             vc.task = tasks[collectionView.tag][indexPath.item]
-           
-            
             transition(vc, transitionStyle: .present)
         }
     }
