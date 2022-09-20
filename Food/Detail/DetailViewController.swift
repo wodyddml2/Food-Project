@@ -11,7 +11,12 @@ final class DetailViewController: BaseViewController {
     
     private let mainView = DetailView()
     
+    let repository = UserWishListRepository()
+    
     var webID: String?
+    
+    var storeData: StoreInfo?
+    var regionData: RegionInfo?
     
     override func loadView() {
         self.view = mainView
@@ -25,7 +30,7 @@ final class DetailViewController: BaseViewController {
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(leftBarButtonClicked))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
     }
     
     @objc private func leftBarButtonClicked() {
@@ -33,7 +38,17 @@ final class DetailViewController: BaseViewController {
     }
     
     @objc private func rightBarButtonClicked() {
-        transition(WriteMemoViewController(), transitionStyle: .present)
+        
+        showMemoAlert(title: "찜 목록에 등록하시겠습니까?", button: "확인") { _ in
+            guard let storeData = self.storeData else { return }
+            
+            guard let regionData = self.regionData else { return }
+            
+            let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
+            
+            self.repository.addRealm(item: task)
+        }
+ 
     }
     
     override func configureUI() {

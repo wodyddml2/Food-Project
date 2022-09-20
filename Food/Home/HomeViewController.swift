@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RealmSwift
+
 final class HomeViewController: BaseViewController {
     private let mainView = HomeView()
     
@@ -15,6 +17,10 @@ final class HomeViewController: BaseViewController {
     private var nowPage = 0
     
     let category = CategoryInfo()
+    
+    let repository = UserMemoListRepository()
+    
+    var tasks: [Results<UserMemo>]?
     
     override func loadView() {
         self.view = mainView
@@ -79,6 +85,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let memoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier, for: indexPath) as? MemoListCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
+            collectionView.tag == 0
             
             return memoCell
         }
@@ -145,8 +153,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListCollectionView.dataSource = self
         cell.memoListCollectionView.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
         cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
+        cell.memoListCollectionView.tag = indexPath.section
+//        if let tasks = tasks {
+//           let s = tasks[indexPath.section]
+//        }
         return cell
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height / 4
     }

@@ -46,6 +46,8 @@ final class PopupViewController: BaseViewController {
     @objc private func popToDetailButtonClicked() {
         let vc = DetailViewController()
         vc.webID = storeData?.webID
+        vc.storeData = storeData
+        vc.regionData = regionData
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     
