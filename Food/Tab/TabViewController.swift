@@ -29,7 +29,7 @@ final class TabViewController: UITabBarController {
     private func configureTabBar() {
         let homeVC = setupTabBar(viewController: HomeViewController(), title: "Home", image: "house", fillImage: "house.fill")
         let mapVC = setupTabBar(viewController: MapViewController(), title: "Map", image: "map", fillImage: "map.fill")
-        let memoVC = setupTabBar(viewController: AllMemoViewController(), title: "Memo", image: "square.and.pencil", fillImage: "square.and.pencil")
+        let memoVC = setupTabBar(viewController: SubMemoViewController(), title: "Memo", image: "square.and.pencil", fillImage: "square.and.pencil")
         let settingVC = setupTabBar(viewController: SettingViewController(), title: "Setting", image: "ellipsis.circle", fillImage: "ellipsis.circle.fill")
         
         setViewControllers([homeVC, mapVC, memoVC, settingVC], animated: true)

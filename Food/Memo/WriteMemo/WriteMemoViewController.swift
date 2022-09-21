@@ -22,10 +22,13 @@ final class WriteMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
+    let categoryInfo = CategoryInfo()
+    
     var task: UserMemo?
     var delegate: UserMemoDelegate?
 
     var categoryKey: Int?
+    var sameTask: Int?
     
     var storeData: StoreInfo?
     
@@ -60,8 +63,13 @@ final class WriteMemoViewController: BaseViewController {
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
         
+        mainView.categoryTextField.tintColor = .clear
+        setPickerView()
+        dismissPickerView()
+        
+        
     }
-    
+
     
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .black
@@ -91,9 +99,12 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-        if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+        if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+            // visit 수정
+            sameTask = repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s")
+            print(repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s"))
             showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
-                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.mainView.visitCount, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
+                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
                 
                 self.repository.addRealm(item: task)
                 
@@ -101,7 +112,7 @@ final class WriteMemoViewController: BaseViewController {
                     self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
                 
-                self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+                self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
                 self.dismiss(animated: true)
             }
         } else {
@@ -121,10 +132,9 @@ final class WriteMemoViewController: BaseViewController {
                         task.storeName = self.mainView.storeNameField.text ?? "없음"
                         task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
                         task.storeRate = self.mainView.currentRate
-                        task.storeVisit = self.mainView.visitCount
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                     }
-                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
 
                     if let image = UIImage(named: "dishes") {
                         self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
@@ -146,7 +156,7 @@ final class WriteMemoViewController: BaseViewController {
             if let task = self.task {
                 self.repository.deleteRecord(item: task)
             }
-            self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+            self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
             
             self.dismiss(animated: true)
         }
@@ -161,9 +171,8 @@ final class WriteMemoViewController: BaseViewController {
             mainView.storeNameField.text = task.storeName
             mainView.storeLocationTextView.text = task.storeAdress
             mainView.storeReviewTextView.text = task.storeReview
-            mainView.visitCount = task.storeVisit
             mainView.currentRate = task.storeRate
-            
+            mainView.categoryTextField.text = categoryInfo.categoryInfo[task.storeCategory]
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             
@@ -311,6 +320,45 @@ extension WriteMemoViewController: UITextViewDelegate {
     }
     
    
+}
+
+extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categoryInfo.categoryInfo.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categoryInfo.categoryInfo[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        mainView.categoryTextField.text = categoryInfo.categoryInfo[row]
+        categoryKey = row
+
+    }
+    
+    func setPickerView() {
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        mainView.categoryTextField.inputView = pickerView
+    }
+    
+    func dismissPickerView() {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let ChoiceButton = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(ChoiceButtonClicked))
+        ChoiceButton.tintColor = .black
+        toolBar.setItems([ChoiceButton], animated: true)
+        toolBar.isUserInteractionEnabled = true
+        mainView.categoryTextField.inputAccessoryView = toolBar
+    }
+    @objc func ChoiceButtonClicked() {
+        mainView.endEditing(true)
+    }
 }
 
 extension WriteMemoViewController: UserMemoDelegate {

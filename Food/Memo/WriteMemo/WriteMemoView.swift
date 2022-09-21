@@ -32,10 +32,7 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    var visitCount: Int = 1 {
-        didSet { visitButtonSetup() }
-    }
-
+    
     let memoImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
@@ -44,6 +41,14 @@ final class WriteMemoView: BaseView {
         view.backgroundColor = .lightGray
         return view
     }()
+    
+    let categoryTextField: UITextField = {
+        let view = UITextField()
+        view.textAlignment = .center
+        view.placeholder = "카테고리를 선택하세요"
+        return view
+    }()
+    
     let storeSearchView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.black.cgColor
@@ -78,26 +83,6 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    let storeVisitLabel: UILabel = {
-        let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 18)
-        view.textAlignment = .center
-        return view
-    }()
-    
-    let storeVisitPlusButton: UIButton = {
-        let view = UIButton()
-        view.setBackgroundImage(UIImage(systemName: "plus.square.fill"), for: .normal)
-        view.tintColor = .black
-        return view
-    }()
-    
-    let storeVisitMinusButton: UIButton = {
-        let view = UIButton()
-        view.tintColor = .red
-        view.setBackgroundImage(UIImage(systemName: "minus.square.fill"), for: .normal)
-        return view
-    }()
     
     let storeReviewTextView: UITextView = {
         let view = UITextView()
@@ -121,11 +106,10 @@ final class WriteMemoView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
         self.addGestureRecognizer(tapGesture)
         
-        [ memoImageView,storeSearchView , storeSearchButton, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, storeReviewTextView].forEach {
+        [ memoImageView, categoryTextField ,storeSearchView , storeSearchButton, storeNameField, storeLocationTextView, stackView, storeReviewTextView].forEach {
             self.addSubview($0)
         }
         starNumber = 5
-        visitCount = 1
     }
     
     func rateButtonSetup() {
@@ -156,51 +140,26 @@ final class WriteMemoView: BaseView {
         
          currentRate = endTag + 1
      }
-    
-    func visitButtonSetup() {
-        
-        storeVisitPlusButton.addTarget(self, action: #selector(storeVisitPlusButtonClicked), for: .touchUpInside)
-        storeVisitMinusButton.addTarget(self, action: #selector(storeVisitMinusButtonClicked), for: .touchUpInside)
-        
-        storeVisitLabel.text = "\(visitCount)번 방문"
-    }
-    
-    @objc private func storeVisitPlusButtonClicked() {
-        visitCount += 1
-    }
-    
-    @objc private func storeVisitMinusButtonClicked() {
-        if visitCount > 1 {
-            visitCount -= 1
-        }
-    }
-    
+
+
     override func setConstraints() {
-        storeVisitLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(15)
-            make.centerX.equalTo(self)
-        }
-        
-        storeVisitMinusButton.snp.makeConstraints { make in
-            make.centerY.equalTo(storeVisitLabel)
-            make.trailing.equalTo(storeLocationTextView.snp.trailing).offset(-20)
-            make.width.height.equalTo(25)
-        }
-        
-        storeVisitPlusButton.snp.makeConstraints { make in
-            make.centerY.equalTo(storeVisitLabel)
-            make.trailing.equalTo(storeVisitMinusButton.snp.leading).offset(-8)
-            make.width.height.equalTo(25)
-        }
+  
         memoImageView.snp.makeConstraints { make in
-            make.top.equalTo(storeVisitLabel.snp.bottom).offset(20)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.centerX.equalTo(self)
             make.width.equalTo(self.snp.width).multipliedBy(0.8)
             make.height.equalTo(memoImageView.snp.width).multipliedBy(0.7)
         }
         
-        storeSearchView.snp.makeConstraints { make in
+        categoryTextField.snp.makeConstraints { make in
             make.top.equalTo(memoImageView.snp.bottom).offset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(memoImageView.snp.width)
+            make.centerX.equalTo(self)
+        }
+        
+        storeSearchView.snp.makeConstraints { make in
+            make.top.equalTo(categoryTextField.snp.bottom).offset(20)
             make.height.equalTo(40)
             make.width.equalTo(memoImageView.snp.width)
             make.centerX.equalTo(self)

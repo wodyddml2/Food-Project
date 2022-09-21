@@ -17,8 +17,6 @@ protocol UserMemoDelegate {
 
 final class SubMemoViewController: BaseViewController {
     
-    var category: String?
-    var categoryKey: Int?
     
     let repository = UserMemoListRepository()
     
@@ -39,32 +37,29 @@ final class SubMemoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tasks = repository.fetchCategory(category: categoryKey ?? 0)
-        guard let category = category else {
-            return
-        }
+        tasks = repository.fecth()
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let filterButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "slider.horizontal.3"), primaryAction: nil, menu: filterButtonClicked())
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
-        navigationItem.title = category
+        navigationItem.title = "메모"
         navigationController?.navigationBar.tintColor = .black
     }
     
     @objc func plusButtonClicked() {
         let vc = WriteMemoViewController()
-        vc.categoryKey = categoryKey
+     
         vc.delegate = self
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     
     func filterButtonClicked() -> UIMenu {
         let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
-            self.tasks = self.repository.fetchSort(sort: "storeRate", category: self.categoryKey ?? 0)
+            self.tasks = self.repository.fetchSort(sort: "storeRate")
         }
         
         let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
-            self.tasks = self.repository.fetchSort(sort: "storeVisit", category: self.categoryKey ?? 0)
+            self.tasks = self.repository.fetchSort(sort: "storeVisit")
         }
         
         let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [rate, visit])
@@ -111,7 +106,6 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         guard let tasks = tasks else { return }
        
         let vc = WriteMemoViewController()
-        vc.categoryKey = categoryKey
         vc.task = tasks[indexPath.item]
         vc.delegate = self
         transition(vc, transitionStyle: .presentFullNavigation)

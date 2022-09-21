@@ -77,8 +77,16 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
     }
     
-    func fetchSort(sort: String, category: Int) -> Results<UserMemo> {
+    func fetchCategorySort(sort: String, category: Int) -> Results<UserMemo> {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category).sorted(byKeyPath: sort, ascending: false)
+    }
+    
+    func fetchSort(sort: String) -> Results<UserMemo> {
+        return localRealm.objects(UserMemo.self).sorted(byKeyPath: sort, ascending: false)
+    }
+    
+    func fetchSameData(storeAdress: String) -> Int {
+        return localRealm.objects(UserMemo.self).filter("storeAdress == %@", storeAdress).count
     }
     
     func removeImageFromDocument(fileName: String) {

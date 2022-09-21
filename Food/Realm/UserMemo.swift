@@ -11,7 +11,7 @@ import RealmSwift
 
 class UserMemo: Object {
     @Persisted var storeName: String
-    @Persisted var storeAdress: String?
+    @Persisted var storeAdress: String
     @Persisted var storeRate: Int
     @Persisted var storeVisit: Int
     @Persisted var storeReview: String
@@ -19,7 +19,7 @@ class UserMemo: Object {
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     
-    convenience init(storeName: String, storeAdress: String?, storeRate: Int, storeVisit: Int, storeReview: String,storeCategory: Int) {
+    convenience init(storeName: String, storeAdress: String, storeRate: Int, storeVisit: Int, storeReview: String,storeCategory: Int) {
         self.init()
         self.storeName = storeName
         self.storeAdress = storeAdress

@@ -48,7 +48,7 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         for i in 0...category.categoryInfo.count - 1 {
-            tasks.append(repository.fetchSort(sort: "storeRate", category: i))
+            tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i))
         }
         allTask = repository.fecth()
     }
@@ -198,7 +198,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
         
         cell.memoListMoreButton.tag = indexPath.section
-        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
+//        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
         cell.selectionStyle = .none
         if tasks[indexPath.section].isEmpty {
@@ -215,13 +215,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    @objc func memoListMoreButtonClicked(sender: UIButton) {
-        let vc = SubMemoViewController()
-        vc.category = category.categoryInfo[sender.tag]
-        vc.categoryKey = sender.tag
-        
-        transition(vc, transitionStyle: .push)
-    }
+//    @objc func memoListMoreButtonClicked(sender: UIButton) {
+//        let vc = SubMemoViewController()
+//        vc.category = category.categoryInfo[sender.tag]
+//        vc.categoryKey = sender.tag
+//
+//        transition(vc, transitionStyle: .push)
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tasks[indexPath.section].isEmpty == true ? 0 : UIScreen.main.bounds.height / 4
