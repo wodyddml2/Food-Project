@@ -57,6 +57,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
         pageCount = 1
         RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: pageCount) { store in
             self.storeData.append(contentsOf: store)
+            
             DispatchQueue.main.async {
                 self.mainView.searchTableView.reloadData()
                 self.mainView.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -84,6 +85,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.webID = storeData[indexPath.row].webID
+        vc.storeData = storeData[indexPath.row]
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

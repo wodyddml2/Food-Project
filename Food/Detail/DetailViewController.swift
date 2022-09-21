@@ -41,12 +41,22 @@ final class DetailViewController: BaseViewController {
         
         showMemoAlert(title: "찜 목록에 등록하시겠습니까?", button: "확인") { _ in
             guard let storeData = self.storeData else { return }
-            
-            guard let regionData = self.regionData else { return }
-            
-            let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
-            
-            self.repository.addRealm(item: task)
+            if self.regionData != nil {
+                guard let regionData = self.regionData else { return }
+                
+                let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
+                
+                self.repository.addRealm(item: task)
+            } else {
+                RequestSearchAPIManager.shared.requestRegion(lat: storeData.lon, lon: storeData.lat) { region in
+                    DispatchQueue.main.async {
+                        let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(region.firstArea) \(region.secondArea)")
+                        self.repository.addRealm(item: task)
+                    }
+                    
+                }
+            }
+           
         }
  
     }

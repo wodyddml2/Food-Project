@@ -11,7 +11,7 @@ import CoreLocation
 import NMapsMap
 
 final class MapViewController: BaseViewController {
-
+    
     private let mainView = MapView()
     
     private let locationManager = CLLocationManager()
@@ -35,14 +35,14 @@ final class MapViewController: BaseViewController {
         
         mapCollectionViewSetup()
         checkUserDeviceLocationServiceAuthorization()
-  
+        
         mainView.currentLocationButton.addTarget(self, action: #selector(currentLocationButtonClicked) , for: .touchUpInside)
     }
     
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.title = "맛집 지도"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(seatchButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(searchButtonClicked))
     }
     
     private func mapCollectionViewSetup() {
@@ -53,7 +53,7 @@ final class MapViewController: BaseViewController {
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
     }
     
-    @objc private func seatchButtonClicked() {
+    @objc private func searchButtonClicked() {
         transition(SearchViewController(), transitionStyle: .presentNavigation)
     }
     
@@ -61,12 +61,12 @@ final class MapViewController: BaseViewController {
         if locationManager.authorizationStatus != .denied {
             currentIndex = 0
             mainView.mapCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
-        
+            
             markers.forEach {
                 $0.mapView = nil
             }
             markers.removeAll()
-
+            
             checkUserDeviceLocationServiceAuthorization()
         } else {
             showRequestLocationServiceAlert()
@@ -141,7 +141,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         markers.forEach {
             $0.iconImage = NMF_MARKER_IMAGE_RED
         }
-
+        
         markers[Int(currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
         
         updateCamera(latLang: markers[Int(currentIndex)].position)
@@ -186,10 +186,16 @@ extension MapViewController {
                 
             }
         }
-       
+        
         updateCamera(latLang: NMGLatLng(lat: lat, lng: lng))
     }
-
+    
+    private func updateCamera(latLang: NMGLatLng) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: latLang)
+        cameraUpdate.animation = .easeIn
+        mainView.mapView.moveCamera(cameraUpdate)
+    }
+    
     private func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         
@@ -210,7 +216,7 @@ extension MapViewController {
         case .restricted, .denied:
             
             requestLocationStore(lat: 37.571323, lng: 126.977511)
-
+            
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
         default: print("default")
@@ -226,17 +232,10 @@ extension MapViewController: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
         
         locationManager.distanceFilter = 100000
-  
+        
         requestLocationStore(lat: coordinate.latitude, lng: coordinate.longitude)
-        
-        
     }
- 
-    func updateCamera(latLang: NMGLatLng) {
-        let cameraUpdate = NMFCameraUpdate(scrollTo: latLang)
-        cameraUpdate.animation = .easeIn
-        mainView.mapView.moveCamera(cameraUpdate)
-    }
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")
@@ -245,5 +244,5 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkUserDeviceLocationServiceAuthorization()
     }
-   
+    
 }
