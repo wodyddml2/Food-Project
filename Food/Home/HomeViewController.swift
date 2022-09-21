@@ -33,7 +33,7 @@ final class HomeViewController: BaseViewController {
             mainView.memoListTableView.reloadData()
         }
     }
-    
+    var taskde = [Results<UserMemo>]()
     lazy var randomBanner = allTask?.shuffled()
     
     override func loadView() {
@@ -43,12 +43,15 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tasks.removeAll()
         for i in 0...category.categoryInfo.count - 1 {
-            tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i))
+            if !repository.fetchCategorySort(sort: "storeRate", category: i).isEmpty {
+                
+                tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i))
+            }
         }
         allTask = repository.fecth()
     }
@@ -182,7 +185,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return category.categoryInfo.count
+        return tasks.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -200,20 +203,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListMoreButton.tag = indexPath.section
 //        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
-        cell.selectionStyle = .none
-        if tasks[indexPath.section].isEmpty {
-            cell.isHidden = true
-        }
+
         cell.memoListCollectionView.tag = indexPath.section
     
         cell.memoListCollectionView.reloadData()
 
         return cell
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tasks[section].isEmpty == true ? 0 : UITableView.automaticDimension
-    }
-    
+
     
 //    @objc func memoListMoreButtonClicked(sender: UIButton) {
 //        let vc = SubMemoViewController()
@@ -235,7 +232,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return layout
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        return category.categoryInfo[section]
+        return category.categoryInfo[tasks[section][0].storeCategory]
     }
 }
