@@ -30,17 +30,17 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     let storeNameLabel: UILabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 25)
-
+        
         return view
     }()
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-
+        
         return view
     }()
     let storeReviewLabel: UILabel = {
         let view = UILabel()
-
+        
         return view
     }()
     

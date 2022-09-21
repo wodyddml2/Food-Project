@@ -48,7 +48,7 @@ final class HomeView: BaseView {
             make.top.equalTo(bannerCollectionView.snp.bottom).offset(18)
             make.leading.equalTo(8)
         }
-       
+        
         memoListTableView.snp.makeConstraints { make in
             make.top.equalTo(memoListLabel.snp.bottom).offset(15)
             make.trailing.leading.bottom.equalTo(self.safeAreaLayoutGuide)

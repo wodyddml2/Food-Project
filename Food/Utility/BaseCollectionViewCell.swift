@@ -29,7 +29,7 @@ class BaseCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 8
         self.layer.shadowOpacity = 0.3
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 10)
+        self.layer.shadowOffset = CGSize(width: 0, height: 4)
         self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: radius).cgPath
     }
     

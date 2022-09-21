@@ -28,7 +28,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
         view.tintColor = .black
         return view
     }()
-    let memoListMoreButton: UIButton = {
+    var memoListMoreButton: UIButton = {
         let view = UIButton()
         
         return view

@@ -68,7 +68,7 @@ final class WriteMemoView: BaseView {
         view.placeholder = "음식점 상호명을 적어주세요"
         view.tintColor = .lightGray
         view.textAlignment = .center
-
+        
         return view
     }()
     
@@ -134,16 +134,16 @@ final class WriteMemoView: BaseView {
     }
     
     @objc private func rateButtonClicked(sender: UIButton) {
-         let endTag = sender.tag
-
-         rateUpdate(tag: endTag)
+        let endTag = sender.tag
         
-         currentRate = endTag + 1
-     }
-
-
+        rateUpdate(tag: endTag)
+        
+        currentRate = endTag + 1
+    }
+    
+    
     override func setConstraints() {
-  
+        
         memoImageView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.centerX.equalTo(self)
@@ -173,7 +173,7 @@ final class WriteMemoView: BaseView {
         }
         
         storeNameField.snp.makeConstraints { make in
-           
+            
             make.leading.equalTo(storeSearchView.snp.leading)
             make.top.equalTo(storeSearchView.snp.top)
             make.bottom.equalTo(storeSearchView.snp.bottom)

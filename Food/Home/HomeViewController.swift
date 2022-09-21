@@ -33,7 +33,7 @@ final class HomeViewController: BaseViewController {
             mainView.memoListTableView.reloadData()
         }
     }
-    var taskde = [Results<UserMemo>]()
+    
     lazy var randomBanner = allTask?.shuffled()
     
     override func loadView() {
@@ -93,7 +93,11 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == mainView.bannerCollectionView ? bannerInfo.bannerList.count : tasks[collectionView.tag].count
+        if collectionView == mainView.bannerCollectionView {
+            return bannerInfo.bannerList.count
+        } else {
+            return tasks.isEmpty ? 1 : tasks[collectionView.tag].count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -124,8 +128,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let memoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier, for: indexPath) as? MemoListCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
-            memoCell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+            if tasks.isEmpty {
+                memoCell.memoLabel.text = "메모를 입력해주세요!!"
+                memoCell.memoImageView.image = nil
+            } else {
+                memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
+                memoCell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+            }
+            
             
             return memoCell
         }
@@ -133,7 +143,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView != mainView.bannerCollectionView {
+        if collectionView != mainView.bannerCollectionView && !tasks.isEmpty {
             let vc = FixMemoViewController()
             vc.task = tasks[collectionView.tag][indexPath.item]
             transition(vc, transitionStyle: .present)
@@ -152,7 +162,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == mainView.bannerCollectionView {
             return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
         } else {
-            return CGSize(width: UIScreen.main.bounds.width / 3.5, height: UIScreen.main.bounds.height / 5.5)
+            return tasks.isEmpty ? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 5.5) : CGSize(width: UIScreen.main.bounds.width / 3.5, height: UIScreen.main.bounds.height / 5.5)
         }
         
     }
@@ -186,8 +196,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if tasks.isEmpty {
+            return 1
+        } else {
+            return tasks.count
+        }
         
-        return tasks.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -197,6 +211,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.reusableIdentifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
+        cell.selectionStyle = .none
+        
         cell.memoListCollectionView.delegate = self
         cell.memoListCollectionView.dataSource = self
         cell.memoListCollectionView.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
@@ -205,14 +221,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListMoreButton.tag = indexPath.section
         cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
-
+        if tasks.isEmpty {
+            cell.memoListMoreButton.isHidden = true
+            cell.memoListMoreImageView.isHidden = true
+            cell.memoListMoreLabel.isHidden = true
+        } else {
+            cell.memoListMoreButton.isHidden = false
+            cell.memoListMoreImageView.isHidden = false
+            cell.memoListMoreLabel.isHidden = false
+        }
+        
         cell.memoListCollectionView.tag = indexPath.section
-    
+        
         cell.memoListCollectionView.reloadData()
-
+        
         return cell
     }
-
+    
     
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
@@ -222,17 +247,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tasks[indexPath.section].isEmpty == true ? 0 : UIScreen.main.bounds.height / 4
+        return tasks.isEmpty ? UIScreen.main.bounds.height / 5 : UIScreen.main.bounds.height / 4
     }
     private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        if !tasks.isEmpty {
+            layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        }
+        
         return layout
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return category.categoryInfo[tasks[section][0].storeCategory]
+        return tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
     }
 }

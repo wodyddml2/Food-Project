@@ -9,14 +9,7 @@ import UIKit
 
 import RealmSwift
 
-
-protocol UserMemoDelegate {
-    func reloadUserMemo(updateTasks: Results<UserMemo>)
-    func searchInfoMemo(storeName: String, storeAdress: String)
-}
-
 final class SubMemoViewController: BaseViewController {
-    
     
     let repository = UserMemoListRepository()
     
@@ -36,23 +29,13 @@ final class SubMemoViewController: BaseViewController {
         view.register(SubMemoCollectionViewCell.self, forCellWithReuseIdentifier: SubMemoCollectionViewCell.reusableIdentifier)
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if categoryKey == nil {
-            tasks = repository.fecth()
-            navigationItem.title = "메모"
-        } else {
-            tasks = repository.fetchCategory(category: categoryKey ?? 0)
-            guard let category = category else {
-                return
-            }
-            navigationItem.title = category
-        }
-        
-        
+    
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let filterButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "slider.horizontal.3"), primaryAction: nil, menu: filterButtonClicked())
+        
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
         
         navigationController?.navigationBar.tintColor = .black
@@ -64,10 +47,21 @@ final class SubMemoViewController: BaseViewController {
             vc.categoryKey = categoryKey
             vc.memoCheck = true
         }
-        vc.delegate = self
         transition(vc, transitionStyle: .presentFullNavigation)
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if categoryKey == nil {
+            tasks = repository.fecth()
+            navigationItem.title = "메모"
+        } else {
+            tasks = repository.fetchCategory(category: categoryKey ?? 0)
+            guard let category = category else {
+                return
+            }
+            navigationItem.title = category
+        }
+    }
     
     
     func filterButtonClicked() -> UIMenu {
@@ -117,8 +111,8 @@ final class SubMemoViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
-     
 }
+
 extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tasks?.count ?? 0
@@ -136,17 +130,16 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeReviewLabel.text = tasks[indexPath.item].storeReview
             cell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
         }
-
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         guard let tasks = tasks else { return }
-       
+        
         let vc = WriteMemoViewController()
         vc.task = tasks[indexPath.item]
-        vc.delegate = self
         
         if categoryKey != nil {
             vc.categoryKey = categoryKey
@@ -165,14 +158,4 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         return layout
     }
-}
-
-extension SubMemoViewController: UserMemoDelegate {
-    func searchInfoMemo(storeName: String, storeAdress: String) { }
-    
-
-    func reloadUserMemo(updateTasks: Results<UserMemo>) {
-        tasks = updateTasks
-    }
-    
 }

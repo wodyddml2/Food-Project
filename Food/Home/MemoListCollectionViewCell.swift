@@ -19,7 +19,6 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     let memoLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
-        view.text = "Sssssssssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsds"
         return view
     }()
     
@@ -33,7 +32,6 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        self.shadowSetup(radius: 15)
         [memoImageView,memoLabel,memoButton].forEach {
             self.addSubview($0)
         }
