@@ -16,8 +16,7 @@ enum TextViewPlaceholder: String {
 }
 
 final class WriteMemoViewController: BaseViewController {
- 
-    
+
     private let mainView = WriteMemoView()
     
     let repository = UserMemoListRepository()
@@ -26,11 +25,13 @@ final class WriteMemoViewController: BaseViewController {
     
     var task: UserMemo?
     var delegate: UserMemoDelegate?
-
+    
+    var storeData: StoreInfo?
+    
     var categoryKey: Int?
     var sameTask: Int?
     
-    var storeData: StoreInfo?
+    var memoCheck: Bool = false
     
     lazy var imagePicker: UIImagePickerController = {
         let view = UIImagePickerController()
@@ -54,6 +55,7 @@ final class WriteMemoViewController: BaseViewController {
     
     override func loadView() {
         self.view = mainView
+        
     }
     
     override func viewDidLoad() {
@@ -63,10 +65,15 @@ final class WriteMemoViewController: BaseViewController {
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
         
-        mainView.categoryTextField.tintColor = .clear
-        setPickerView()
-        dismissPickerView()
         
+        if categoryKey == nil || task != nil {
+            mainView.categoryTextField.tintColor = .clear
+            setPickerView()
+            dismissPickerView()
+        } else {
+            mainView.categoryTextField.text = categoryInfo.categoryInfo[categoryKey ?? 0]
+            mainView.categoryTextField.isEnabled = false
+        }
         
     }
 
@@ -100,7 +107,7 @@ final class WriteMemoViewController: BaseViewController {
     
     @objc func saveButtonClicked() {
         if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
-            // visit 수정
+        
             sameTask = repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s")
             print(repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s"))
             showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
@@ -111,8 +118,12 @@ final class WriteMemoViewController: BaseViewController {
                 if let image = UIImage(named: "dishes") {
                     self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
+                if self.memoCheck {
+                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+                } else {
+                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
+                }
                 
-                self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
                 self.dismiss(animated: true)
             }
         } else {
@@ -135,7 +146,11 @@ final class WriteMemoViewController: BaseViewController {
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                     }
-                    self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
+                    if self.memoCheck {
+                        self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+                    } else {
+                        self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
+                    }
 
                     if let image = UIImage(named: "dishes") {
                         self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
@@ -157,7 +172,12 @@ final class WriteMemoViewController: BaseViewController {
             if let task = self.task {
                 self.repository.deleteRecord(item: task)
             }
-            self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
+            
+            if self.memoCheck {
+                self.delegate?.reloadUserMemo(updateTasks: self.repository.fetchCategory(category: self.categoryKey ?? 0))
+            } else {
+                self.delegate?.reloadUserMemo(updateTasks: self.repository.fecth())
+            }
             
             self.dismiss(animated: true)
         }

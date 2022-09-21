@@ -39,11 +39,12 @@ final class HomeViewController: BaseViewController {
     override func loadView() {
         self.view = mainView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tasks.removeAll()
@@ -55,6 +56,7 @@ final class HomeViewController: BaseViewController {
         }
         allTask = repository.fecth()
     }
+    
     override func configureUI() {
         bannerCollectionSetup()
         memoListTableViewSetup()
@@ -201,7 +203,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
         
         cell.memoListMoreButton.tag = indexPath.section
-//        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
+        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
 
         cell.memoListCollectionView.tag = indexPath.section
@@ -212,13 +214,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     
-//    @objc func memoListMoreButtonClicked(sender: UIButton) {
-//        let vc = SubMemoViewController()
-//        vc.category = category.categoryInfo[sender.tag]
-//        vc.categoryKey = sender.tag
-//
-//        transition(vc, transitionStyle: .push)
-//    }
+    @objc func memoListMoreButtonClicked(sender: UIButton) {
+        let vc = SubMemoViewController()
+        vc.category = category.categoryInfo[tasks[sender.tag][0].storeCategory]
+        vc.categoryKey = tasks[sender.tag][0].storeCategory
+        transition(vc, transitionStyle: .push)
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tasks[indexPath.section].isEmpty == true ? 0 : UIScreen.main.bounds.height / 4

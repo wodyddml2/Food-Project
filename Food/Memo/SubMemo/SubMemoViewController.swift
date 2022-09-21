@@ -20,6 +20,9 @@ final class SubMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
+    var category: String?
+    var categoryKey: Int?
+    
     var tasks: Results<UserMemo>? {
         didSet {
             subMemoCollectionView.reloadData()
@@ -36,39 +39,72 @@ final class SubMemoViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if categoryKey == nil {
+            tasks = repository.fecth()
+            navigationItem.title = "메모"
+        } else {
+            tasks = repository.fetchCategory(category: categoryKey ?? 0)
+            guard let category = category else {
+                return
+            }
+            navigationItem.title = category
+        }
         
-        tasks = repository.fecth()
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let filterButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "slider.horizontal.3"), primaryAction: nil, menu: filterButtonClicked())
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
-        navigationItem.title = "메모"
+        
         navigationController?.navigationBar.tintColor = .black
     }
     
     @objc func plusButtonClicked() {
         let vc = WriteMemoViewController()
-     
+        if categoryKey != nil {
+            vc.categoryKey = categoryKey
+            vc.memoCheck = true
+        }
         vc.delegate = self
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     
+    
+    
     func filterButtonClicked() -> UIMenu {
-        let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
-            self.tasks = self.repository.fetchSort(sort: "storeRate")
+        if category == nil {
+            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
+                self.tasks = self.repository.fetchSort(sort: "storeRate")
+            }
+            
+            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
+                self.tasks = self.repository.fetchSort(sort: "storeVisit")
+            }
+            
+            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
+                self.tasks = self.repository.fetchSort(sort: "storeDate")
+            }
+            
+            let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
+            
+            return menu
+        } else {
+            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
+                self.tasks = self.repository.fetchCategorySort(sort: "storeRate", category: self.categoryKey ?? 0)
+            }
+            
+            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
+                self.tasks = self.repository.fetchCategorySort(sort: "storeVisit", category: self.categoryKey ?? 0)
+            }
+            
+            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
+                self.tasks = self.repository.fetchCategorySort(sort: "storeDate", category: self.categoryKey ?? 0)
+            }
+            
+            let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
+            
+            return menu
         }
         
-        let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
-            self.tasks = self.repository.fetchSort(sort: "storeVisit")
-        }
-        
-        let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
-            self.tasks = self.repository.fetchSort(sort: "storeDate")
-        }
-        
-        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
-        
-        return menu
     }
     
     override func configureUI() {
@@ -99,7 +135,6 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
             cell.storeReviewLabel.text = tasks[indexPath.item].storeReview
             cell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
-            
         }
 
         return cell
@@ -112,6 +147,11 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         let vc = WriteMemoViewController()
         vc.task = tasks[indexPath.item]
         vc.delegate = self
+        
+        if categoryKey != nil {
+            vc.categoryKey = categoryKey
+            vc.memoCheck = true
+        }
         transition(vc, transitionStyle: .presentFullNavigation)
     }
     
