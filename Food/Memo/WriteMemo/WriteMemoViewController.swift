@@ -319,9 +319,5 @@ extension WriteMemoViewController: UserMemoDelegate {
         mainView.storeLocationTextView.text = storeAdress
         mainView.storeLocationTextView.textColor = .black
     }
-    func reloadUserMemo(updateTasks: Results<UserMemo>) {
-        
-    }
- 
-    
+    func reloadUserMemo(updateTasks: Results<UserMemo>) { }
 }

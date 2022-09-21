@@ -181,6 +181,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return category.categoryInfo.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -200,13 +201,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
         cell.selectionStyle = .none
-        
+        if tasks[indexPath.section].isEmpty {
+            cell.isHidden = true
+        }
         cell.memoListCollectionView.tag = indexPath.section
     
         cell.memoListCollectionView.reloadData()
 
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tasks[section].isEmpty == true ? 0 : UITableView.automaticDimension
+    }
+    
     
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
@@ -215,9 +222,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         transition(vc, transitionStyle: .push)
     }
- 
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height / 4
+        return tasks[indexPath.section].isEmpty == true ? 0 : UIScreen.main.bounds.height / 4
     }
     private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -228,6 +235,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return layout
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
         return category.categoryInfo[section]
     }
 }

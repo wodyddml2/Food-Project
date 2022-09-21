@@ -88,7 +88,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if memoCheck {
-            
             delegate?.searchInfoMemo(storeName: storeData[indexPath.row].name, storeAdress: storeData[indexPath.row].adress)
             self.dismiss(animated: true)
         } else {
