@@ -14,6 +14,10 @@ final class SearchViewController: BaseViewController {
     private var storeData: [StoreInfo] = []
     private var pageCount = 1
     
+    var memoCheck: Bool = false
+    
+    var delegate: UserMemoDelegate?
+    
     override func loadView() {
         self.view = mainView
     }
@@ -79,14 +83,22 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.storeNameLabel.text = storeData[indexPath.row].name
         cell.storeNumberLabel.text = storeData[indexPath.row].phone
         cell.storeLocationLabel.text = storeData[indexPath.row].adress
-        
+
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DetailViewController()
-        vc.webID = storeData[indexPath.row].webID
-        vc.storeData = storeData[indexPath.row]
-        transition(vc, transitionStyle: .presentFullNavigation)
+        if memoCheck {
+            
+            delegate?.searchInfoMemo(storeName: storeData[indexPath.row].name, storeAdress: storeData[indexPath.row].adress)
+            self.dismiss(animated: true)
+        } else {
+            let vc = DetailViewController()
+            vc.webID = storeData[indexPath.row].webID
+            vc.storeData = storeData[indexPath.row]
+            
+            transition(vc, transitionStyle: .presentFullNavigation)
+        }
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return mainView.frame.height / 7

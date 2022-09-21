@@ -44,6 +44,18 @@ final class WriteMemoView: BaseView {
         view.backgroundColor = .lightGray
         return view
     }()
+    let storeSearchView: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 1
+        return view
+    }()
+    let storeSearchButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        view.tintColor = .black
+        return view
+    }()
     
     let storeNameField: UITextField = {
         let view = UITextField()
@@ -51,6 +63,7 @@ final class WriteMemoView: BaseView {
         view.placeholder = "음식점 상호명을 적어주세요"
         view.tintColor = .lightGray
         view.textAlignment = .center
+
         return view
     }()
     
@@ -108,7 +121,7 @@ final class WriteMemoView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
         self.addGestureRecognizer(tapGesture)
         
-        [ memoImageView, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, storeReviewTextView].forEach {
+        [ memoImageView,storeSearchView , storeSearchButton, storeNameField, storeLocationTextView, stackView, storeVisitLabel, storeVisitPlusButton, storeVisitMinusButton, storeReviewTextView].forEach {
             self.addSubview($0)
         }
         starNumber = 5
@@ -186,11 +199,27 @@ final class WriteMemoView: BaseView {
             make.height.equalTo(memoImageView.snp.width).multipliedBy(0.7)
         }
         
-        storeNameField.snp.makeConstraints { make in
+        storeSearchView.snp.makeConstraints { make in
             make.top.equalTo(memoImageView.snp.bottom).offset(20)
-            make.centerX.equalTo(self)
+            make.height.equalTo(40)
             make.width.equalTo(memoImageView.snp.width)
-            make.height.equalTo(30)
+            make.centerX.equalTo(self)
+        }
+        
+        storeSearchButton.snp.makeConstraints { make in
+            make.trailing.equalTo(storeSearchView.snp.trailing)
+            make.centerY.equalTo(storeNameField)
+            make.height.equalTo(storeSearchView.snp.height)
+            make.width.equalTo(storeSearchButton.snp.height)
+        }
+        
+        storeNameField.snp.makeConstraints { make in
+           
+            make.leading.equalTo(storeSearchView.snp.leading)
+            make.top.equalTo(storeSearchView.snp.top)
+            make.bottom.equalTo(storeSearchView.snp.bottom)
+            make.trailing.equalTo(storeSearchButton.snp.leading)
+            
         }
         
         storeLocationTextView.snp.makeConstraints { make in

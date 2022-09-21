@@ -16,6 +16,7 @@ enum TextViewPlaceholder: String {
 }
 
 final class WriteMemoViewController: BaseViewController {
+ 
     
     private let mainView = WriteMemoView()
     
@@ -25,6 +26,8 @@ final class WriteMemoViewController: BaseViewController {
     var delegate: UserMemoDelegate?
 
     var categoryKey: Int?
+    
+    var storeData: StoreInfo?
     
     lazy var imagePicker: UIImagePickerController = {
         let view = UIImagePickerController()
@@ -59,6 +62,7 @@ final class WriteMemoViewController: BaseViewController {
         
     }
     
+    
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .black
         
@@ -69,6 +73,8 @@ final class WriteMemoViewController: BaseViewController {
             let galleryButton = UIBarButtonItem(image: UIImage(systemName: "photo"), primaryAction: nil, menu: menuImageButtonClicked())
             navigationItem.rightBarButtonItems = [saveButton, galleryButton]
             
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(backButtonClicked))
+            
         } else {
 
             navigationItem.title = "메모 수정"
@@ -77,7 +83,10 @@ final class WriteMemoViewController: BaseViewController {
             
             navigationItem.rightBarButtonItems = [resaveButton, galleryButton]
             
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteButtonClicked))
+            let deleteButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteButtonClicked))
+            let backButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(backButtonClicked))
+            
+            navigationItem.leftBarButtonItems = [backButton, deleteButton]
         }
     }
     
@@ -143,6 +152,9 @@ final class WriteMemoViewController: BaseViewController {
         }
     }
     
+    @objc func backButtonClicked() {
+        self.dismiss(animated: true)
+    }
 
     override func configureUI() {
         if let task = task {
@@ -160,6 +172,14 @@ final class WriteMemoViewController: BaseViewController {
             }
             mainView.memoImageView.image = loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
+        mainView.storeSearchButton.addTarget(self, action: #selector(storeSearchButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func storeSearchButtonClicked() {
+        let vc = SearchViewController()
+        vc.memoCheck = true
+        vc.delegate = self
+        transition(vc, transitionStyle: .presentNavigation)
     }
     
     func menuImageButtonClicked() -> UIMenu {
@@ -291,4 +311,17 @@ extension WriteMemoViewController: UITextViewDelegate {
     }
     
    
+}
+
+extension WriteMemoViewController: UserMemoDelegate {
+    func searchInfoMemo(storeName: String, storeAdress: String) {
+        mainView.storeNameField.text = storeName
+        mainView.storeLocationTextView.text = storeAdress
+        mainView.storeLocationTextView.textColor = .black
+    }
+    func reloadUserMemo(updateTasks: Results<UserMemo>) {
+        
+    }
+ 
+    
 }

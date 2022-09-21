@@ -9,8 +9,10 @@ import UIKit
 
 import RealmSwift
 
+
 protocol UserMemoDelegate {
     func reloadUserMemo(updateTasks: Results<UserMemo>)
+    func searchInfoMemo(storeName: String, storeAdress: String)
 }
 
 final class SubMemoViewController: BaseViewController {
@@ -53,7 +55,7 @@ final class SubMemoViewController: BaseViewController {
         let vc = WriteMemoViewController()
         vc.categoryKey = categoryKey
         vc.delegate = self
-        transition(vc, transitionStyle: .presentNavigation)
+        transition(vc, transitionStyle: .presentFullNavigation)
     }
     
     func filterButtonClicked() -> UIMenu {
@@ -112,7 +114,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         vc.categoryKey = categoryKey
         vc.task = tasks[indexPath.item]
         vc.delegate = self
-        transition(vc, transitionStyle: .presentNavigation)
+        transition(vc, transitionStyle: .presentFullNavigation)
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
@@ -128,7 +130,11 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension SubMemoViewController: UserMemoDelegate {
+    func searchInfoMemo(storeName: String, storeAdress: String) { }
+    
+
     func reloadUserMemo(updateTasks: Results<UserMemo>) {
         tasks = updateTasks
     }
+    
 }

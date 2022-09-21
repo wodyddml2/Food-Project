@@ -13,7 +13,11 @@ final class WishListViewController: BaseViewController {
     
     private let repository = UserWishListRepository()
     
-    private var tasks: Results<UserWishList>?
+    private var tasks: Results<UserWishList>? {
+        didSet {
+            wishListCollectionView.reloadData()
+        }
+    }
     
     private lazy var wishListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -26,15 +30,14 @@ final class WishListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.popViewController(animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        tasks = repository.fecth()
     }
     
     override func configureUI() {
         view.addSubview(wishListCollectionView)
         
-        tasks = repository.fecth()
+        
         
         wishListCollectionView.collectionViewLayout = collectionViewLayout()
     }
