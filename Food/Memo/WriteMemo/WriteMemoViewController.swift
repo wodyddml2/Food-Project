@@ -104,7 +104,7 @@ final class WriteMemoViewController: BaseViewController {
             sameTask = repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s")
             print(repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s"))
             showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
-                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0)
+                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0, storeDate: Date())
                 
                 self.repository.addRealm(item: task)
                 
@@ -131,6 +131,7 @@ final class WriteMemoViewController: BaseViewController {
                     self.repository.fetchUpdate {
                         task.storeName = self.mainView.storeNameField.text ?? "없음"
                         task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
+                        task.storeCategory = self.categoryKey ?? 0
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                     }

@@ -62,7 +62,11 @@ final class SubMemoViewController: BaseViewController {
             self.tasks = self.repository.fetchSort(sort: "storeVisit")
         }
         
-        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [rate, visit])
+        let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
+            self.tasks = self.repository.fetchSort(sort: "storeDate")
+        }
+        
+        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
         
         return menu
     }

@@ -16,10 +16,11 @@ class UserMemo: Object {
     @Persisted var storeVisit: Int
     @Persisted var storeReview: String
     @Persisted var storeCategory: Int
+    @Persisted var storeDate = Date()
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     
-    convenience init(storeName: String, storeAdress: String, storeRate: Int, storeVisit: Int, storeReview: String,storeCategory: Int) {
+    convenience init(storeName: String, storeAdress: String, storeRate: Int, storeVisit: Int, storeReview: String, storeCategory: Int, storeDate: Date) {
         self.init()
         self.storeName = storeName
         self.storeAdress = storeAdress
@@ -27,5 +28,6 @@ class UserMemo: Object {
         self.storeVisit = storeVisit
         self.storeReview = storeReview
         self.storeCategory = storeCategory
+        self.storeDate = storeDate
     }
 }
