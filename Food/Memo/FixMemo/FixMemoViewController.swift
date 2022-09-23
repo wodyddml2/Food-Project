@@ -11,6 +11,8 @@ class FixMemoViewController: BaseViewController {
 
     let mainView = FixMemoView()
     
+    let documentManager = DocumentManager()
+    
     var task: UserMemo?
     
     override func loadView() {
@@ -37,7 +39,7 @@ class FixMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            mainView.memoImageView.image = loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            mainView.memoImageView.image = try documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
     }
    

@@ -23,7 +23,8 @@ final class HomeView: BaseView {
     
     let memoListTableView: UITableView = {
         let view = UITableView()
-        
+        view.contentInset = .zero
+        view.contentInsetAdjustmentBehavior = .never
         return view
     }()
     override init(frame: CGRect) {

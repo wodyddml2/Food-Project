@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-class UserMemo: Object {
+class UserMemo: Object, Codable {
     @Persisted var storeName: String
     @Persisted var storeAdress: String
     @Persisted var storeRate: Int
@@ -30,4 +30,28 @@ class UserMemo: Object {
         self.storeCategory = storeCategory
         self.storeDate = storeDate
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case storeName
+        case storeAdress
+        case storeRate
+        case storeVisit
+        case storeReview
+        case storeCategory
+        case storeDate
+        case objectId
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(objectId, forKey: .objectId)
+        try container.encode(storeName, forKey: .storeName)
+        try container.encode(storeRate, forKey: .storeRate)
+        try container.encode(storeVisit, forKey: .storeVisit)
+        try container.encode(storeReview, forKey: .storeReview)
+        try container.encode(storeCategory, forKey: .storeCategory)
+        try container.encode(storeDate, forKey: .storeDate)
+    }
+    
+    
 }

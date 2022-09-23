@@ -20,8 +20,11 @@ final class HomeViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     
+    let documentManager = DocumentManager()
+    
     var allTask: Results<UserMemo>? {
         didSet {
+            randomBanner = allTask?.shuffled()
             mainView.bannerCollectionView.reloadData()
         }
     }
@@ -29,7 +32,7 @@ final class HomeViewController: BaseViewController {
     // optional로 변수를 선언해준 상태에서는 초기화가 되어 있지 않기 때문에 append가 불가
     var tasks = [Results<UserMemo>]() {
         didSet {
-            randomBanner = allTask?.shuffled()
+            
             mainView.memoListTableView.reloadData()
         }
     }
@@ -88,15 +91,25 @@ final class HomeViewController: BaseViewController {
     @objc func wishListButtonClicked() {
         transition(WishListViewController(), transitionStyle: .push)
     }
-    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // index 오류 명확한 해결법이 아닌듯
         if collectionView == mainView.bannerCollectionView {
             return bannerInfo.bannerList.count
         } else {
-            return tasks.isEmpty ? 1 : tasks[collectionView.tag].count
+            print("Collection: \(collectionView.tag)") // section은 0인데 이건 1
+            if tasks.isEmpty {
+                return 1
+            } else {
+                if tasks.count == 1{
+                    return tasks[0].count
+                } else {
+                    return tasks[collectionView.tag].count
+                }
+            }
+//            return tasks.isEmpty ? 1 : tasks[collectionView.tag].count
         }
     }
     
@@ -110,7 +123,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if let randomBanner = randomBanner {
                 if randomBanner.count >= 3 {
                     
-                    bannerCell.bannerImageView.image = loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
+                    bannerCell.bannerImageView.image = documentManager.loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
                     bannerCell.bannerIntroLable.text = randomBanner[indexPath.item].storeName
                 } else {
                     bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
@@ -132,8 +145,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 memoCell.memoLabel.text = "메모를 입력해주세요!!"
                 memoCell.memoImageView.image = nil
             } else {
-                memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
-                memoCell.memoImageView.image = loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+                if tasks.count == 1{
+                    memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
+                    memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
+                } else {
+                    memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
+                    memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+                }
+//                memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
+//                memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
             }
             
             
@@ -261,6 +281,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return layout
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        print("table: \(section)")
         return tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
     }
 }

@@ -64,7 +64,9 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
             
             DispatchQueue.main.async {
                 self.mainView.searchTableView.reloadData()
-                self.mainView.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                if !store.isEmpty {
+                    self.mainView.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }
         }
     }

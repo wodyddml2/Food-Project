@@ -24,6 +24,7 @@ final class WriteMemoViewController: BaseViewController {
     private let mainView = WriteMemoView()
     
     let repository = UserMemoListRepository()
+    let documentManager = DocumentManager()
     
     let categoryInfo = CategoryInfo()
     
@@ -120,7 +121,7 @@ final class WriteMemoViewController: BaseViewController {
                 self.repository.addRealm(item: task)
                 
                 if let image = UIImage(named: "dishes") {
-                    self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                    self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
                 
                 self.dismiss(animated: true)
@@ -145,10 +146,8 @@ final class WriteMemoViewController: BaseViewController {
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                     }
-                    
-                    
                     if let image = UIImage(named: "dishes") {
-                        self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                        self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                     }
                     
                     self.dismiss(animated: true)
@@ -190,7 +189,7 @@ final class WriteMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            mainView.memoImageView.image = loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            mainView.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
         mainView.storeSearchButton.addTarget(self, action: #selector(storeSearchButtonClicked), for: .touchUpInside)
     }

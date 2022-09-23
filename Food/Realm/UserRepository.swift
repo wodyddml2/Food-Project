@@ -67,6 +67,8 @@ protocol UserMemoListRepositoryType {
 
 class UserMemoListRepository: UserMemoListRepositoryType {
  
+    let documentManager = DocumentManager()
+    
     let localRealm = try! Realm()
     
     func fecth() -> Results<UserMemo> {
@@ -139,6 +141,57 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         }
     }
     
+    func saveEncodedJsonToDocument() throws {
+        
+        let encodedJson = try encodeMemo(item: fecth())
+        
+        try documentManager.saveJsonToDocument(data: encodedJson)
+
+    }
+  
+    lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko-KR")
+        formatter.dateFormat = "MM월 dd일 hh:mm:ss EEEE"
+        return formatter
+    }()
     
+    func encodeMemo(item: Results<UserMemo>) throws -> Data {
+        do {
+            let encoder = JSONEncoder()
+
+            encoder.dateEncodingStrategy = .formatted(formatter)
+            
+            let encodedData: Data = try encoder.encode(item)
+            
+            return encodedData
+        } catch {
+            throw DocumentError.jsonEncodeError
+        }
+    }
     
+    func decodeJSON(_ memoData: Data) throws -> [UserMemo]? {
+        do {
+            let decoder = JSONDecoder()
+            
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            
+            let decodedData: [UserMemo] = try decoder.decode([UserMemo].self, from: memoData)
+            
+            return decodedData
+        } catch {
+            throw DocumentError.jsonDecodeError
+        }
+    }
+    
+    func overwriteRealm() throws {
+        let jsonData = try documentManager.fetchJSONData()
+        
+        guard let decodedData = try decodeJSON(jsonData) else { return }
+        
+        try localRealm.write {
+            localRealm.deleteAll()
+            localRealm.add(decodedData)
+        }
+    }
 }
