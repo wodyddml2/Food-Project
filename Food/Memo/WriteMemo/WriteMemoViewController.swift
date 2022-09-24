@@ -34,7 +34,6 @@ final class WriteMemoViewController: BaseViewController {
     var storeData: StoreInfo?
     
     var categoryKey: Int?
-    var sameTask: Int?
     
     var memoCheck: Bool = false
     
@@ -112,8 +111,6 @@ final class WriteMemoViewController: BaseViewController {
     
     @objc func saveButtonClicked() {
         if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray {
-            
-            sameTask = repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s")
 
             showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
                 if self.mainView.storeReviewTextView.textColor == .lightGray {
@@ -123,7 +120,7 @@ final class WriteMemoViewController: BaseViewController {
                 
                 self.repository.addRealm(item: task)
                 
-                if let image = UIImage(named: "dishes") {
+                if let image = UIImage(named: "amda") {
                     self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
                 
@@ -142,7 +139,7 @@ final class WriteMemoViewController: BaseViewController {
         
         if let task = task {
             if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray  {
-                
+              
                 showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
                     if self.mainView.storeReviewTextView.textColor == .lightGray {
                         self.mainView.storeReviewTextView.text = nil
@@ -154,8 +151,10 @@ final class WriteMemoViewController: BaseViewController {
                         task.storeCategory = self.categoryKey ?? 0
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+//                        task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1
                     }
-                    if let image = UIImage(named: "dishes") {
+                    
+                    if let image = UIImage(named: "amda") {
                         self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                     }
                     

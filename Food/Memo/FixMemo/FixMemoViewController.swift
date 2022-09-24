@@ -21,13 +21,12 @@ class FixMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainView.storeReviewTextView.isEditable = false
-        mainView.storeLocationTextView.isEditable = false
+    
     }
     
     override func configureUI() {
         if let task = task {
-            mainView.storeNameLabel.text = task.storeName
+            mainView.storeNameField.text = task.storeName
             mainView.storeLocationTextView.text = task.storeAdress
             mainView.storeReviewTextView.text = task.storeReview
             mainView.storeVisitLabel.text = "\(task.storeVisit)번 방문"
@@ -39,7 +38,7 @@ class FixMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            mainView.memoImageView.image = try documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            mainView.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
     }
    

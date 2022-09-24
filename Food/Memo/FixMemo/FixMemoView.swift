@@ -5,9 +5,10 @@
 //  Created by J on 2022/09/20.
 //
 
+
 import UIKit
 
-class FixMemoView: BaseView {
+final class FixMemoView: BaseView {
     
     var starNumber: Int = 5 {
         didSet { rateButtonSetup() }
@@ -32,27 +33,66 @@ class FixMemoView: BaseView {
         return view
     }()
     
-
+    
     let memoImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 15
-        view.image = UIImage(named: "dishes")
-        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 10
+        view.image = UIImage(named: "amda")
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
-    let storeNameLabel: UILabel = {
-        let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 20)
+    let categoryTextField: UITextField = {
+        let view = UITextField()
         view.textAlignment = .center
+        view.textColor = .white
+        view.isEnabled = false
+        view.font = .boldSystemFont(ofSize: 14)
+        view.attributedPlaceholder = NSAttributedString(string: "카테고리", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.cgColor])
+        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    let storeSearchView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        return view
+    }()
+
+    let storeNameField: UITextField = {
+        let view = UITextField()
+        view.isEnabled = false
+        view.font = .systemFont(ofSize: 16)
+        view.attributedPlaceholder = NSAttributedString(string: "음식점 상호명을 적어주세요", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor])
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.textAlignment = .left
         return view
     }()
     
     let storeLocationTextView: UITextView = {
         let view = UITextView()
-        view.font = .boldSystemFont(ofSize: 16)
-        view.textAlignment = .center
+        view.isEditable = false
+        view.font = .systemFont(ofSize: 16)
+        view.text = TextViewPlaceholder.locationPlaceholder.rawValue
+        view.textColor = .lightGray
+        view.textAlignment = .left
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        return view
+    }()
+    
+    
+    let storeReviewTextView: UITextView = {
+        let view = UITextView()
+        view.isEditable = false
+        view.font = .systemFont(ofSize: 16)
+        view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
+        view.textColor = .lightGray
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         return view
     }()
     
@@ -60,16 +100,6 @@ class FixMemoView: BaseView {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 18)
         view.textAlignment = .center
-        return view
-    }()
-    
-
-    
-    let storeReviewTextView: UITextView = {
-        let view = UITextView()
-        view.font = .systemFont(ofSize: 16)
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
         return view
     }()
     
@@ -85,22 +115,22 @@ class FixMemoView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
         self.addGestureRecognizer(tapGesture)
         
-        [ memoImageView, storeNameLabel, storeLocationTextView, stackView, storeVisitLabel, storeReviewTextView].forEach {
+        [storeVisitLabel ,memoImageView, categoryTextField ,storeSearchView , storeNameField, storeLocationTextView, stackView, storeReviewTextView].forEach {
             self.addSubview($0)
         }
         starNumber = 5
-
     }
-    
+
     func rateButtonSetup() {
         for i in 0 ..< 5 {
             let rateButton = UIButton()
             rateButton.isEnabled = false
             rateButton.setImage(starImage, for: .normal)
-            rateButton.tintColor = .red
+            rateButton.tintColor = UIColor(named: SetColor.darkPink.rawValue)
             rateButton.tag = i
             rateButtonArr += [rateButton]
             stackView.addArrangedSubview(rateButton)
+          
         }
     }
     
@@ -119,38 +149,52 @@ class FixMemoView: BaseView {
             make.top.equalTo(self.safeAreaLayoutGuide).offset(15)
             make.centerX.equalTo(self)
         }
-        
         memoImageView.snp.makeConstraints { make in
-            make.top.equalTo(storeVisitLabel.snp.bottom).offset(20)
+            make.top.equalTo(storeVisitLabel.snp.bottom).offset(10)
             make.centerX.equalTo(self)
-            make.width.equalTo(self.snp.width).multipliedBy(0.8)
-            make.height.equalTo(memoImageView.snp.width).multipliedBy(0.7)
+            make.width.equalTo(self.snp.width).multipliedBy(0.7)
+            make.height.equalTo(memoImageView.snp.width)
         }
         
-        storeNameLabel.snp.makeConstraints { make in
+        storeSearchView.snp.makeConstraints { make in
             make.top.equalTo(memoImageView.snp.bottom).offset(20)
-            make.leading.lessThanOrEqualTo(memoImageView.snp.leading).offset(4)
-            make.trailing.lessThanOrEqualTo(memoImageView.snp.trailing).offset(-4)
+            make.height.equalTo(40)
+            make.width.equalTo(self.snp.width).multipliedBy(0.9)
             make.centerX.equalTo(self)
+        }
+        
+        storeNameField.snp.makeConstraints { make in
+            
+            make.leading.equalTo(storeSearchView.snp.leading).offset(4)
+            make.top.equalTo(storeSearchView.snp.top)
+            make.bottom.equalTo(storeSearchView.snp.bottom)
+            make.trailing.equalTo(storeSearchView.snp.trailing).offset(-10)
+            
         }
         
         storeLocationTextView.snp.makeConstraints { make in
-            make.top.equalTo(storeNameLabel.snp.bottom).offset(10)
+            make.top.equalTo(storeNameField.snp.bottom).offset(20)
             make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width)
+            make.width.equalTo(storeSearchView.snp.width)
             make.height.equalTo(50)
         }
-        
+        categoryTextField.snp.makeConstraints { make in
+            make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)
+            make.leading.equalTo(storeSearchView.snp.leading)
+            make.height.equalTo(40)
+            make.width.equalTo(storeSearchView.snp.width).multipliedBy(0.3)
+        }
         stackView.snp.makeConstraints { make in
             make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)
-            make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width).multipliedBy(0.8)
+            make.centerY.equalTo(categoryTextField)
+            make.leading.equalTo(categoryTextField.snp.trailing).offset(60)
+            make.trailing.equalTo(storeSearchView.snp.trailing)
         }
         
         storeReviewTextView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(20)
             make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width)
+            make.width.equalTo(storeSearchView.snp.width)
             make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-10)
         }
         

@@ -59,7 +59,6 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
             return UICollectionViewCell()
         }
         if let tasks = tasks {
-            cell.storeImageView.image = UIImage(named: "dishes")
             cell.storeNameLabel.text = tasks[indexPath.item].storeName
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
         }
