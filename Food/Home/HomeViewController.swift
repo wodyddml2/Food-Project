@@ -76,7 +76,8 @@ final class HomeViewController: BaseViewController {
     override func navigationSetup() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
         
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+//        navigationItem.titleView = addNavBarImage()
         
         navigationItem.title = "홈"
     }

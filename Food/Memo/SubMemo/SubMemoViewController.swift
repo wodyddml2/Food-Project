@@ -153,7 +153,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width / 1.3
         
-        layout.itemSize = CGSize(width: width / 1.7, height: width / 1.3)
+        layout.itemSize = CGSize(width: width / 1.7, height: width / 1.2)
         layout.sectionInset = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10

@@ -23,7 +23,6 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
         view.backgroundColor = .blue
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 5
-        view.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner)
         return view
     }()
     
@@ -35,7 +34,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     }()
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 12)
+        view.font = .systemFont(ofSize: 12)
         return view
     }()
   
@@ -64,7 +63,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        self.shadowSetup(radius: 5)
+        setBorder(borderWidth: 0.3)
         [memoView, memoImageView, storeNameLabel, storeLocationLabel,  storeRateImageView, storeRateLabel, storeVisitLabel].forEach {
             self.addSubview($0)
         }
@@ -76,8 +75,10 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
         }
         
         memoImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(self).multipliedBy(0.6)
+            make.top.leading.equalTo(12)
+            make.trailing.equalTo(-12)
+        
+            make.height.equalTo(memoImageView.snp.width)
         }
         
         storeNameLabel.snp.makeConstraints { make in

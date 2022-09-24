@@ -36,50 +36,55 @@ final class WriteMemoView: BaseView {
     let memoImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 5
-        view.image = UIImage(named: "dishes")
-        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 10
+        view.image = UIImage(named: "amda")
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
     let categoryTextField: UITextField = {
         let view = UITextField()
         view.textAlignment = .center
-        view.placeholder = "카테고리를 선택하세요"
+        view.textColor = .white
+        view.font = .boldSystemFont(ofSize: 14)
+        view.attributedPlaceholder = NSAttributedString(string: "카테고리", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.cgColor])
+        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.layer.cornerRadius = 5
         return view
     }()
     
     let storeSearchView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.black.cgColor
-        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         return view
     }()
     let storeSearchButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         view.tintColor = .black
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         return view
     }()
     
     let storeNameField: UITextField = {
         let view = UITextField()
-        view.font = .boldSystemFont(ofSize: 20)
-        view.placeholder = "음식점 상호명을 적어주세요"
-        view.tintColor = .lightGray
-        view.textAlignment = .center
-        
+        view.font = .systemFont(ofSize: 16)
+        view.attributedPlaceholder = NSAttributedString(string: "음식점 상호명을 적어주세요", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor])
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.textAlignment = .left
         return view
     }()
     
     let storeLocationTextView: UITextView = {
         let view = UITextView()
-        view.font = .boldSystemFont(ofSize: 16)
+        view.font = .systemFont(ofSize: 16)
         view.text = TextViewPlaceholder.locationPlaceholder.rawValue
         view.textColor = .lightGray
-        view.textAlignment = .center
-        view.layer.borderColor = UIColor.black.cgColor
-        view.layer.borderWidth = 2
+        view.textAlignment = .left
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         return view
     }()
     
@@ -89,8 +94,8 @@ final class WriteMemoView: BaseView {
         view.font = .systemFont(ofSize: 16)
         view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
         view.textColor = .lightGray
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         return view
     }()
     
@@ -116,7 +121,7 @@ final class WriteMemoView: BaseView {
         for i in 0 ..< 5 {
             let rateButton = UIButton()
             rateButton.setImage(starImage, for: .normal)
-            rateButton.tintColor = .red
+            rateButton.tintColor = UIColor(named: SetColor.darkPink.rawValue)
             rateButton.tag = i
             rateButtonArr += [rateButton]
             stackView.addArrangedSubview(rateButton)
@@ -147,21 +152,14 @@ final class WriteMemoView: BaseView {
         memoImageView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.centerX.equalTo(self)
-            make.width.equalTo(self.snp.width).multipliedBy(0.8)
-            make.height.equalTo(memoImageView.snp.width).multipliedBy(0.7)
-        }
-        
-        categoryTextField.snp.makeConstraints { make in
-            make.top.equalTo(memoImageView.snp.bottom).offset(20)
-            make.height.equalTo(40)
-            make.width.equalTo(memoImageView.snp.width)
-            make.centerX.equalTo(self)
+            make.width.equalTo(self.snp.width).multipliedBy(0.7)
+            make.height.equalTo(memoImageView.snp.width)
         }
         
         storeSearchView.snp.makeConstraints { make in
-            make.top.equalTo(categoryTextField.snp.bottom).offset(20)
+            make.top.equalTo(memoImageView.snp.bottom).offset(20)
             make.height.equalTo(40)
-            make.width.equalTo(memoImageView.snp.width)
+            make.width.equalTo(self.snp.width).multipliedBy(0.9)
             make.centerX.equalTo(self)
         }
         
@@ -174,7 +172,7 @@ final class WriteMemoView: BaseView {
         
         storeNameField.snp.makeConstraints { make in
             
-            make.leading.equalTo(storeSearchView.snp.leading)
+            make.leading.equalTo(storeSearchView.snp.leading).offset(4)
             make.top.equalTo(storeSearchView.snp.top)
             make.bottom.equalTo(storeSearchView.snp.bottom)
             make.trailing.equalTo(storeSearchButton.snp.leading)
@@ -182,22 +180,28 @@ final class WriteMemoView: BaseView {
         }
         
         storeLocationTextView.snp.makeConstraints { make in
-            make.top.equalTo(storeNameField.snp.bottom).offset(10)
+            make.top.equalTo(storeNameField.snp.bottom).offset(20)
             make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width)
+            make.width.equalTo(storeSearchView.snp.width)
             make.height.equalTo(50)
         }
-        
+        categoryTextField.snp.makeConstraints { make in
+            make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)
+            make.leading.equalTo(storeSearchView.snp.leading)
+            make.height.equalTo(40)
+            make.width.equalTo(storeSearchView.snp.width).multipliedBy(0.3)
+        }
         stackView.snp.makeConstraints { make in
             make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)
-            make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width).multipliedBy(0.8)
+            make.centerY.equalTo(categoryTextField)
+            make.leading.equalTo(categoryTextField.snp.trailing).offset(60)
+            make.trailing.equalTo(storeSearchView.snp.trailing)
         }
         
         storeReviewTextView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(20)
             make.centerX.equalTo(self)
-            make.width.equalTo(memoImageView.snp.width)
+            make.width.equalTo(storeSearchView.snp.width)
             make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-10)
         }
         

@@ -28,7 +28,6 @@ final class PopupViewController: BaseViewController {
     override func configureUI() {
         mainView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
         
-        mainView.storeImageView.image = UIImage(named: "dishes")
         mainView.storeNameLabel.text = storeData?.name
         mainView.storeLocationLabel.text = storeData?.adress
         mainView.storePhoneLabel.text = storeData?.phone

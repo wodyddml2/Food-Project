@@ -35,17 +35,14 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
             self.addSubview($0)
         }
      
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 5
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 0.2
+        setBorder(borderWidth: 0.3)
         self.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
     }
     
     override func setConstraints() {
         memoImageView.snp.makeConstraints { make in
             make.top.trailing.leading.equalTo(self)
-            make.height.equalTo(self.snp.height).multipliedBy(0.8)
+            make.height.equalTo(self.snp.width)
         }
         memoLabel.snp.makeConstraints { make in
             make.centerX.equalTo(memoImageView)

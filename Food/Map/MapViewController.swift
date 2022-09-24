@@ -29,6 +29,7 @@ final class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     override func configureUI() {
         locationManager.delegate = self

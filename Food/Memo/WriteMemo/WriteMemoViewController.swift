@@ -88,7 +88,7 @@ final class WriteMemoViewController: BaseViewController {
         
         if task == nil {
             
-            navigationItem.title = "메모 작성"
+            navigationItem.title = "작성"
             let saveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(saveButtonClicked))
             let galleryButton = UIBarButtonItem(image: UIImage(systemName: "photo"), primaryAction: nil, menu: menuImageButtonClicked())
             navigationItem.rightBarButtonItems = [saveButton, galleryButton]
@@ -97,7 +97,7 @@ final class WriteMemoViewController: BaseViewController {
             
         } else {
             
-            navigationItem.title = "메모 수정"
+            navigationItem.title = "수정"
             let resaveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(resaveButtonClicked))
             let galleryButton = UIBarButtonItem(image: UIImage(systemName: "photo"), primaryAction: nil, menu: menuImageButtonClicked())
             
@@ -111,11 +111,14 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-        if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+        if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray {
             
             sameTask = repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s")
-            print(repository.fetchSameData(storeAdress: mainView.storeLocationTextView.text ?? "s"))
+
             showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
+                if self.mainView.storeReviewTextView.textColor == .lightGray {
+                    self.mainView.storeReviewTextView.text = nil
+                }
                 let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0, storeDate: Date())
                 
                 self.repository.addRealm(item: task)
@@ -126,6 +129,8 @@ final class WriteMemoViewController: BaseViewController {
                 
                 self.dismiss(animated: true)
             }
+        } else if categoryKey == nil {
+            showCautionAlert(title: "주의", message: "카테고리를 선택해주세요!")
         } else {
             showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
         }
@@ -136,8 +141,12 @@ final class WriteMemoViewController: BaseViewController {
     @objc func resaveButtonClicked() {
         
         if let task = task {
-            if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray && mainView.storeReviewTextView.textColor != .lightGray {
+            if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray  {
+                
                 showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
+                    if self.mainView.storeReviewTextView.textColor == .lightGray {
+                        self.mainView.storeReviewTextView.text = nil
+                    }
                     self.repository.removeImageFromDocument(fileName: "\(task.objectId).jpg" )
                     self.repository.fetchUpdate {
                         task.storeName = self.mainView.storeNameField.text ?? "없음"

@@ -19,23 +19,24 @@ final class PopupView: BaseView {
     let popupBackgroundView: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.cornerRadius = 5
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
         view.backgroundColor = .white
         return view
     }()
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
-        view.layer.cornerRadius = 10
-        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 5
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "amda")
         return view
     }()
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 24)
+        view.font = .boldSystemFont(ofSize: 20)
         view.textAlignment = .center
         return view
     }()
@@ -44,7 +45,6 @@ final class PopupView: BaseView {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         view.textAlignment = .center
-        view.text = "가정,생활 > 문구,사무용품 > 디자인문구 > 카카오프렌즈"
         return view
     }()
     
@@ -57,34 +57,35 @@ final class PopupView: BaseView {
     let storeLocationLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
-        view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14)
         return view
     }()
     
     let storePhoneLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
+        view.font = .systemFont(ofSize: 14)
         return view
     }()
     
     let popToDetailButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
         view.layer.cornerRadius = 15
         view.layer.maskedCorners = CACornerMask(arrayLiteral:  .layerMaxXMaxYCorner)
         view.setTitle("더보기", for: .normal)
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
         return view
     }()
     
     let wishListButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
         view.layer.cornerRadius = 15
         view.layer.maskedCorners = CACornerMask(arrayLiteral:  .layerMinXMaxYCorner)
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
         view.setTitle("찜하기", for: .normal)
         return view
     }()
