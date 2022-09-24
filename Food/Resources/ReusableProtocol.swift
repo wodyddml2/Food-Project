@@ -28,3 +28,9 @@ extension UICollectionViewCell: ReusableProtocol {
         return String(describing: self)
     }
 }
+
+extension UITableViewHeaderFooterView: ReusableProtocol {
+    static var reusableIdentifier: String {
+        return String(describing: self)
+    }
+}

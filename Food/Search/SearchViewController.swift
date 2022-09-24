@@ -49,6 +49,7 @@ final class SearchViewController: BaseViewController {
         mainView.searchTableView.dataSource = self
         mainView.searchTableView.prefetchDataSource = self
         mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
+        
     }
 }
 
@@ -85,6 +86,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.storeNameLabel.text = storeData[indexPath.row].name
         cell.storeNumberLabel.text = storeData[indexPath.row].phone
         cell.storeLocationLabel.text = storeData[indexPath.row].adress
+        
+        cell.searchToDetailImageView.image = memoCheck == true ? nil : UIImage(systemName: "chevron.right")
+      
 
         return cell
     }
@@ -102,7 +106,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return mainView.frame.height / 7
+        return mainView.frame.height / 8
     }
     
 }

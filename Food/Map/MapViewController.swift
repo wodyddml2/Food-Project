@@ -33,6 +33,7 @@ final class MapViewController: BaseViewController {
     override func configureUI() {
         locationManager.delegate = self
         
+            
         mapCollectionViewSetup()
         checkUserDeviceLocationServiceAuthorization()
         
@@ -40,12 +41,13 @@ final class MapViewController: BaseViewController {
     }
     
     override func navigationSetup() {
-        navigationController?.navigationBar.tintColor = .darkGray
+        navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "맛집 지도"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(searchButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonClicked))
     }
     
     private func mapCollectionViewSetup() {
+        mainView.mapCollectionView.showsHorizontalScrollIndicator = false
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
@@ -90,7 +92,7 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height)
+        return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height / 1.2)
     }
     private func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -230,7 +232,7 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let coordinate = locations.last?.coordinate  else { return }
-        
+        print("S")
         locationManager.stopUpdatingLocation()
         
         locationManager.distanceFilter = 100000

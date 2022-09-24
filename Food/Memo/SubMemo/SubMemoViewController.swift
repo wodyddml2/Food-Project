@@ -128,7 +128,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeVisitLabel.text = "\(tasks[indexPath.item].storeVisit)번 방문"
             cell.storeRateLabel.text = "\(tasks[indexPath.item].storeRate)"
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
-            cell.storeReviewLabel.text = tasks[indexPath.item].storeReview
+            
             cell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
         }
         
@@ -153,9 +153,10 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width / 1.3
         
-        layout.itemSize = CGSize(width: width, height: width * 1.3)
-        layout.sectionInset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
-        layout.minimumLineSpacing = 40
+        layout.itemSize = CGSize(width: width / 1.7, height: width / 1.3)
+        layout.sectionInset = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
         
         return layout
     }

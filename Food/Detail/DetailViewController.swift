@@ -30,7 +30,7 @@ final class DetailViewController: BaseViewController {
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .darkGray
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(leftBarButtonClicked))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(rightBarButtonClicked))
     }
     
     @objc private func leftBarButtonClicked() {

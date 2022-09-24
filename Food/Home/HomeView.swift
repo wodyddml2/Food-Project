@@ -15,16 +15,9 @@ final class HomeView: BaseView {
         return view
     }()
     
-    let memoListLabel: UILabel = {
-        let view = UILabel()
-        view.text = "Memo List"
-        return view
-    }()
-    
     let memoListTableView: UITableView = {
         let view = UITableView()
-        view.contentInset = .zero
-        view.contentInsetAdjustmentBehavior = .never
+        view.separatorStyle = .singleLine
         return view
     }()
     override init(frame: CGRect) {
@@ -32,7 +25,7 @@ final class HomeView: BaseView {
     }
     
     override func configureUI() {
-        [bannerCollectionView, memoListLabel, memoListTableView].forEach {
+        [bannerCollectionView, memoListTableView].forEach {
             self.addSubview($0)
         }
         
@@ -41,17 +34,12 @@ final class HomeView: BaseView {
     override func setConstraints() {
         bannerCollectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalTo(UIScreen.main.bounds.height / 4.5)
+            make.height.equalTo(UIScreen.main.bounds.height / 5)
         }
         
-        
-        memoListLabel.snp.makeConstraints { make in
-            make.top.equalTo(bannerCollectionView.snp.bottom).offset(18)
-            make.leading.equalTo(8)
-        }
-        
+    
         memoListTableView.snp.makeConstraints { make in
-            make.top.equalTo(memoListLabel.snp.bottom).offset(15)
+            make.top.equalTo(bannerCollectionView.snp.bottom)
             make.trailing.leading.bottom.equalTo(self.safeAreaLayoutGuide)
         }
     }

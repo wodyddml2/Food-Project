@@ -11,7 +11,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     
     let memoListCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        view.backgroundColor = .white
+  
         view.showsHorizontalScrollIndicator = false
         return view
     }()
@@ -53,7 +53,11 @@ final class MemoListTableViewCell: BaseTableViewCell {
             contentView.addSubview($0)
         }
     }
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+    }
     override func setConstraints() {
         memoListCollectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self)

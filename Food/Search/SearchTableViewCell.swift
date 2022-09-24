@@ -13,18 +13,19 @@ final class SearchTableViewCell: BaseTableViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 24)
+        view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
     
     let storeNumberLabel: UILabel = {
         let view = UILabel()
+        view.font = .systemFont(ofSize: 14)
         return view
     }()
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14)
         return view
     }()
     
@@ -69,8 +70,9 @@ final class SearchTableViewCell: BaseTableViewCell {
         storeLocationLabel.snp.makeConstraints { make in
             make.top.equalTo(storeNumberLabel.snp.bottom).offset(10)
             make.leading.equalTo(14)
+            make.leading.lessThanOrEqualTo(searchToDetailImageView.snp.leading).offset(14)
             make.trailing.lessThanOrEqualTo(searchToDetailImageView.snp.leading).offset(-4)
-            make.bottom.lessThanOrEqualTo(self).offset(-8)
+
         }
         
         

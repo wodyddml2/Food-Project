@@ -17,13 +17,14 @@ final class MapView: BaseView {
         return view
     }()
     
+
     let currentLocationView: UIView = {
-        let view = UIView()
-        
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 5
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        //          view.layer.masksToBounds = true
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowRadius = 3
         view.backgroundColor = .white
         return view
     }()
@@ -31,7 +32,7 @@ final class MapView: BaseView {
     let currentLocationImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "scope")
-        view.tintColor = .darkGray
+        view.tintColor = .black
         return view
     }()
     
@@ -43,6 +44,7 @@ final class MapView: BaseView {
     
     let mapCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
         return view
     }()
     
@@ -52,7 +54,7 @@ final class MapView: BaseView {
     
     override func configureUI() {
         
-        [mapView, mapCollectionView, currentLocationView, currentLocationImageView, currentLocationButton].forEach {
+        [mapView, mapCollectionView,currentLocationView, currentLocationImageView, currentLocationButton].forEach {
             self.addSubview($0)
         }
     }
@@ -61,6 +63,7 @@ final class MapView: BaseView {
         mapView.snp.makeConstraints { make in
             make.edges.equalTo(self.safeAreaLayoutGuide)
         }
+        
         currentLocationView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
             make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
@@ -68,7 +71,7 @@ final class MapView: BaseView {
             make.height.equalTo(40)
         }
         currentLocationImageView.snp.makeConstraints { make in
-            make.edges.equalTo(currentLocationView)
+            make.edges.equalTo(currentLocationView).inset(8)
         }
         currentLocationButton.snp.makeConstraints { make in
             make.edges.equalTo(currentLocationView)

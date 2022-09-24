@@ -37,7 +37,7 @@ final class BannerCollectionViewCell: BaseCollectionViewCell {
     
     override func setConstraints() {
         bannerImageView.snp.makeConstraints { make in
-            make.top.trailing.leading.bottom.equalTo(self)
+            make.edges.equalToSuperview()
         }
         bannerIntroLable.snp.makeConstraints { make in
             make.top.equalTo(self).offset(15)

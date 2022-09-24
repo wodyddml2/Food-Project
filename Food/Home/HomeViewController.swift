@@ -58,6 +58,13 @@ final class HomeViewController: BaseViewController {
             }
         }
         allTask = repository.fecth()
+        for family in UIFont.familyNames {
+            print("-------\(family)------")
+            
+            for name in UIFont.fontNames(forFamilyName: family) {
+                print(name)
+            }
+        }
     }
     
     override func configureUI() {
@@ -68,7 +75,9 @@ final class HomeViewController: BaseViewController {
     
     override func navigationSetup() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
-        navigationController?.navigationBar.tintColor = .darkGray
+        
+        navigationController?.navigationBar.tintColor = .black
+        
         navigationItem.title = "홈"
     }
     
@@ -86,6 +95,10 @@ final class HomeViewController: BaseViewController {
         mainView.memoListTableView.delegate = self
         mainView.memoListTableView.dataSource = self
         mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
+        mainView.memoListTableView.register(MemoListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MemoListTableHeaderView.reusableIdentifier)
+        mainView.memoListTableView.showsVerticalScrollIndicator = false
+        mainView.memoListTableView.bounces = false
+        mainView.memoListTableView.backgroundColor = UIColor(named: SetColor.background.rawValue)
     }
     
     @objc func wishListButtonClicked() {
@@ -134,8 +147,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
             }
             
-            
-            
             return bannerCell
         } else {
             guard let memoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier, for: indexPath) as? MemoListCollectionViewCell else {
@@ -143,7 +154,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             if tasks.isEmpty {
                 memoCell.memoLabel.text = "메모를 입력해주세요!!"
-                memoCell.memoImageView.image = nil
+                memoCell.memoImageView.image = UIImage(named: "dishes")
             } else {
                 if tasks.count == 1{
                     memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
@@ -171,7 +182,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        //        layout.itemSize = CGSize(width: mainView.bannerCollectionView.frame.size.width, height: mainView.bannerCollectionView.frame.size.height) 이건 왜 안될까...??
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -200,17 +210,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             nowPage = 0
             return
         }
-        
         nowPage += 1
         mainView.bannerCollectionView.scrollToItem(at: IndexPath(item: nowPage, section: 0), at: .right, animated: true)
     }
     
     private func bannerTimer() {
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             self.bannerMove()
         }
     }
-    
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -280,8 +288,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         return layout
     }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print("table: \(section)")
-        return tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
+
+  
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as! MemoListTableHeaderView
+        header.contentView.backgroundColor = .white
+        header.categoryLabel.text = tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
+        return header
     }
+  
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        print("table: \(section)")
+//        return tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
+//    }
 }
+

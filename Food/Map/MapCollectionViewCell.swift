@@ -12,15 +12,13 @@ final class MapCollectionViewCell: BaseCollectionViewCell {
     let storeListView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.cornerRadius = 5
         return view
     }()
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 24)
+        view.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
         view.textAlignment = .center
         return view
     }()
@@ -42,17 +40,18 @@ final class MapCollectionViewCell: BaseCollectionViewCell {
         [storeListView, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)
         }
+        self.shadowSetup(radius: 5)
     }
     
     override func setConstraints() {
         storeListView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self)
+            make.edges.equalToSuperview()
         }
         
         
         storeNameLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self)
-            make.top.equalTo(12)
+            make.top.equalTo(16)
             make.trailing.lessThanOrEqualTo(-4)
             make.leading.lessThanOrEqualTo(4)
         }
