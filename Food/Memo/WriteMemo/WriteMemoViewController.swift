@@ -151,7 +151,7 @@ final class WriteMemoViewController: BaseViewController {
                         task.storeCategory = self.categoryKey ?? 0
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
-//                        task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1
+                        task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s")
                     }
                     
                     if let image = UIImage(named: "amda") {

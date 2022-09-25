@@ -15,7 +15,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
         view.image = UIImage(named: "amda")
         view.contentMode = .scaleAspectFit
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 5
         return view
     }()
     
