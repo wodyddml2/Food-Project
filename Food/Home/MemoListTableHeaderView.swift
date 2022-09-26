@@ -14,7 +14,7 @@ class MemoListTableHeaderView: UITableViewHeaderFooterView {
     let categoryLabel: UILabel = {
         let view = UILabel()
         view.textColor = .black
-        view.font = .boldSystemFont(ofSize: 15)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 15)
         return view
     }()
     

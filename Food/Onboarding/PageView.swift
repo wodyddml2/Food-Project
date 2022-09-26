@@ -8,13 +8,14 @@ final class PageView: BaseView {
         let view = UIImageView()
         view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         view.image = UIImage(named: "samgyeopsal")
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
     let onboardingTitleLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = .boldSystemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 16)
         view.textAlignment = .center
         return view
     }()
@@ -22,7 +23,7 @@ final class PageView: BaseView {
     let onboardingIntroLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = .systemFont(ofSize: 14)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
         view.textAlignment = .center
         view.textColor = .lightGray
         return view

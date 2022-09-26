@@ -46,7 +46,7 @@ final class WriteMemoView: BaseView {
         let view = UITextField()
         view.textAlignment = .center
         view.textColor = .white
-        view.font = .boldSystemFont(ofSize: 14)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
         view.attributedPlaceholder = NSAttributedString(string: "카테고리", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.cgColor])
         view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
         view.layer.cornerRadius = 5
@@ -70,7 +70,7 @@ final class WriteMemoView: BaseView {
     
     let storeNameField: UITextField = {
         let view = UITextField()
-        view.font = .systemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
         view.attributedPlaceholder = NSAttributedString(string: "음식점 상호명을 적어주세요", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor])
         view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         view.textAlignment = .left
@@ -79,7 +79,7 @@ final class WriteMemoView: BaseView {
     
     let storeLocationTextView: UITextView = {
         let view = UITextView()
-        view.font = .systemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
         view.text = TextViewPlaceholder.locationPlaceholder.rawValue
         view.textColor = .lightGray
         view.textAlignment = .left
@@ -91,7 +91,7 @@ final class WriteMemoView: BaseView {
     
     let storeReviewTextView: UITextView = {
         let view = UITextView()
-        view.font = .systemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
         view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
         view.textColor = .lightGray
         view.layer.cornerRadius = 5

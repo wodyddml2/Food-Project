@@ -36,7 +36,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
         let view = UILabel()
         view.textColor = .black
         view.textAlignment = .center
-        view.font = .boldSystemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 16)
         return view
     }()
     
@@ -44,7 +44,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
         let view = UILabel()
         view.textColor = .black
         view.textAlignment = .center
-        view.font = .boldSystemFont(ofSize: 16)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 16)
         return view
     }()
     

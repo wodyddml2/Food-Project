@@ -5,12 +5,12 @@ import SnapKit
 class BackupTableViewCell: BaseTableViewCell {
     let fileNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 17)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 17)
         return view
     }()
     let fileSizeLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 15)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 15)
         return view
     }()
     

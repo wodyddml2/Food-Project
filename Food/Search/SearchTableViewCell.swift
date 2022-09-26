@@ -13,19 +13,19 @@ final class SearchTableViewCell: BaseTableViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 18)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 18)
         return view
     }()
     
     let storeNumberLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 13)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 13)
         return view
     }()
     
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 13)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 13)
         return view
     }()
     

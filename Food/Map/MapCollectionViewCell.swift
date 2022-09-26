@@ -18,7 +18,7 @@ final class MapCollectionViewCell: BaseCollectionViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+        view.font = UIFont(name: SetFont.bold.rawValue, size: 18)
         view.textAlignment = .center
         return view
     }()
@@ -27,7 +27,7 @@ final class MapCollectionViewCell: BaseCollectionViewCell {
         let view = UILabel()
         view.numberOfLines = 0
         view.textAlignment = .center
-        view.font = .systemFont(ofSize: 14)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
         return view
     }()
     

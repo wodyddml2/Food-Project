@@ -15,7 +15,7 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     
     let memoLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 13)
+        view.font = UIFont(name: SetFont.medium.rawValue, size: 13)
         view.textColor = .darkGray
         view.textAlignment = .center
         return view

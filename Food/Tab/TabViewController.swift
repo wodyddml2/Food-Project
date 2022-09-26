@@ -14,6 +14,13 @@ enum SetColor: String {
     case background
 }
 
+enum SetFont: String {
+    case light = "AppleSDGothicNeo-Light"
+    case medium = "AppleSDGothicNeo-Medium"
+    case semibold = "AppleSDGothicNeo-SemiBold"
+    case bold = "AppleSDGothicNeo-Bold"
+}
+
 final class TabViewController: UITabBarController {
     
     override func viewDidLoad() {
@@ -46,7 +53,7 @@ final class TabViewController: UITabBarController {
         let tabBarAppearance = UITabBarItemAppearance()
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .white
-        tabBarAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 10)!]
+        tabBarAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: SetFont.bold.rawValue, size: 10)!]
         appearance.stackedLayoutAppearance = tabBarAppearance
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance

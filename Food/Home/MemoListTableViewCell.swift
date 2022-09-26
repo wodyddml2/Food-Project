@@ -19,7 +19,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     let memoListMoreLabel: UILabel = {
         let view = UILabel()
         view.text = "더보기"
-        view.font = .boldSystemFont(ofSize: 14)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
         return view
     }()
     let memoListMoreImageView: UIImageView = {
