@@ -7,6 +7,9 @@
 
 import Foundation
 
+import RealmSwift
+
 struct CategoryInfo {
-    let categoryInfo: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "술집"]
+    var categoryInfo: [String] = ["한식", "중식", "일식", "양식", "아시안", "디져트", "술집"]
 }
+

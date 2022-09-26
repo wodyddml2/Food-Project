@@ -11,13 +11,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    
+   
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         UserDefaults.standard.set(false, forKey: "onboarding")
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
         if UserDefaults.standard.bool(forKey: "onboarding") {
+           
             let vc = TabViewController()
             window?.rootViewController = vc
             

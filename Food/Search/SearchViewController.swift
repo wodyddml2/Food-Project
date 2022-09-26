@@ -35,7 +35,7 @@ final class SearchViewController: BaseViewController {
         navigationItem.title = "맛집 검색"
         navigationItem.searchController = mainView.searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.tintColor = .darkGray
+        navigationController?.navigationBar.tintColor = .black
     }
     
     private func searchControllerSetup() {

@@ -14,6 +14,7 @@ class FixMemoViewController: BaseViewController {
     let documentManager = DocumentManager()
     
     var task: UserMemo?
+    var category: String?
     
     override func loadView() {
         self.view = mainView
@@ -31,7 +32,7 @@ class FixMemoViewController: BaseViewController {
             mainView.storeReviewTextView.text = task.storeReview
             mainView.storeVisitLabel.text = "\(task.storeVisit)번 방문"
             mainView.currentRate = task.storeRate
-            
+            mainView.categoryTextField.text = category ?? "카테고리"
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             

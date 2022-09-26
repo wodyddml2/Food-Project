@@ -15,11 +15,12 @@ enum SettingList: String, CaseIterable {
     case backupAndRecovery = "백업 / 복구"
     case versionInfo = "버전 정보"
     case openSource = "오픈소스 라이선스"
+    case addCategory = "카테고리 추가"
 }
 
 final class SettingViewController: BaseViewController {
     
-    let settingList: [SettingList] = [.appEvaluation, .appInfo, .backupAndRecovery, .versionInfo, .openSource]
+    let settingList: [SettingList] = [.appEvaluation, .appInfo, .backupAndRecovery, .versionInfo, .openSource, .addCategory]
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()
@@ -74,6 +75,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         case .backupAndRecovery: selectedVC = BackupViewController()
         case .versionInfo: break
         case .openSource: break
+        case .addCategory: selectedVC = CategoryViewController()
         }
         
         if let selectedVC = selectedVC {

@@ -37,7 +37,7 @@ final class WishListViewController: BaseViewController {
     override func configureUI() {
         view.addSubview(wishListCollectionView)
         
-        
+        navigationController?.navigationBar.tintColor = .black
         wishListCollectionView.collectionViewLayout = collectionViewLayout()
     }
     

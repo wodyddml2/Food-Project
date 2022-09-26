@@ -26,8 +26,9 @@ final class WriteMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     let documentManager = DocumentManager()
+    let categoryRepository = UserCategoryRepository()
     
-    let categoryInfo = CategoryInfo()
+    var categoryTask: Results<UserCategory>?
     
     var task: UserMemo?
     var delegate: UserMemoDelegate?
@@ -70,16 +71,7 @@ final class WriteMemoViewController: BaseViewController {
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
         
-        
-        if categoryKey == nil || task != nil {
-            mainView.categoryTextField.tintColor = .clear
-            setPickerView()
-            dismissPickerView()
-        } else {
-            mainView.categoryTextField.text = categoryInfo.categoryInfo[categoryKey ?? 0]
-            mainView.categoryTextField.isEnabled = false
-        }
-        
+       
     }
     
     
@@ -186,12 +178,24 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     override func configureUI() {
+        categoryTask = categoryRepository.fecth()
+        
+        if categoryKey == nil || task != nil {
+            mainView.categoryTextField.tintColor = .clear
+            setPickerView()
+            dismissPickerView()
+        } else {
+            
+            mainView.categoryTextField.text = categoryTask?[categoryKey ?? 0].category
+            mainView.categoryTextField.isEnabled = false
+        }
+        
         if let task = task {
             mainView.storeNameField.text = task.storeName
             mainView.storeLocationTextView.text = task.storeAdress
             mainView.storeReviewTextView.text = task.storeReview
             mainView.currentRate = task.storeRate
-            mainView.categoryTextField.text = categoryInfo.categoryInfo[task.storeCategory]
+            mainView.categoryTextField.text = categoryTask?[task.storeCategory].category
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             
@@ -378,17 +382,16 @@ extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return categoryInfo.categoryInfo.count
+        return categoryTask?.count ?? 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categoryInfo.categoryInfo[row]
+        return categoryTask?[row].category
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        mainView.categoryTextField.text = categoryInfo.categoryInfo[row]
+        mainView.categoryTextField.text = categoryTask?[row].category
         categoryKey = row
-        
     }
     
     func setPickerView() {

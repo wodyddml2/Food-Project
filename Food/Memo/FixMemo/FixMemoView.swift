@@ -49,7 +49,6 @@ final class FixMemoView: BaseView {
         view.textColor = .white
         view.isEnabled = false
         view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
-        view.attributedPlaceholder = NSAttributedString(string: "카테고리", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.cgColor])
         view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
         view.layer.cornerRadius = 5
         return view
@@ -66,7 +65,6 @@ final class FixMemoView: BaseView {
         let view = UITextField()
         view.isEnabled = false
         view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
-        view.attributedPlaceholder = NSAttributedString(string: "음식점 상호명을 적어주세요", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor])
         view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
         view.textAlignment = .left
         return view
