@@ -23,6 +23,7 @@ final class MapViewController: BaseViewController {
     
     private var currentIndex: CGFloat = 0
     
+    
     override func loadView() {
         self.view = mainView
     }
@@ -233,10 +234,10 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let coordinate = locations.last?.coordinate  else { return }
-        print("S")
+      
         locationManager.stopUpdatingLocation()
         
-        locationManager.distanceFilter = 100000
+        locationManager.distanceFilter = 1000000
         
         requestLocationStore(lat: coordinate.latitude, lng: coordinate.longitude)
     }

@@ -82,7 +82,7 @@ struct DocumentManager {
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return UIImage(contentsOfFile: fileURL.path)
         } else {
-            return UIImage(named: "dishes")
+            return UIImage(named: "amda")
         }
     }
     

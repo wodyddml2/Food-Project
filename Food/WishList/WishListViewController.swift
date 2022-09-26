@@ -38,7 +38,6 @@ final class WishListViewController: BaseViewController {
         view.addSubview(wishListCollectionView)
         
         
-        
         wishListCollectionView.collectionViewLayout = collectionViewLayout()
     }
     

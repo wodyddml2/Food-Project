@@ -9,6 +9,7 @@ import UIKit
 import PhotosUI
 
 import RealmSwift
+import CropViewController
 
 enum TextViewPlaceholder: String {
     case locationPlaceholder = "음식점 주소를 적어주세요"
@@ -234,11 +235,20 @@ final class WriteMemoViewController: BaseViewController {
 extension WriteMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            mainView.memoImageView.image = image
-            dismiss(animated: true)
+
+            let crop = CropViewController(image: image)
+            
+            crop.delegate = self
+            crop.doneButtonTitle = "완료"
+            crop.cancelButtonTitle = "취소"
+            
+            
+            self.dismiss(animated: true)
+            
+            self.present(crop, animated: true)
         }
     }
-    
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
@@ -253,11 +263,32 @@ extension WriteMemoViewController: PHPickerViewControllerDelegate {
         if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { image, error in
                 DispatchQueue.main.async {
-                    self.mainView.memoImageView.image = image as? UIImage
+                    
+                    guard let image = image as? UIImage else {
+                        return
+                    }
+                    
+                    let crop = CropViewController(image: image)
+                    
+                    crop.delegate = self
+                    crop.doneButtonTitle = "완료"
+                    crop.cancelButtonTitle = "취소"
+                    
+                    self.present(crop, animated: true)
+
                 }
             }
         }
     }
+    
+}
+
+extension WriteMemoViewController: CropViewControllerDelegate {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        mainView.memoImageView.image = image
+        self.dismiss(animated: true)
+    }
+    
     
 }
 
@@ -276,6 +307,8 @@ extension WriteMemoViewController: UITextFieldDelegate {
         
         return changeText.count <= 17
     }
+    
+   
 }
 
 extension WriteMemoViewController: UITextViewDelegate {
@@ -333,11 +366,10 @@ extension WriteMemoViewController: UITextViewDelegate {
                 mainView.storeReviewTextView.textColor = .lightGray
             }
             navigationController?.navigationBar.tintColor = .black
-            removeKeyboardObserver()
+            
+            mainView.endEditing(true)
         }
     }
-    
-    
 }
 
 extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource {

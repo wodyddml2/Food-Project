@@ -11,8 +11,8 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .white
-        view.image = UIImage(named: "amda")
+        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        
         view.contentMode = .scaleAspectFit
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 5
@@ -22,7 +22,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     let storePickImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "xmark.circle.fill")
-        view.tintColor = .red
+        view.tintColor = UIColor(named: SetColor.darkPink.rawValue)
         return view
     }()
     
@@ -54,7 +54,8 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     
     override func configureUI() {
-        self.shadowSetup(radius: 15)
+        
+        setBorder(borderWidth: 0.3)
 
         [storeImageView, storePickImageView, storePickButton, storeNameLabel, storeLocationLabel].forEach {
             self.addSubview($0)

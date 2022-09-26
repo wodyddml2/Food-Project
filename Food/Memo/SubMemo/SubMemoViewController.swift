@@ -40,6 +40,8 @@ final class SubMemoViewController: BaseViewController {
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
         
         navigationController?.navigationBar.tintColor = .black
+        
+        subMemoCollectionView.showsVerticalScrollIndicator = false
     }
     
     @objc func plusButtonClicked() {

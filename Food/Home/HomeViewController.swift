@@ -65,6 +65,7 @@ final class HomeViewController: BaseViewController {
                 print(name)
             }
         }
+       navigationSet()
     }
     
     override func configureUI() {
@@ -73,12 +74,15 @@ final class HomeViewController: BaseViewController {
         bannerTimer()
     }
     
-    override func navigationSetup() {
+    func navigationSet() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
-        
+      
         navigationController?.navigationBar.tintColor = UIColor(named: SetColor.darkPink.rawValue)
-//        navigationItem.titleView = addNavBarImage()
         
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+
         navigationItem.title = "홈"
     }
     
@@ -109,11 +113,10 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // index 오류 명확한 해결법이 아닌듯
+      
         if collectionView == mainView.bannerCollectionView {
             return bannerInfo.bannerList.count
         } else {
-            print("Collection: \(collectionView.tag)") // section은 0인데 이건 1
             if tasks.isEmpty {
                 return 1
             } else {
@@ -123,7 +126,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     return tasks[collectionView.tag].count
                 }
             }
-//            return tasks.isEmpty ? 1 : tasks[collectionView.tag].count
         }
     }
     
@@ -154,9 +156,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 return UICollectionViewCell()
             }
             if tasks.isEmpty {
-                memoCell.memoLabel.text = "메모를 입력해주세요!!"
-                memoCell.memoImageView.image = UIImage(named: "dishes")
+                memoCell.memoImageView.image = nil
+                memoCell.memoLabel.snp.remakeConstraints { make in
+                    make.center.equalTo(memoCell)
+                }
+                memoCell.memoLabel.text = "메모를 작성해주세요 :)"
+              
             } else {
+                memoCell.memoLabel.snp.remakeConstraints { make in
+                    make.centerX.equalTo(memoCell.memoImageView)
+                    make.leading.lessThanOrEqualTo(memoCell.memoImageView).offset(4)
+                    make.trailing.lessThanOrEqualTo(memoCell.memoImageView).offset(-4)
+                    make.top.equalTo(memoCell.memoImageView.snp.bottom).offset(8)
+                    make.bottom.equalTo(-8)
+                }
                 if tasks.count == 1{
                     memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
                     memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
@@ -164,8 +177,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
                     memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
                 }
-//                memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
-//                memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
             }
             
             
@@ -193,7 +204,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == mainView.bannerCollectionView {
             return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
         } else {
-            return tasks.isEmpty ? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 5.5) : CGSize(width: UIScreen.main.bounds.width / 3.5, height: UIScreen.main.bounds.height / 5.5)
+            return tasks.isEmpty ? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3) : CGSize(width: UIScreen.main.bounds.width / 3.5, height: UIScreen.main.bounds.height / 5.5)
         }
         
     }
@@ -251,10 +262,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
         
         if tasks.isEmpty {
+            mainView.memoListTableView.separatorStyle = .none
+            cell.backgroundColor = UIColor(named: SetColor.background.rawValue)
             cell.memoListMoreButton.isHidden = true
             cell.memoListMoreImageView.isHidden = true
             cell.memoListMoreLabel.isHidden = true
         } else {
+            mainView.memoListTableView.separatorStyle = .singleLine
+            cell.backgroundColor = .white
             cell.memoListMoreButton.isHidden = false
             cell.memoListMoreImageView.isHidden = false
             cell.memoListMoreLabel.isHidden = false
@@ -276,8 +291,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tasks.isEmpty ? UIScreen.main.bounds.height / 5 : UIScreen.main.bounds.height / 4
+        return tasks.isEmpty ? UIScreen.main.bounds.height / 3 : UIScreen.main.bounds.height / 4
     }
+    
     private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -293,14 +309,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as! MemoListTableHeaderView
-        header.contentView.backgroundColor = .white
-        header.categoryLabel.text = tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
+        
+        if tasks.isEmpty {
+            header.categoryLabel.text = nil
+            header.contentView.backgroundColor = UIColor(named: SetColor.background.rawValue)
+        } else {
+            header.categoryLabel.text = category.categoryInfo[tasks[section][0].storeCategory]
+            header.contentView.backgroundColor = .white
+        }
+
         return header
     }
-  
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        print("table: \(section)")
-//        return tasks.isEmpty ? nil : category.categoryInfo[tasks[section][0].storeCategory]
-//    }
+
 }
 
