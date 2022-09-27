@@ -15,7 +15,7 @@ final class SubMemoViewController: BaseViewController {
     let documentManager = DocumentManager()
     
     var category: String?
-    var categoryKey: Int?
+    var categoryKey: ObjectId?
     
     var tasks: Results<UserMemo>? {
         didSet {
@@ -58,7 +58,10 @@ final class SubMemoViewController: BaseViewController {
             tasks = repository.fecth()
             navigationItem.title = "메모"
         } else {
-            tasks = repository.fetchCategory(category: categoryKey ?? 0)
+            if let categoryKey = categoryKey {
+                tasks = repository.fetchCategory(category: categoryKey)
+            }
+            
             guard let category = category else {
                 return
             }
@@ -85,16 +88,20 @@ final class SubMemoViewController: BaseViewController {
             
             return menu
         } else {
+            guard let categoryKey = self.categoryKey else {
+                return UIMenu()
+            }
+
             let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
-                self.tasks = self.repository.fetchCategorySort(sort: "storeRate", category: self.categoryKey ?? 0)
+                self.tasks = self.repository.fetchCategorySort(sort: "storeRate", category: categoryKey)
             }
             
             let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
-                self.tasks = self.repository.fetchCategorySort(sort: "storeVisit", category: self.categoryKey ?? 0)
+                self.tasks = self.repository.fetchCategorySort(sort: "storeVisit", category: categoryKey)
             }
             
             let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
-                self.tasks = self.repository.fetchCategorySort(sort: "storeDate", category: self.categoryKey ?? 0)
+                self.tasks = self.repository.fetchCategorySort(sort: "storeDate", category: categoryKey)
             }
             
             let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])

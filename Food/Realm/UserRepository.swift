@@ -63,12 +63,12 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         return localRealm.objects(UserMemo.self)
     }
     
-    func fetchCategory(category: Int) -> Results<UserMemo> {
+    func fetchCategory(category: ObjectId) -> Results<UserMemo> {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
     }
     
     
-    func fetchCategorySort(sort: String, category: Int) -> Results<UserMemo> {
+    func fetchCategorySort(sort: String, category: ObjectId) -> Results<UserMemo> {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category).sorted(byKeyPath: sort, ascending: false)
     }
     
@@ -183,6 +183,8 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         }
     }
 }
+
+
 protocol UserCategoryRepositoryType {
     func fecth() -> Results<UserCategory>
 }
@@ -194,7 +196,11 @@ class UserCategoryRepository: UserCategoryRepositoryType {
     func fecth() -> Results<UserCategory> {
         return localRealm.objects(UserCategory.self)
     }
-
+    
+    func fetchCategory(category: ObjectId) -> Results<UserCategory> {
+        return localRealm.objects(UserCategory.self).filter("objectId == %@", category)
+    }
+    
     func addRealm(item: UserCategory) {
         do {
             try localRealm.write {

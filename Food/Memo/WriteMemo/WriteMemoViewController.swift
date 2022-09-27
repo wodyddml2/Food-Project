@@ -35,7 +35,7 @@ final class WriteMemoViewController: BaseViewController {
     
     var storeData: StoreInfo?
     
-    var categoryKey: Int?
+    var categoryKey: ObjectId?
     
     var memoCheck: Bool = false
     
@@ -109,7 +109,7 @@ final class WriteMemoViewController: BaseViewController {
                 if self.mainView.storeReviewTextView.textColor == .lightGray {
                     self.mainView.storeReviewTextView.text = nil
                 }
-                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey ?? 0, storeDate: Date())
+                let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey!, storeDate: Date())
                 
                 self.repository.addRealm(item: task)
                 
@@ -132,7 +132,7 @@ final class WriteMemoViewController: BaseViewController {
         
         if let task = task {
             if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray  {
-              
+                
                 showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
                     if self.mainView.storeReviewTextView.textColor == .lightGray {
                         self.mainView.storeReviewTextView.text = nil
@@ -141,7 +141,9 @@ final class WriteMemoViewController: BaseViewController {
                     self.repository.fetchUpdate {
                         task.storeName = self.mainView.storeNameField.text ?? "없음"
                         task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
-                        task.storeCategory = self.categoryKey ?? 0
+                        if let categoryKey = self.categoryKey {
+                            task.storeCategory = categoryKey
+                        }
                         task.storeRate = self.mainView.currentRate
                         task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
                         task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s")
@@ -180,14 +182,11 @@ final class WriteMemoViewController: BaseViewController {
     override func configureUI() {
         categoryTask = categoryRepository.fecth()
         
+     
         if categoryKey == nil || task != nil {
             mainView.categoryTextField.tintColor = .clear
             setPickerView()
             dismissPickerView()
-        } else {
-            
-            mainView.categoryTextField.text = categoryTask?[categoryKey ?? 0].category
-            mainView.categoryTextField.isEnabled = false
         }
         
         if let task = task {
@@ -195,7 +194,14 @@ final class WriteMemoViewController: BaseViewController {
             mainView.storeLocationTextView.text = task.storeAdress
             mainView.storeReviewTextView.text = task.storeReview
             mainView.currentRate = task.storeRate
-            mainView.categoryTextField.text = categoryTask?[task.storeCategory].category
+            
+            if categoryKey != nil {
+                mainView.categoryTextField.text = categoryRepository.fetchCategory(category: task.storeCategory)[0].category
+                mainView.categoryTextField.isEnabled = false
+            } else {
+                mainView.categoryTextField.text = categoryRepository.fetchCategory(category: task.storeCategory)[0].category
+            }
+            
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             
@@ -391,7 +397,7 @@ extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         mainView.categoryTextField.text = categoryTask?[row].category
-        categoryKey = row
+        categoryKey = categoryTask?[row].objectId
     }
     
     func setPickerView() {
@@ -403,15 +409,15 @@ extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     func dismissPickerView() {
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
-        let ChoiceButton = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(ChoiceButtonClicked))
+        let choiceButton = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(choiceButtonClicked))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        ChoiceButton.tintColor = .black
-        toolBar.setItems([flexSpace ,ChoiceButton], animated: true)
+        choiceButton.tintColor = .black
+        toolBar.setItems([flexSpace ,choiceButton], animated: true)
         toolBar.isUserInteractionEnabled = true
         mainView.categoryTextField.inputAccessoryView = toolBar
     }
     
-    @objc func ChoiceButtonClicked() {
+    @objc func choiceButtonClicked() {
         mainView.endEditing(true)
     }
 }

@@ -15,12 +15,12 @@ class UserMemo: Object, Codable {
     @Persisted var storeRate: Int
     @Persisted var storeVisit: Int
     @Persisted var storeReview: String
-    @Persisted var storeCategory: Int
+    @Persisted var storeCategory: ObjectId
     @Persisted var storeDate = Date()
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     
-    convenience init(storeName: String, storeAdress: String, storeRate: Int, storeVisit: Int, storeReview: String, storeCategory: Int, storeDate: Date) {
+    convenience init(storeName: String, storeAdress: String, storeRate: Int, storeVisit: Int, storeReview: String, storeCategory: ObjectId, storeDate: Date) {
         self.init()
         self.storeName = storeName
         self.storeAdress = storeAdress

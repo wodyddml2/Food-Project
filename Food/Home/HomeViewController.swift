@@ -59,16 +59,16 @@ final class HomeViewController: BaseViewController {
         categoryTask = categoryRepository.fecth()
         
         tasks.removeAll()
-        
+       
         if let categoryTask = categoryTask {
-            for i in 0...categoryTask.count - 1 {
-                if !repository.fetchCategorySort(sort: "storeRate", category: i).isEmpty {
-                    
-                    tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i))
+            for i in categoryTask {
+                if !repository.fetchCategorySort(sort: "storeRate", category: i.objectId).isEmpty {
+
+                    tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i.objectId))
                 }
             }
         }
-        
+    
         allTask = repository.fecth()
         navigationSet()
 
@@ -88,7 +88,6 @@ final class HomeViewController: BaseViewController {
         bannerCollectionSetup()
         memoListTableViewSetup()
         bannerTimer()
-        
         
     }
     
@@ -201,9 +200,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView != mainView.bannerCollectionView && !tasks.isEmpty {
             let vc = FixMemoViewController()
-            if let categoryTask = categoryTask {
-                vc.category = categoryTask[tasks[collectionView.tag][0].storeCategory].category
-            }
+//            if let categoryTask = categoryTask {
+                vc.category = categoryRepository.fetchCategory(category: tasks[collectionView.tag][0].storeCategory)[0].category
+//                categoryTask[tasks[collectionView.tag][0].storeCategory].category
+//            }
             vc.task = tasks[collectionView.tag][indexPath.item]
             transition(vc, transitionStyle: .present)
         }
@@ -302,10 +302,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
 //        category.categoryInfo[tasks[sender.tag][0].storeCategory]
-        if let categoryTask = categoryTask {
-            vc.category = categoryTask[tasks[sender.tag][0].storeCategory].category
-        }
+//        if let categoryTask = categoryTask {
+            vc.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
+//            categoryTask[tasks[sender.tag][0].storeCategory].category
+//        }
         vc.categoryKey = tasks[sender.tag][0].storeCategory
+        
         transition(vc, transitionStyle: .push)
     }
     
@@ -333,9 +335,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             header.categoryLabel.text = nil
             header.contentView.backgroundColor = UIColor(named: SetColor.background.rawValue)
         } else {
-            if let categoryTask = categoryTask {
-                header.categoryLabel.text = categoryTask[tasks[section][0].storeCategory].category
-            }
+//            if let categoryTask = categoryTask {
+
+                header.categoryLabel.text =
+            categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category
+//                categoryTask[tasks[section][0].storeCategory].category
+//            }
 //            category.categoryInfo[tasks[section][0].storeCategory]
             header.contentView.backgroundColor = .white
         }

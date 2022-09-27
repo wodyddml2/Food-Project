@@ -15,6 +15,7 @@ class BackupViewController: BaseViewController {
         view.delegate = self
         view.dataSource = self
         view.register(BackupTableViewCell.self, forCellReuseIdentifier: BackupTableViewCell.reusableIdentifier)
+        view.rowHeight = 60
         return view
     }()
     
@@ -42,14 +43,13 @@ class BackupViewController: BaseViewController {
                 String(format: "%.1f", fileSize / 1000)
             }
         }
-      
     }
     
     
     
     override func configureUI() {
         view.addSubview(tableView)
-        tableView.rowHeight = 60
+        
         
         let backupButton = UIBarButtonItem(title: "백업", style: .plain, target: self, action: #selector(backupButtonClicked))
         let recoveryButton = UIBarButtonItem(title: "복구", style: .plain, target: self, action: #selector(recoveryButtonClicked))
