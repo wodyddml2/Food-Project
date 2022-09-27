@@ -37,6 +37,7 @@
 		634C57BC28D1FB490067B44F /* WriteMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57BB28D1FB490067B44F /* WriteMemoView.swift */; };
 		6354093028D0732800D03CAD /* MemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */; };
 		6354093228D0733500D03CAD /* MemoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */; };
+		637F4E0928E2F8FC002F7DA6 /* AcknowList in Frameworks */ = {isa = PBXBuildFile; productRef = 637F4E0828E2F8FC002F7DA6 /* AcknowList */; };
 		637F8FE928E1B23000EE67EF /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 637F8FE828E1B23000EE67EF /* CropViewController */; };
 		637F8FEB28E1B23000EE67EF /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 637F8FEA28E1B23000EE67EF /* TOCropViewController */; };
 		637F8FED28E1C7C400EE67EF /* UserCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637F8FEC28E1C7C400EE67EF /* UserCategory.swift */; };
@@ -155,6 +156,7 @@
 				637F8FE928E1B23000EE67EF /* CropViewController in Frameworks */,
 				63D700E528D5D8AF006E10B7 /* RealmSwift in Frameworks */,
 				63A9B0B128C74E6300201418 /* SnapKit in Frameworks */,
+				637F4E0928E2F8FC002F7DA6 /* AcknowList in Frameworks */,
 				63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */,
 				637F8FEB28E1B23000EE67EF /* TOCropViewController in Frameworks */,
 				C21CD95C1C651E063C2F0996 /* Pods_Food.framework in Frameworks */,
@@ -439,6 +441,7 @@
 				63A0A31D28DC55FD002D01EA /* Zip */,
 				637F8FE828E1B23000EE67EF /* CropViewController */,
 				637F8FEA28E1B23000EE67EF /* TOCropViewController */,
+				637F4E0828E2F8FC002F7DA6 /* AcknowList */,
 			);
 			productName = Food;
 			productReference = 638FCAAB28D1A08A00AC84D3 /* Food.app */;
@@ -475,6 +478,7 @@
 				63D700E128D5D8AF006E10B7 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				63A0A31C28DC55FD002D01EA /* XCRemoteSwiftPackageReference "Zip" */,
 				637F8FE728E1B22F00EE67EF /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */,
 			);
 			productRefGroup = 63FDE35428C62D5F00257D18;
 			projectDirPath = "";
@@ -844,6 +848,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vtourraine/AcknowList.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		637F8FE728E1B22F00EE67EF /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
@@ -888,6 +900,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		637F4E0828E2F8FC002F7DA6 /* AcknowList */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */;
+			productName = AcknowList;
 		};
 		637F8FE828E1B23000EE67EF /* CropViewController */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -34,7 +34,7 @@ final class HomeView: BaseView {
     override func setConstraints() {
         bannerCollectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalTo(UIScreen.main.bounds.height / 5)
+            make.height.equalTo(140)
         }
         
     

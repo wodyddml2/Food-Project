@@ -182,11 +182,13 @@ final class WriteMemoViewController: BaseViewController {
     override func configureUI() {
         categoryTask = categoryRepository.fecth()
         
-     
         if categoryKey == nil || task != nil {
             mainView.categoryTextField.tintColor = .clear
             setPickerView()
             dismissPickerView()
+        } else {
+            mainView.categoryTextField.text = categoryRepository.fetchCategory(category: categoryKey!)[0].category
+            mainView.categoryTextField.isEnabled = false
         }
         
         if let task = task {
@@ -194,14 +196,7 @@ final class WriteMemoViewController: BaseViewController {
             mainView.storeLocationTextView.text = task.storeAdress
             mainView.storeReviewTextView.text = task.storeReview
             mainView.currentRate = task.storeRate
-            
-            if categoryKey != nil {
-                mainView.categoryTextField.text = categoryRepository.fetchCategory(category: task.storeCategory)[0].category
-                mainView.categoryTextField.isEnabled = false
-            } else {
-                mainView.categoryTextField.text = categoryRepository.fetchCategory(category: task.storeCategory)[0].category
-            }
-            
+            mainView.categoryTextField.text = categoryRepository.fetchCategory(category: task.storeCategory)[0].category
             mainView.storeLocationTextView.textColor = .black
             mainView.storeReviewTextView.textColor = .black
             

@@ -57,7 +57,7 @@ final class SearchTableViewCell: BaseTableViewCell {
         }
         
         storeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(10)
+            make.top.equalTo(14)
             make.leading.equalTo(16)
             make.trailing.lessThanOrEqualTo(searchToDetailImageView.snp.leading).offset(4)
         }

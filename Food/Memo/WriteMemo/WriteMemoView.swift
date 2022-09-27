@@ -152,7 +152,7 @@ final class WriteMemoView: BaseView {
         memoImageView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.centerX.equalTo(self)
-            make.width.equalTo(self.snp.width).multipliedBy(0.7)
+            make.width.equalTo(self.snp.width).multipliedBy(0.5)
             make.height.equalTo(memoImageView.snp.width)
         }
         

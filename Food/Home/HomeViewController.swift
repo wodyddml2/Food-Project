@@ -220,7 +220,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == mainView.bannerCollectionView {
             return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
         } else {
-            return tasks.isEmpty ? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3) : CGSize(width: UIScreen.main.bounds.width / 3.5, height: UIScreen.main.bounds.height / 5.5)
+            return tasks.isEmpty ? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3) : CGSize(width: UIScreen.main.bounds.width / 3.5, height: 140)
         }
         
     }
@@ -312,7 +312,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tasks.isEmpty ? UIScreen.main.bounds.height / 3 : UIScreen.main.bounds.height / 4
+        return tasks.isEmpty ? UIScreen.main.bounds.height / 3 : 190
     }
     
     private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
