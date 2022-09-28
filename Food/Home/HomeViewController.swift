@@ -58,23 +58,23 @@ final class HomeViewController: BaseViewController {
         categoryTask = categoryRepository.fecth()
         
         tasks.removeAll()
-       
+        
         if let categoryTask = categoryTask {
             for i in categoryTask {
                 if !repository.fetchCategorySort(sort: "storeRate", category: i.objectId).isEmpty {
-
+                    
                     tasks.append(repository.fetchCategorySort(sort: "storeRate", category: i.objectId))
                 }
             }
         }
-    
+        
         allTask = repository.fecth()
         navigationSet()
-
+        
     }
     
     func categorySet() {
-
+        
         for i in category.categoryInfo {
             let info = UserCategory(category: i)
             categoryRepository.addRealm(item: info)
@@ -92,7 +92,7 @@ final class HomeViewController: BaseViewController {
     
     func navigationSet() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
-      
+        
         navigationController?.navigationBar.tintColor = UIColor(named: SetColor.darkPink.rawValue)
         navigationItem.backButtonTitle = ""
         navigationItem.title = "홈"
@@ -125,14 +125,14 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      
+        
         if collectionView == mainView.bannerCollectionView {
             return bannerInfo.bannerList.count
         } else {
             if tasks.isEmpty {
                 return 1
             } else {
-                if tasks.count == 1{
+                if tasks.count == 1 {
                     return tasks[0].count
                 } else {
                     return tasks[collectionView.tag].count
@@ -173,7 +173,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     make.center.equalTo(memoCell)
                 }
                 memoCell.memoLabel.text = "메모를 작성해주세요 :)"
-              
+                
             } else {
                 memoCell.memoLabel.snp.remakeConstraints { make in
                     make.centerX.equalTo(memoCell.memoImageView)
@@ -190,7 +190,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
                 }
             }
-  
+            
             return memoCell
         }
         
@@ -199,10 +199,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView != mainView.bannerCollectionView && !tasks.isEmpty {
             let vc = FixMemoViewController()
-//            if let categoryTask = categoryTask {
-                vc.category = categoryRepository.fetchCategory(category: tasks[collectionView.tag][0].storeCategory)[0].category
-//                categoryTask[tasks[collectionView.tag][0].storeCategory].category
-//            }
+            
+            vc.category = categoryRepository.fetchCategory(category: tasks[collectionView.tag][0].storeCategory)[0].category
+            
             vc.task = tasks[collectionView.tag][indexPath.item]
             transition(vc, transitionStyle: .present)
         }
@@ -300,7 +299,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
-            vc.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
+        vc.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
         vc.categoryKey = tasks[sender.tag][0].storeCategory
         
         transition(vc, transitionStyle: .push)
@@ -321,8 +320,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         return layout
     }
-
-  
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else {
             return nil
@@ -332,13 +331,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             header.categoryLabel.text = nil
             header.contentView.backgroundColor = UIColor(named: SetColor.background.rawValue)
         } else {
-                header.categoryLabel.text =
+            header.categoryLabel.text =
             categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category
             header.contentView.backgroundColor = .white
         }
-
+        
         return header
     }
-
+    
 }
 

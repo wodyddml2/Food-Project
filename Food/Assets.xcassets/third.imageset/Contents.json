@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "amdap.png",
+      "filename" : "undraw_breakfast_psiw.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "amdap@2x.png",
+      "filename" : "undraw_breakfast_psiw@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "amdap@3x.png",
+      "filename" : "undraw_breakfast_psiw@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

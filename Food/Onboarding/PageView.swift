@@ -6,8 +6,6 @@ final class PageView: BaseView {
     
     let onboardingImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
-        view.image = UIImage(named: "samgyeopsal")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -50,12 +48,12 @@ final class PageView: BaseView {
         onboardingImageView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(30)
             make.centerX.equalTo(self)
-            make.width.equalTo(UIScreen.main.bounds.width / 1.5)
-            make.height.equalTo(UIScreen.main.bounds.height / 2.5)
+            make.width.equalTo(UIScreen.main.bounds.width / 1.1)
+            make.height.equalTo(UIScreen.main.bounds.height / 2.3)
         }
         
         onboardingTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(onboardingImageView.snp.bottom).offset(45)
+            make.top.equalTo(onboardingImageView.snp.bottom)
             make.centerX.equalTo(self)
             make.trailing.equalTo(onboardingImageView.snp.trailing).offset(-20)
             make.leading.equalTo(onboardingImageView.snp.leading).offset(20)

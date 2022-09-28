@@ -32,6 +32,7 @@ final class WishListViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         tasks = repository.fecth()
+        navigationController?.navigationBar.tintColor = .black
     }
     
     override func configureUI() {

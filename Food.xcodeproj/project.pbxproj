@@ -52,6 +52,8 @@
 		63A9B0AE28C74E4700201418 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0AD28C74E4700201418 /* PageView.swift */; };
 		63A9B0B128C74E6300201418 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63A9B0B028C74E6300201418 /* SnapKit */; };
 		63AD53B728E4377000CAF193 /* SettingTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53B628E4377000CAF193 /* SettingTableHeaderView.swift */; };
+		63AD53BA28E467C200CAF193 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53B928E467C200CAF193 /* NetworkMonitor.swift */; };
+		63AD53BC28E4C3EB00CAF193 /* NotNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */; };
 		63D4B36F28DEF58B001681EE /* MemoListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B36E28DEF58B001681EE /* MemoListTableHeaderView.swift */; };
 		63D4B37128DF556B001681EE /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B37028DF556B001681EE /* UIView+Extension.swift */; };
 		63D700E028D5C747006E10B7 /* BannerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700DF28D5C747006E10B7 /* BannerInfo.swift */; };
@@ -123,6 +125,8 @@
 		63A0A31A28DC55E5002D01EA /* BackupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupTableViewCell.swift; sourceTree = "<group>"; };
 		63A9B0AD28C74E4700201418 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		63AD53B628E4377000CAF193 /* SettingTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderView.swift; sourceTree = "<group>"; };
+		63AD53B928E467C200CAF193 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNetworkViewController.swift; sourceTree = "<group>"; };
 		63D4B36E28DEF58B001681EE /* MemoListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableHeaderView.swift; sourceTree = "<group>"; };
 		63D4B37028DF556B001681EE /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		63D700DF28D5C747006E10B7 /* BannerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfo.swift; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				63258C4028CDC6A3007638DC /* TabViewController.swift */,
+				63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -238,8 +243,7 @@
 				63D700EB28D5ECC9006E10B7 /* APIKey.swift */,
 				63261AE928D3089E005E8501 /* APIManager.swift */,
 				63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */,
-				63D4B37028DF556B001681EE /* UIView+Extension.swift */,
-				63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */,
+				63AD53B928E467C200CAF193 /* NetworkMonitor.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -337,6 +341,16 @@
 			path = BackUp;
 			sourceTree = "<group>";
 		};
+		63AD53B828E466B700CAF193 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */,
+				63D4B37028DF556B001681EE /* UIView+Extension.swift */,
+				63D8892028D73022002EDC7C /* UIButton+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		63D700E628D5D948006E10B7 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +377,7 @@
 		63FDE35F28C62D5F00257D18 /* Food */ = {
 			isa = PBXGroup;
 			children = (
+				63AD53B828E466B700CAF193 /* Extension */,
 				63261AE328D2D314005E8501 /* Resources */,
 				63D700E628D5D948006E10B7 /* Realm */,
 				63261AEE28D33915005E8501 /* InfoData */,
@@ -379,8 +394,8 @@
 				6329218228D0D09E000DC3E5 /* Detail */,
 				6329217D28D0BA75000DC3E5 /* PopUp */,
 				634C57A228D1D2FC0067B44F /* WishList */,
-				63A0A31728DC55BA002D01EA /* BackUp */,
 				6380C24628E2002D00518679 /* Category */,
+				63A0A31728DC55BA002D01EA /* BackUp */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				63FDE36E28C62D5F00257D18 /* Info.plist */,
@@ -395,7 +410,6 @@
 				63FDE37D28C62F0000257D18 /* BaseView.swift */,
 				63FDE37928C62EEF00257D18 /* BaseTableViewCell.swift */,
 				63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */,
-				63D8892028D73022002EDC7C /* UIButton+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -561,6 +575,7 @@
 				63261AF228D345F8005E8501 /* StoreInfo.swift in Sources */,
 				63261AF028D33947005E8501 /* RegionInfo.swift in Sources */,
 				63D700E828D5D95A006E10B7 /* UserWishList.swift in Sources */,
+				63AD53BA28E467C200CAF193 /* NetworkMonitor.swift in Sources */,
 				63261AEA28D3089E005E8501 /* APIManager.swift in Sources */,
 				63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
@@ -589,6 +604,7 @@
 				63D4B36F28DEF58B001681EE /* MemoListTableHeaderView.swift in Sources */,
 				63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */,
 				63258C4128CDC6A3007638DC /* TabViewController.swift in Sources */,
+				63AD53BC28E4C3EB00CAF193 /* NotNetworkViewController.swift in Sources */,
 				63D8891F28D729A6002EDC7C /* UserMemo.swift in Sources */,
 				63A0A31928DC55D9002D01EA /* BackupViewController.swift in Sources */,
 				63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */,

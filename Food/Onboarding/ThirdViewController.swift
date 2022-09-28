@@ -20,7 +20,7 @@ final class ThirdViewController: BaseViewController {
     
     }
     override func configureUI() {
-        
+        mainView.onboardingImageView.image = UIImage(named: "third")
         mainView.onboardingTitleLabel.text = "맛집을 메모에 기록해보세요"
         mainView.onboardingIntroLabel.text = "나만의 맛집을 기록으로 남기고 얼마나 방문했는지 한 눈에 살펴볼 수 있습니다"
     }

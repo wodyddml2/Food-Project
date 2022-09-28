@@ -10,10 +10,10 @@ import UIKit
 import NMapsMap
 
 final class MapView: BaseView {
-    
-    let mapView: NMFMapView = {
+ 
+    lazy var mapView: NMFMapView = {
         let view = NMFMapView()
-        
+       
         return view
     }()
     
@@ -21,7 +21,6 @@ final class MapView: BaseView {
     let currentLocationView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         view.layer.shadowOffset = CGSize(width: 0, height: 4)
-        //          view.layer.masksToBounds = true
         view.layer.cornerRadius = view.frame.width / 2
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 3
@@ -60,6 +59,7 @@ final class MapView: BaseView {
     }
     
     override func setConstraints() {
+       
         mapView.snp.makeConstraints { make in
             make.edges.equalTo(self.safeAreaLayoutGuide)
         }

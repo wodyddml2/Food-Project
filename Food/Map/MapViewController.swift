@@ -35,13 +35,22 @@ final class MapViewController: BaseViewController {
     override func configureUI() {
         locationManager.delegate = self
         
-            
+
         mapCollectionViewSetup()
         checkUserDeviceLocationServiceAuthorization()
         
         mainView.currentLocationButton.addTarget(self, action: #selector(currentLocationButtonClicked) , for: .touchUpInside)
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(networkNotificationObserver), name: Notification.Name("network"), object: nil)
+   
+    }
+
+    @objc func networkNotificationObserver() {
+        mainView.mapView.authorize()
+    }
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "맛집 지도"
@@ -93,9 +102,11 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height / 1.1)
     }
+    
     private func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal

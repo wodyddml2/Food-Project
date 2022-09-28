@@ -29,7 +29,7 @@ final class SettingViewController: BaseViewController {
     
     let infoList: [InfoList] = [.appInfo, .appEvaluation, .appInquiry, .openSource, .versionInfo]
     
-    let settingList: [SettingList] = [.backupAndRecovery, .addCategory]
+    let settingList: [SettingList] = [.addCategory, .backupAndRecovery]
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()
@@ -93,7 +93,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             let settingCell = settingList[indexPath.row]
             
             switch settingCell {
-            case .backupAndRecovery: selectedVC = BackupViewController()
+            case .backupAndRecovery: showCautionAlert(title: "추후 업데이트 예정")
             case .addCategory: selectedVC = CategoryViewController()
             }
         } else {
@@ -115,7 +115,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             case .appInquiry:
                 sendMail()
-            case .versionInfo: break
+            case .versionInfo: showCautionAlert(title: "버전 1.0")
             case .openSource:
                 guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
                       let data = try? Data(contentsOf: url),
@@ -171,7 +171,6 @@ extension SettingViewController : MFMailComposeViewControllerDelegate {
         switch result {
         case .cancelled:
             showCautionAlert(title: "메일 전송을 취소했습니다.")
-         
         case .failed:
             showCautionAlert(title: "메일 전송을 실패했습니다.")
         case .saved: //임시저장

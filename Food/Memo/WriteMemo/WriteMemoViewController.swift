@@ -75,8 +75,11 @@ final class WriteMemoViewController: BaseViewController {
     
    
     override func navigationSetup() {
+        let appearance = UINavigationBarAppearance()
         navigationController?.navigationBar.tintColor = .black
-        
+        appearance.backgroundColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         if task == nil {
             
             navigationItem.title = "작성"
@@ -359,7 +362,7 @@ extension WriteMemoViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView == mainView.storeReviewTextView {
             setKeyboardObserver()
-            navigationController?.navigationBar.tintColor = .clear
+           
         }
         
         return true

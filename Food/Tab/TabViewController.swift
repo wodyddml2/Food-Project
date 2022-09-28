@@ -25,10 +25,10 @@ final class TabViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureTabBar()
         setupTabBarAppearence()
     }
+   
     
     private func setupTabBar(viewController: UIViewController, title: String, image: String, fillImage: String) -> UINavigationController {
         
@@ -42,7 +42,9 @@ final class TabViewController: UITabBarController {
     
     private func configureTabBar() {
         let homeVC = setupTabBar(viewController: HomeViewController(), title: "홈", image: "house", fillImage: "house.fill")
-        let mapVC = setupTabBar(viewController: MapViewController(), title: "지도", image: "map", fillImage: "map.fill")
+        
+        let mapVC = NetworkMonitor.shared.isConnected ? setupTabBar(viewController: MapViewController(), title: "지도", image: "map", fillImage: "map.fill") : setupTabBar(viewController: NotNetworkViewController(), title: "지도", image: "map", fillImage: "map.fill")
+      
         let memoVC = setupTabBar(viewController: SubMemoViewController(), title: "메모", image: "square.and.pencil", fillImage: "square.and.pencil")
         let settingVC = setupTabBar(viewController: SettingViewController(), title: "설정", image: "ellipsis.circle", fillImage: "ellipsis.circle.fill")
         
