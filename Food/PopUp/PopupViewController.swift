@@ -33,13 +33,18 @@ final class PopupViewController: BaseViewController {
         mainView.storePhoneLabel.text = storeData?.phone
         mainView.storeCategoryLabel.text = storeData?.category
         
+        mainView.backgroudViewButton.addTarget(self, action: #selector(backgroudViewButtonClicked), for: .touchUpInside)
         mainView.popToMapButton.addTarget(self, action: #selector(popToMapButtonClicked), for: .touchUpInside)
         mainView.popToDetailButton.addTarget(self, action: #selector(popToDetailButtonClicked), for: .touchUpInside)
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
+        
     }
-    
+    @objc private func backgroudViewButtonClicked() {
+        self.dismiss(animated: false)
+    }
+   
     @objc private func popToMapButtonClicked() {
-        self.dismiss(animated: true)
+        self.dismiss(animated: false)
     }
     
     @objc private func popToDetailButtonClicked() {

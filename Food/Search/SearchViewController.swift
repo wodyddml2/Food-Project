@@ -82,6 +82,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {
             return UITableViewCell()
         }
+        cell.selectionStyle = .none
         
         cell.storeNameLabel.text = storeData[indexPath.row].name
         cell.storeNumberLabel.text = storeData[indexPath.row].phone

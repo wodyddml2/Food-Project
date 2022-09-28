@@ -70,11 +70,10 @@ final class WriteMemoViewController: BaseViewController {
         mainView.storeNameField.delegate = self
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
-        
-       
+  
     }
     
-    
+   
     override func navigationSetup() {
         navigationController?.navigationBar.tintColor = .black
         
@@ -205,6 +204,7 @@ final class WriteMemoViewController: BaseViewController {
             }
             mainView.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
+        
         mainView.storeSearchButton.addTarget(self, action: #selector(storeSearchButtonClicked), for: .touchUpInside)
     }
     
@@ -217,20 +217,40 @@ final class WriteMemoViewController: BaseViewController {
     
     func menuImageButtonClicked() -> UIMenu {
         let camera = UIAction(title: "카메라", image: UIImage(systemName: "camera")) { _ in
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                return
+            
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            
+            switch status {
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: AVMediaType.video) { bool in
+                    if bool {
+                        self.imagePicker.sourceType = .camera
+                        self.imagePicker.allowsEditing = true
+                        self.present(self.imagePicker, animated: true)
+                    }
+                }
+            case .denied, .restricted:
+                self.showRequestServiceAlert(title: "카메라 이용", message: "카메라를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 카메라 권한을 설정해주세요.")
+            case .authorized:
+                self.imagePicker.sourceType = .camera
+                self.imagePicker.allowsEditing = true
+                self.present(self.imagePicker, animated: true)
+            @unknown default:
+                fatalError()
             }
-            self.imagePicker.sourceType = .camera
-            self.imagePicker.allowsEditing = true
-            self.present(self.imagePicker, animated: true)
+           
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+            
+
         }
         let gallery = UIAction(title: "갤러리", image: UIImage(systemName: "photo.on.rectangle.angled")) { _ in
             self.present(self.phPicker, animated: true)
         }
         let menu = UIMenu(title: "이미지를 가져올 경로를 정해주세요.", options: .displayInline, children: [camera, gallery])
-        
+       
         return menu
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

@@ -35,7 +35,6 @@ final class HomeViewController: BaseViewController {
     // optional로 변수를 선언해준 상태에서는 초기화가 되어 있지 않기 때문에 append가 불가
     var tasks = [Results<UserMemo>]() {
         didSet {
-            
             mainView.memoListTableView.reloadData()
         }
     }
@@ -301,11 +300,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
-//        category.categoryInfo[tasks[sender.tag][0].storeCategory]
-//        if let categoryTask = categoryTask {
             vc.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
-//            categoryTask[tasks[sender.tag][0].storeCategory].category
-//        }
         vc.categoryKey = tasks[sender.tag][0].storeCategory
         
         transition(vc, transitionStyle: .push)
@@ -329,19 +324,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
   
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as! MemoListTableHeaderView
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else {
+            return nil
+        }
         
         if tasks.isEmpty {
             header.categoryLabel.text = nil
             header.contentView.backgroundColor = UIColor(named: SetColor.background.rawValue)
         } else {
-//            if let categoryTask = categoryTask {
-
                 header.categoryLabel.text =
             categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category
-//                categoryTask[tasks[section][0].storeCategory].category
-//            }
-//            category.categoryInfo[tasks[section][0].storeCategory]
             header.contentView.backgroundColor = .white
         }
 

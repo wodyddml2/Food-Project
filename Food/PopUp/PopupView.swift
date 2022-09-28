@@ -9,6 +9,12 @@ import UIKit
 
 final class PopupView: BaseView {
     
+    let backgroudViewButton: UIButton = {
+        let view = UIButton()
+
+        return view
+    }()
+    
     let popToMapButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -95,14 +101,19 @@ final class PopupView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
+  
     override func configureUI() {
+        self.addSubview(backgroudViewButton)
         [popToMapButton, popupBackgroundView, storeImageView, storeNameLabel, storeCategoryLabel, sectionLineView, storeLocationLabel, storePhoneLabel, popToDetailButton, wishListButton].forEach {
-            self.addSubview($0)
+            backgroudViewButton.addSubview($0)
         }
     }
     
     override func setConstraints() {
+        
+        backgroudViewButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         popToMapButton.snp.makeConstraints { make in
             make.centerX.equalTo(self)
             make.bottom.equalTo(popupBackgroundView.snp.top).offset(-12)

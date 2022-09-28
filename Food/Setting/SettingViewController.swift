@@ -13,24 +13,30 @@ import AcknowList
 import SnapKit
 
 enum SettingList: String, CaseIterable {
+    case backupAndRecovery = "백업 / 복구"
+    case addCategory = "카테고리 추가"
+}
+
+enum InfoList: String, CaseIterable {
     case appInfo = "앱 소개글"
     case appEvaluation = "리뷰 남기기"
     case appInquiry = "문의하기"
-    case backupAndRecovery = "백업 / 복구"
     case versionInfo = "버전 정보"
     case openSource = "오픈소스 라이선스"
-    case addCategory = "카테고리 추가"
 }
 
 final class SettingViewController: BaseViewController {
     
-    let settingList: [SettingList] = [.appEvaluation, .appInfo, .appInquiry, .backupAndRecovery, .versionInfo, .openSource, .addCategory]
+    let infoList: [InfoList] = [.appInfo, .appEvaluation, .appInquiry, .openSource, .versionInfo]
+    
+    let settingList: [SettingList] = [.backupAndRecovery, .addCategory]
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
         view.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.reusableIdentifier)
+        view.register(SettingTableHeaderView.self, forHeaderFooterViewReuseIdentifier: SettingTableHeaderView.reusableIdentifier)
         return view
     }()
     
@@ -55,53 +61,73 @@ final class SettingViewController: BaseViewController {
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingList.count
+        return section == 0 ? settingList.count : infoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.reusableIdentifier, for: indexPath) as? SettingTableViewCell else {
             return UITableViewCell()
         }
-        cell.settingLabel.text = settingList[indexPath.row].rawValue
-       
+        cell.selectionStyle = .none
+        if indexPath.section == 0 {
+            cell.settingLabel.text = settingList[indexPath.row].rawValue
+        } else {
+            cell.settingLabel.text = infoList[indexPath.row].rawValue
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = settingList[indexPath.row]
-        
+
         var selectedVC: UIViewController?
+        selectedVC?.navigationItem.backButtonTitle = ""
         
-        switch cell {
-        case .appInfo: break
-        case .appEvaluation:
-            if #available(iOS 14.0, *) {
-                guard let scene = UIApplication
-                    .shared
-                    .connectedScenes
-                    .first(where: {
-                        $0.activationState == .foregroundActive
-                    }) as? UIWindowScene else { return }
-                SKStoreReviewController.requestReview(in: scene)
-            } else {
-                SKStoreReviewController.requestReview()
-            }
-        case .appInquiry:
-            sendMail()
-        case .backupAndRecovery: selectedVC = BackupViewController()
-        case .versionInfo: break
-        case .openSource:
-            guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
-                  let data = try? Data(contentsOf: url),
-                  let acknowList = try? AcknowPackageDecoder().decode(from: data) else {
-                return
-            }
+        if indexPath.section == 0 {
+            let settingCell = settingList[indexPath.row]
             
-            let vc = AcknowListViewController()
-            vc.acknowledgements = acknowList.acknowledgements
-            transition(vc, transitionStyle: .push)
-        case .addCategory: selectedVC = CategoryViewController()
+            switch settingCell {
+            case .backupAndRecovery: selectedVC = BackupViewController()
+            case .addCategory: selectedVC = CategoryViewController()
+            }
+        } else {
+            let infoCell = infoList[indexPath.row]
+            
+            switch infoCell {
+            case .appInfo: break
+            case .appEvaluation:
+                if #available(iOS 14.0, *) {
+                    guard let scene = UIApplication
+                        .shared
+                        .connectedScenes
+                        .first(where: {
+                            $0.activationState == .foregroundActive
+                        }) as? UIWindowScene else { return }
+                    SKStoreReviewController.requestReview(in: scene)
+                } else {
+                    SKStoreReviewController.requestReview()
+                }
+            case .appInquiry:
+                sendMail()
+            case .versionInfo: break
+            case .openSource:
+                guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
+                      let data = try? Data(contentsOf: url),
+                      let acknowList = try? AcknowPackageDecoder().decode(from: data) else {
+                    return
+                }
+                
+                let vc = AcknowListViewController()
+                vc.acknowledgements = acknowList.acknowledgements
+                
+                transition(vc, transitionStyle: .push)
+            }
         }
         
         if let selectedVC = selectedVC {
@@ -110,7 +136,15 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingTableHeaderView.reusableIdentifier) as? SettingTableHeaderView else {return nil}
+        
+        header.headerLabel.text = section == 0 ? "설정" : "정보"
+        
+        return header
     }
 }
 

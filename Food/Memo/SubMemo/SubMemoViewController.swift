@@ -39,8 +39,6 @@ final class SubMemoViewController: BaseViewController {
         
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
         
-        navigationController?.navigationBar.tintColor = .black
-        
         subMemoCollectionView.showsVerticalScrollIndicator = false
     }
     
@@ -67,6 +65,8 @@ final class SubMemoViewController: BaseViewController {
             }
             navigationItem.title = category
         }
+        
+        navigationController?.navigationBar.tintColor = .black
     }
     
     

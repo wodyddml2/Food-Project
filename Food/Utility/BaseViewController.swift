@@ -24,8 +24,8 @@ class BaseViewController: UIViewController {
     
     func navigationSetup() { }
     
-    func showRequestLocationServiceAlert() {
-        let alert = UIAlertController(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
+    func showRequestServiceAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
             if let appSetting = URL(string: UIApplication.openSettingsURLString) {
@@ -40,6 +40,7 @@ class BaseViewController: UIViewController {
         
         self.present(alert, animated: true)
     }
+
     
     func showMemoAlert(title: String, button: String = "저장", completionHandler: @escaping (UIAlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
