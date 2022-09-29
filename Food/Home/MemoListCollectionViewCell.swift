@@ -10,6 +10,8 @@ import UIKit
 final class MemoListCollectionViewCell: BaseCollectionViewCell {
     let memoImageView: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -21,17 +23,13 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
         return view
     }()
     
-    let memoButton: UIButton = {
-        let view = UIButton()
-        return view
-    }()
-    
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureUI() {
-        [memoImageView,memoLabel,memoButton].forEach {
+        [memoImageView, memoLabel].forEach {
             self.addSubview($0)
         }
      
@@ -42,14 +40,12 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
     override func setConstraints() {
         memoImageView.snp.makeConstraints { make in
             make.top.trailing.leading.equalTo(self)
-            make.height.equalTo(self.snp.width)
+            make.height.equalTo(memoImageView.snp.width)
         }
         memoLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(memoImageView)
             make.leading.lessThanOrEqualTo(memoImageView).offset(4)
             make.trailing.lessThanOrEqualTo(memoImageView).offset(-4)
             make.top.equalTo(memoImageView.snp.bottom).offset(8)
-            make.bottom.equalTo(-8)
         }
     }
 }

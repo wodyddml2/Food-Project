@@ -42,7 +42,7 @@ class CategoryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryTasks = categoryRepository.fecth()
-        
+        navigationController?.navigationBar.tintColor = .black
     }
     
     override func configureUI() {
@@ -77,6 +77,8 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        cell.selectionStyle = .none
+        
         if indexPath.row == 0 {
             cell.isHidden = true
         } else {
@@ -100,13 +102,22 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         let delete = UIContextualAction(style: .destructive, title: "") { action, view, completionHandler in
             if indexPath.row != 0 {
                 if let tasks = self.categoryTasks {
-                    self.repository.fetchUpdate {
-                        self.repository.fetchCategory(category: tasks[indexPath.row].objectId).forEach { memo in
-                            memo.storeCategory = tasks[0].objectId
+                    do {
+                        try self.repository.fetchUpdate {
+                            self.repository.fetchCategory(category: tasks[indexPath.row].objectId).forEach { memo in
+                                memo.storeCategory = tasks[0].objectId
+                            }
                         }
+                    } catch {
+                        print("error")
                     }
-                    self.categoryRepository.deleteRecord(item: tasks[indexPath.row])
                     
+                    do {
+                        try self.categoryRepository.deleteRecord(item: tasks[indexPath.row])
+                    } catch {
+                        self.showCautionAlert(title: "카테고리 삭제에 실패했습니다.")
+                    }
+
                 }
                 self.categoryTasks = self.categoryRepository.fecth()
             }
@@ -125,7 +136,11 @@ extension CategoryViewController: UITextFieldDelegate {
         if let category = textField.text {
             if category != "" {
                 let item = UserCategory(category: category)
-                categoryRepository.addRealm(item: item)
+                do {
+                    try categoryRepository.addRealm(item: item)
+                } catch {
+                    showCautionAlert(title: "카테고리 추가를 실패했습니다.")
+                }
                 categoryTasks = categoryRepository.fecth()
             } else {
                 showCautionAlert(title: "한글자 이상 입력해주세요!")

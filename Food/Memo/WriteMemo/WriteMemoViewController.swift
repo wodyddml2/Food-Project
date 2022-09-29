@@ -73,6 +73,9 @@ final class WriteMemoViewController: BaseViewController {
   
     }
     
+    deinit {
+        print("가나나나나나나나난나나나난")
+    }
    
     override func navigationSetup() {
         let appearance = UINavigationBarAppearance()
@@ -107,14 +110,20 @@ final class WriteMemoViewController: BaseViewController {
     @objc func saveButtonClicked() {
         if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray {
 
-            showMemoAlert(title: "메모를 저장하시겠습니까?") { _ in
+            showMemoAlert(title: "메모를 저장하시겠습니까?") { [weak self] _ in
+                guard let self = self else { return }
                 if self.mainView.storeReviewTextView.textColor == .lightGray {
                     self.mainView.storeReviewTextView.text = nil
                 }
                 let task = UserMemo(storeName: self.mainView.storeNameField.text ?? "없음", storeAdress: self.mainView.storeLocationTextView.text ?? "없음", storeRate: self.mainView.currentRate, storeVisit: self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s") + 1, storeReview: self.mainView.storeReviewTextView.text ?? "없음",storeCategory: self.categoryKey!, storeDate: Date())
                 
-                self.repository.addRealm(item: task)
+                do {
+                    try self.repository.addRealm(item: task)
+                } catch {
+                    self.showCautionAlert(title: "메모 저장에 실패했습니다.")
+                }
                 
+
                 if let image = UIImage(named: "amda") {
                     self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
@@ -135,21 +144,27 @@ final class WriteMemoViewController: BaseViewController {
         if let task = task {
             if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray  {
                 
-                showMemoAlert(title: "메모를 수정하시겠습니까?") { _ in
+                showMemoAlert(title: "메모를 수정하시겠습니까?") { [weak self] _ in
+                    guard let self = self else { return }
                     if self.mainView.storeReviewTextView.textColor == .lightGray {
                         self.mainView.storeReviewTextView.text = nil
                     }
                     self.repository.removeImageFromDocument(fileName: "\(task.objectId).jpg" )
-                    self.repository.fetchUpdate {
-                        task.storeName = self.mainView.storeNameField.text ?? "없음"
-                        task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
-                        if let categoryKey = self.categoryKey {
-                            task.storeCategory = categoryKey
+                    do {
+                        try self.repository.fetchUpdate {
+                            task.storeName = self.mainView.storeNameField.text ?? "없음"
+                            task.storeAdress = self.mainView.storeLocationTextView.text ?? "없음"
+                            if let categoryKey = self.categoryKey {
+                                task.storeCategory = categoryKey
+                            }
+                            task.storeRate = self.mainView.currentRate
+                            task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
+                            task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s")
                         }
-                        task.storeRate = self.mainView.currentRate
-                        task.storeReview = self.mainView.storeReviewTextView.text ?? "없음"
-                        task.storeVisit = self.repository.fetchSameData(storeAdress: self.mainView.storeLocationTextView.text ?? "s")
+                    } catch {
+                        self.showCautionAlert(title: "메모 수정에 실패했습니다.")
                     }
+                    
                     
                     if let image = UIImage(named: "amda") {
                         self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
@@ -167,9 +182,14 @@ final class WriteMemoViewController: BaseViewController {
         
     }
     @objc func deleteButtonClicked() {
-        showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { _ in
+        showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { [weak self] _ in
+            guard let self = self else { return }
             if let task = self.task {
-                self.repository.deleteRecord(item: task)
+                do {
+                    try self.repository.deleteRecord(item: task)
+                } catch {
+                    self.showCautionAlert(title: "메모 삭제를 실패했습니다.")
+                }
             }
             
             

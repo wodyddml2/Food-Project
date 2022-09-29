@@ -47,7 +47,7 @@ final class MapViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(networkNotificationObserver), name: Notification.Name("network"), object: nil)
    
     }
-
+   
     @objc func networkNotificationObserver() {
         mainView.mapView.authorize()
     }

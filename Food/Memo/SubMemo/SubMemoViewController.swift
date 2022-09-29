@@ -15,7 +15,7 @@ final class SubMemoViewController: BaseViewController {
     let documentManager = DocumentManager()
     
     var category: String?
-    var categoryKey: ObjectId?
+    weak var categoryKey: ObjectId?
     
     var tasks: Results<UserMemo>? {
         didSet {
@@ -41,6 +41,7 @@ final class SubMemoViewController: BaseViewController {
         
         subMemoCollectionView.showsVerticalScrollIndicator = false
     }
+    
     
     @objc func plusButtonClicked() {
         let vc = WriteMemoViewController()

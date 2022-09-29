@@ -18,7 +18,6 @@ enum SettingList: String, CaseIterable {
 }
 
 enum InfoList: String, CaseIterable {
-    case appInfo = "앱 소개글"
     case appEvaluation = "리뷰 남기기"
     case appInquiry = "문의하기"
     case versionInfo = "버전 정보"
@@ -27,7 +26,7 @@ enum InfoList: String, CaseIterable {
 
 final class SettingViewController: BaseViewController {
     
-    let infoList: [InfoList] = [.appInfo, .appEvaluation, .appInquiry, .openSource, .versionInfo]
+    let infoList: [InfoList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
     
     let settingList: [SettingList] = [.addCategory, .backupAndRecovery]
     
@@ -49,6 +48,7 @@ final class SettingViewController: BaseViewController {
     override func configureUI() {
         view.addSubview(settingTableView)
         
+        navigationItem.backButtonTitle = ""
         navigationItem.title = "설정"
     }
     
@@ -86,21 +86,20 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        var selectedVC: UIViewController?
-        selectedVC?.navigationItem.backButtonTitle = ""
         
+        var selectedVC: UIViewController?
+       
         if indexPath.section == 0 {
             let settingCell = settingList[indexPath.row]
             
             switch settingCell {
-            case .backupAndRecovery: showCautionAlert(title: "추후 업데이트 예정")
+            case .backupAndRecovery: showCautionAlert(title: "추후 업데이트 예정!!")
             case .addCategory: selectedVC = CategoryViewController()
             }
         } else {
             let infoCell = infoList[indexPath.row]
             
             switch infoCell {
-            case .appInfo: break
             case .appEvaluation:
                 if #available(iOS 14.0, *) {
                     guard let scene = UIApplication
@@ -115,7 +114,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             case .appInquiry:
                 sendMail()
-            case .versionInfo: showCautionAlert(title: "버전 1.0")
+            case .versionInfo:
+                showCautionAlert(title: "Version 1.0")
             case .openSource:
                 guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
                       let data = try? Data(contentsOf: url),
@@ -124,8 +124,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 let vc = AcknowListViewController()
+                let acknow = Acknow(title: "NMapsMap", text: nil, license: nil, repository: nil)
                 vc.acknowledgements = acknowList.acknowledgements
-                
+                vc.acknowledgements.append(acknow)
                 transition(vc, transitionStyle: .push)
             }
         }
@@ -166,7 +167,7 @@ extension SettingViewController : MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
-        // mail view가 떴을때 정상적으로 보내졌다. 실패했다고 Toast 띄워줄 수 있음
+        // mail view가 떴을때 정상적으로 보내졌다.
         // 어떤식으로 대응 할 수 있을지 생각해보기
         switch result {
         case .cancelled:

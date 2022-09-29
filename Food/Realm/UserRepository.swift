@@ -5,15 +5,11 @@
 //  Created by J on 2022/09/17.
 //
 
-import Foundation
+import UIKit
 
 import RealmSwift
 
-protocol UserWishListRepositoryType {
-    func fecth() -> Results<UserWishList>
-}
-
-class UserWishListRepository: UserWishListRepositoryType {
+class UserWishListRepository {
     
     let localRealm = try! Realm()
     
@@ -21,39 +17,21 @@ class UserWishListRepository: UserWishListRepositoryType {
         return localRealm.objects(UserWishList.self)
     }
     
-   
-    
-    func addRealm(item: UserWishList) {
-        do {
-            try localRealm.write {
-                localRealm.add(item)
-            }
-        } catch {
-            print("저장 불가")
+    func addRealm(item: UserWishList) throws {
+        try localRealm.write {
+            localRealm.add(item)
         }
     }
-    
-    
-    
-    func deleteRecord(item: UserWishList) {
-       
-        do {
-            try localRealm.write {
-                localRealm.delete(item)
-            }
-        } catch {
-            print("삭제 안됨")
+
+    func deleteRecord(item: UserWishList) throws {
+        try localRealm.write {
+            localRealm.delete(item)
         }
-        
     }
     
 }
 
-protocol UserMemoListRepositoryType {
-    func fecth() -> Results<UserMemo>
-}
-
-class UserMemoListRepository: UserMemoListRepositoryType {
+class UserMemoListRepository {
  
     let documentManager = DocumentManager()
     
@@ -94,39 +72,25 @@ class UserMemoListRepository: UserMemoListRepositoryType {
         }
     }
     
-    func addRealm(item: UserMemo) {
-        do {
-            try localRealm.write {
-                localRealm.add(item)
-            }
-        } catch {
-            print("저장 불가")
+    func addRealm(item: UserMemo) throws {
+        try localRealm.write {
+            localRealm.add(item)
         }
     }
-    
-    
-    
-    func deleteRecord(item: UserMemo) {
+ 
+    func deleteRecord(item: UserMemo) throws {
         removeImageFromDocument(fileName: "\(item.objectId).jpg")
-        do {
-            try localRealm.write {
-                localRealm.delete(item)
-            }
-        } catch {
-            print("삭제 안됨")
+    
+        try localRealm.write {
+            localRealm.delete(item)
         }
-        
     }
     
   
-    func fetchUpdate(completionHandler: @escaping () -> Void) {
-        do {
+    func fetchUpdate(completionHandler: @escaping () -> Void) throws {
             try localRealm.write {
                 completionHandler()
             }
-        } catch {
-            print("error")
-        }
     }
     //
     func saveEncodedJsonToDocument() throws {
@@ -184,12 +148,7 @@ class UserMemoListRepository: UserMemoListRepositoryType {
     }
 }
 
-
-protocol UserCategoryRepositoryType {
-    func fecth() -> Results<UserCategory>
-}
-
-class UserCategoryRepository: UserCategoryRepositoryType {
+class UserCategoryRepository {
     
     let localRealm = try! Realm()
     
@@ -201,23 +160,15 @@ class UserCategoryRepository: UserCategoryRepositoryType {
         return localRealm.objects(UserCategory.self).filter("objectId == %@", category)
     }
     
-    func addRealm(item: UserCategory) {
-        do {
-            try localRealm.write {
-                localRealm.add(item)
-            }
-        } catch {
-            print("저장 불가")
+    func addRealm(item: UserCategory) throws {
+        try localRealm.write {
+            localRealm.add(item)
         }
     }
  
-    func deleteRecord(item: UserCategory) {
-        do {
-            try localRealm.write {
-                localRealm.delete(item)
-            }
-        } catch {
-            print("삭제 안됨")
+    func deleteRecord(item: UserCategory) throws {
+        try localRealm.write {
+            localRealm.delete(item)
         }
     }
 }

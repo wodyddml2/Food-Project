@@ -77,9 +77,12 @@ final class HomeViewController: BaseViewController {
         
         for i in category.categoryInfo {
             let info = UserCategory(category: i)
-            categoryRepository.addRealm(item: info)
+            do {
+                try categoryRepository.addRealm(item: info)
+            } catch {
+                print("error")
+            }
         }
-        
         UserDefaults.standard.set(true, forKey: "category")
     }
     

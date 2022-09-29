@@ -42,7 +42,7 @@ final class PopupViewController: BaseViewController {
     @objc private func backgroudViewButtonClicked() {
         self.dismiss(animated: false)
     }
-   
+    
     @objc private func popToMapButtonClicked() {
         self.dismiss(animated: false)
     }
@@ -61,8 +61,11 @@ final class PopupViewController: BaseViewController {
         guard let regionData = regionData else { return }
         
         let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
-        
-        repository.addRealm(item: task)
+        do {
+            try self.repository.addRealm(item: task)
+        } catch {
+            self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+        }
         
         self.dismiss(animated: true)
     }

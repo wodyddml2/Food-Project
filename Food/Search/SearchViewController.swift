@@ -37,7 +37,7 @@ final class SearchViewController: BaseViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.navigationBar.tintColor = .black
     }
-    
+   
     private func searchControllerSetup() {
         mainView.searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         mainView.searchController.searchBar.delegate = self
@@ -60,7 +60,8 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         storeData.removeAll()
         pageCount = 1
-        RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: pageCount) { store in
+        RequestSearchAPIManager.shared.requestStore(query: searchBar.text ?? "", page: pageCount) { [weak self] store in
+            guard let self = self else { return }
             self.storeData.append(contentsOf: store)
             
             DispatchQueue.main.async {
@@ -109,7 +110,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
     }
-//    mapView.authorize()
+
 }
 
 extension SearchViewController: UITableViewDataSourcePrefetching {
@@ -117,7 +118,8 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
         for indexPath in indexPaths {
             if storeData.count - 1 == indexPath.item && storeData.count < 45 {
                 pageCount += 1
-                RequestSearchAPIManager.shared.requestStore(query: mainView.searchController.searchBar.text ?? "", page: pageCount) { store in
+                RequestSearchAPIManager.shared.requestStore(query: mainView.searchController.searchBar.text ?? "", page: pageCount) { [weak self] store in
+                    guard let self = self else { return }
                     self.storeData.append(contentsOf: store)
                     DispatchQueue.main.async {
                         self.mainView.searchTableView.reloadData()

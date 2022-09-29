@@ -38,7 +38,7 @@ final class WriteMemoView: BaseView {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 10
         view.image = UIImage(named: "amda")
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         return view
     }()
     

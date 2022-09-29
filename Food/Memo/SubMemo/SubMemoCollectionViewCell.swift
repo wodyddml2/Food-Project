@@ -23,6 +23,7 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
         view.backgroundColor = .blue
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 5
+        view.contentMode = .scaleAspectFill
         return view
     }()
     

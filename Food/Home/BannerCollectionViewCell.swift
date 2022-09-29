@@ -18,11 +18,10 @@ final class BannerCollectionViewCell: BaseCollectionViewCell {
     
     let bannerIntroLable: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 25)
+        view.font = UIFont(name: SetFont.semibold.rawValue, size: 20)
         view.textColor = .white
         return view
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

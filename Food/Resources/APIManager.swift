@@ -14,7 +14,7 @@ class RequestSearchAPIManager {
     static let shared = RequestSearchAPIManager()
     
     private init() { }
-    
+  
     func requestStore(query: String, page: Int, _ completionHandler: @escaping([StoreInfo]) -> Void) {
         let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         

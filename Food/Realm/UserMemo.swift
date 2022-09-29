@@ -45,6 +45,7 @@ class UserMemo: Object, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(objectId, forKey: .objectId)
+        try container.encode(storeAdress, forKey: .storeAdress)
         try container.encode(storeName, forKey: .storeName)
         try container.encode(storeRate, forKey: .storeRate)
         try container.encode(storeVisit, forKey: .storeVisit)

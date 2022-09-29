@@ -71,7 +71,11 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
     
     @objc func storePickButtonClicked(_ sender: UIButton) {
         if let tasks = tasks {
-            repository.deleteRecord(item: tasks[sender.tag])
+            do {
+                try repository.deleteRecord(item: tasks[sender.tag])
+            } catch {
+                showCautionAlert(title: "찜 삭제에 실패했습니다.")
+            }
         }
         wishListCollectionView.reloadData()
     }

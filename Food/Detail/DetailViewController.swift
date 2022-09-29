@@ -46,13 +46,21 @@ final class DetailViewController: BaseViewController {
                 guard let regionData = self.regionData else { return }
                 
                 let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
+                do {
+                    try self.repository.addRealm(item: task)
+                } catch {
+                    self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+                }
                 
-                self.repository.addRealm(item: task)
             } else {
                 RequestSearchAPIManager.shared.requestRegion(lat: storeData.lon, lon: storeData.lat) { region in
                     DispatchQueue.main.async {
                         let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(region.firstArea) \(region.secondArea)")
-                        self.repository.addRealm(item: task)
+                        do {
+                            try self.repository.addRealm(item: task)
+                        } catch {
+                            self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+                        }
                     }
                     
                 }

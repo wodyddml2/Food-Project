@@ -18,7 +18,7 @@ class NotNetworkViewController: BaseViewController {
         """
         wifi 또는 셀룰러를 활성화 해준 후
         
-        앱을 재부팅해주세요.
+        앱을 재실행해주세요.
         """
         view.font = .systemFont(ofSize: 16)
         return view
