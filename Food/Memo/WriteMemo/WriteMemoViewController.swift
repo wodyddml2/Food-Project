@@ -239,30 +239,39 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     func menuImageButtonClicked() -> UIMenu {
-        let camera = UIAction(title: "카메라", image: UIImage(systemName: "camera")) { _ in
-            
+        let camera = UIAction(title: "카메라", image: UIImage(systemName: "camera")) { [weak self] _ in
+            guard let self = self else {return}
             let status = AVCaptureDevice.authorizationStatus(for: .video)
             
             switch status {
+            case .authorized:
+                guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                    self.showCautionAlert(title: "카메라 사용이 불가능합니다.")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.imagePicker.sourceType = .camera
+                    self.imagePicker.allowsEditing = true
+                    self.present(self.imagePicker, animated: true)
+                }
+                
             case .notDetermined:
-                AVCaptureDevice.requestAccess(for: AVMediaType.video) { bool in
+                AVCaptureDevice.requestAccess(for: AVMediaType.video) { [weak self] bool in
+                    guard let self = self else {return}
                     if bool {
-                        self.imagePicker.sourceType = .camera
-                        self.imagePicker.allowsEditing = true
-                        self.present(self.imagePicker, animated: true)
+                        DispatchQueue.main.async {
+                            self.imagePicker.sourceType = .camera
+                            self.imagePicker.allowsEditing = true
+                            self.present(self.imagePicker, animated: true)
+                        }
                     }
                 }
-            case .denied, .restricted:
+            default:
                 self.showRequestServiceAlert(title: "카메라 이용", message: "카메라를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 카메라 권한을 설정해주세요.")
-            case .authorized:
-                self.imagePicker.sourceType = .camera
-                self.imagePicker.allowsEditing = true
-                self.present(self.imagePicker, animated: true)
-            @unknown default:
-                fatalError()
             }
            
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+            
             
 
         }
