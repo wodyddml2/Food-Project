@@ -35,6 +35,8 @@ final class SettingViewController: BaseViewController {
         view.dataSource = self
         view.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.reusableIdentifier)
         view.register(SettingTableHeaderView.self, forHeaderFooterViewReuseIdentifier: SettingTableHeaderView.reusableIdentifier)
+        view.showsVerticalScrollIndicator = false
+        view.bounces = false
         return view
     }()
     
@@ -49,6 +51,7 @@ final class SettingViewController: BaseViewController {
         
         navigationItem.backButtonTitle = ""
         navigationItem.title = "설정"
+        
     }
     
     override func setConstraints() {
@@ -99,17 +102,18 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             
             switch infoCell {
             case .appEvaluation:
-                if #available(iOS 14.0, *) {
-                    guard let scene = UIApplication
-                        .shared
-                        .connectedScenes
-                        .first(where: {
-                            $0.activationState == .foregroundActive
-                        }) as? UIWindowScene else { return }
-                    SKStoreReviewController.requestReview(in: scene)
-                } else {
-                    SKStoreReviewController.requestReview()
-                }
+                moveToReview()
+//                if #available(iOS 14.0, *) {
+//                    guard let scene = UIApplication
+//                        .shared
+//                        .connectedScenes
+//                        .first(where: {
+//                            $0.activationState == .foregroundActive
+//                        }) as? UIWindowScene else { return }
+//                    SKStoreReviewController.requestReview(in: scene)
+//                } else {
+//                    SKStoreReviewController.requestReview()
+//                }
             case .appInquiry:
                 sendMail()
             case .versionInfo:
@@ -144,6 +148,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         header.headerLabel.text = section == 0 ? "설정" : "정보"
         
         return header
+    }
+    
+    private func moveToReview() {
+        if let reviewURL = URL(string: "itms-apps://itunes.apple.com/app/itunes-u/id\(1645004547)?ls=1&mt=8&action=write-review"), UIApplication.shared.canOpenURL(reviewURL) {
+            UIApplication.shared.open(reviewURL, options: [:], completionHandler: nil)
+        }
     }
 }
 

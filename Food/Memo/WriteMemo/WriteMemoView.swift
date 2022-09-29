@@ -96,6 +96,7 @@ final class WriteMemoView: BaseView {
         view.textColor = .lightGray
         view.layer.cornerRadius = 5
         view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.showsVerticalScrollIndicator = false
         return view
     }()
     

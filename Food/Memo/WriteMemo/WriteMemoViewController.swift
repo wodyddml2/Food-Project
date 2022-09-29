@@ -48,7 +48,7 @@ final class WriteMemoViewController: BaseViewController {
     let configuration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
-        configuration.selectionLimit = 0
+        configuration.selectionLimit = 1
         return configuration
     }()
     
@@ -73,10 +73,6 @@ final class WriteMemoViewController: BaseViewController {
   
     }
     
-    deinit {
-        print("가나나나나나나나난나나나난")
-    }
-   
     override func navigationSetup() {
         let appearance = UINavigationBarAppearance()
         navigationController?.navigationBar.tintColor = .black
@@ -177,9 +173,6 @@ final class WriteMemoViewController: BaseViewController {
             }
         }
         
-        
-        
-        
     }
     @objc func deleteButtonClicked() {
         showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { [weak self] _ in
@@ -275,7 +268,8 @@ final class WriteMemoViewController: BaseViewController {
             
 
         }
-        let gallery = UIAction(title: "갤러리", image: UIImage(systemName: "photo.on.rectangle.angled")) { _ in
+        let gallery = UIAction(title: "갤러리", image: UIImage(systemName: "photo.on.rectangle.angled")) { [weak self] _ in
+            guard let self = self else {return}
             self.present(self.phPicker, animated: true)
         }
         let menu = UIMenu(title: "이미지를 가져올 경로를 정해주세요.", options: .displayInline, children: [camera, gallery])

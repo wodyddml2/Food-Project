@@ -15,7 +15,7 @@ final class SubMemoViewController: BaseViewController {
     let documentManager = DocumentManager()
     
     var category: String?
-    weak var categoryKey: ObjectId?
+    var categoryKey: ObjectId?
     
     var tasks: Results<UserMemo>? {
         didSet {
@@ -42,7 +42,7 @@ final class SubMemoViewController: BaseViewController {
         subMemoCollectionView.showsVerticalScrollIndicator = false
     }
     
-    
+
     @objc func plusButtonClicked() {
         let vc = WriteMemoViewController()
         if categoryKey != nil {
@@ -73,15 +73,18 @@ final class SubMemoViewController: BaseViewController {
     
     func filterButtonClicked() -> UIMenu {
         if category == nil {
-            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
+            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchSort(sort: "storeRate")
             }
             
-            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
+            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchSort(sort: "storeVisit")
             }
             
-            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
+            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchSort(sort: "storeDate")
             }
             
@@ -93,15 +96,18 @@ final class SubMemoViewController: BaseViewController {
                 return UIMenu()
             }
 
-            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) { _ in
+            let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchCategorySort(sort: "storeRate", category: categoryKey)
             }
             
-            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) { _ in
+            let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchCategorySort(sort: "storeVisit", category: categoryKey)
             }
             
-            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) { _ in
+            let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) {[weak self] _ in
+                guard let self = self else {return}
                 self.tasks = self.repository.fetchCategorySort(sort: "storeDate", category: categoryKey)
             }
             

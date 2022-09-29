@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sushi.jpg",
+      "filename" : "sushi.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sushi@2x.jpg",
+      "filename" : "sushi@2x.jpeg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "sushi@3x.jpg",
+      "filename" : "sushi@3x.jpeg",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -17,6 +17,8 @@ class CategoryViewController: BaseViewController {
         view.dataSource = self
         view.keyboardDismissMode = .onDrag
         view.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reusableIdentifier)
+        view.showsVerticalScrollIndicator = false
+        view.bounces = false
         return view
     }()
     
