@@ -232,6 +232,7 @@ extension MapViewController {
             requestLocationStore(lat: 37.571323, lng: 126.977511)
             
         case .authorizedWhenInUse:
+            locationManager.distanceFilter = 100000
             locationManager.startUpdatingLocation()
         default: print("default")
         }
@@ -246,9 +247,7 @@ extension MapViewController: CLLocationManagerDelegate {
         guard let coordinate = locations.last?.coordinate  else { return }
       
         locationManager.stopUpdatingLocation()
-        
-        locationManager.distanceFilter = 1000000
-        
+   
         requestLocationStore(lat: coordinate.latitude, lng: coordinate.longitude)
     }
     
