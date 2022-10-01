@@ -13,6 +13,11 @@
   * naver map
   * alamofire
   * snapKit
+  * Realm
+  * SwiftyJson
+  * Zip
+  * TOCropViewController
+  * AcknowList
 
 
 
@@ -34,3 +39,23 @@
 [2022.09.20](https://www.notion.so/2022-09-20-a414cc62eff24fff810ad5efb881fbcc)
 <br/>
 [2022.09.21](https://www.notion.so/2022-09-21-bf70b17d3b0a4187802836502be64eed)
+<br/>
+[2022.09.22](https://www.notion.so/2022-09-22-78643084bd3d499bbe6b4ed119d19900)
+<br/>
+[2022.09.23](https://www.notion.so/2022-09-23-72f76188ded8441ca2419764b09ff8b0)
+<br/>
+[2022.09.24](https://www.notion.so/2022-09-24-063ca14728254c01be4d5fed4a1d81e7)
+<br/>
+[2022.09.25](https://www.notion.so/2022-09-25-52970569fff44e2e8ebe3e32b4a2f31a)
+<br/>
+[2022.09.26](https://www.notion.so/2022-09-26-10d0f643e8a946e389eb04008e361a80)
+<br/>
+[2022.09.27](https://www.notion.so/2022-09-27-1264c61665b24f4b9f091b25c453b3c7)
+<br/>
+[2022.09.28](https://www.notion.so/2022-09-28-5f645514caa44723b4aa18dc83ac3db0)
+<br/>
+[2022.09.29](https://www.notion.so/2022-09-29-4fc2798ad77040869f38afdc47f57007)
+<br/>
+[2022.09.30](https://www.notion.so/2022-09-30-e651935429694184bae3a25f1b9e3dcf)
+
+
