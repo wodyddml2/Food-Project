@@ -38,6 +38,7 @@ final class WishListViewController: BaseViewController {
     override func configureUI() {
         view.addSubview(wishListCollectionView)
         
+        navigationItem.title = "찜 목록"
         navigationController?.navigationBar.tintColor = .black
         wishListCollectionView.collectionViewLayout = collectionViewLayout()
     }

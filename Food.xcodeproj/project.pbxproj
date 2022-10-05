@@ -66,6 +66,7 @@
 		63D700F028D62C7D006E10B7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */; };
 		63D8891F28D729A6002EDC7C /* UserMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8891E28D729A6002EDC7C /* UserMemo.swift */; };
 		63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8892028D73022002EDC7C /* UIButton+Extension.swift */; };
+		63F1E89F28E7407700FC67F4 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F1E89E28E7407700FC67F4 /* UIScreen+Extension.swift */; };
 		63F6153328D4E6230062C9FA /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F6153228D4E6230062C9FA /* DetailView.swift */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
 		63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36228C62D5F00257D18 /* SceneDelegate.swift */; };
@@ -137,6 +138,7 @@
 		63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		63D8891E28D729A6002EDC7C /* UserMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMemo.swift; sourceTree = "<group>"; };
 		63D8892028D73022002EDC7C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		63F1E89E28E7407700FC67F4 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		63F6153228D4E6230062C9FA /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FDE36228C62D5F00257D18 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */,
+				63F1E89E28E7407700FC67F4 /* UIScreen+Extension.swift */,
 				63D4B37028DF556B001681EE /* UIView+Extension.swift */,
 				63D8892028D73022002EDC7C /* UIButton+Extension.swift */,
 			);
@@ -570,6 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63258C4728CDC6C0007638DC /* SearchViewController.swift in Sources */,
+				63F1E89F28E7407700FC67F4 /* UIScreen+Extension.swift in Sources */,
 				634C57A428D1D3520067B44F /* WishListViewController.swift in Sources */,
 				634C57BA28D1FB360067B44F /* WriteMemoViewController.swift in Sources */,
 				63261AF228D345F8005E8501 /* StoreInfo.swift in Sources */,

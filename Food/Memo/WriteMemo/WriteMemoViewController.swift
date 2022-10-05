@@ -385,7 +385,6 @@ extension WriteMemoViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView == mainView.storeReviewTextView {
             setKeyboardObserver()
-           
         }
         
         return true
