@@ -5,13 +5,13 @@ import Zip
 
 
 class BackupViewController: BaseViewController {
-
+    
     let repository = UserMemoListRepository()
     let categoryRepository = UserCategoryRepository()
     let wishlistRepository = UserWishListRepository()
-
+    
     lazy var tableView: UITableView = {
-       let view = UITableView()
+        let view = UITableView()
         view.delegate = self
         view.dataSource = self
         view.register(BackupTableViewCell.self, forCellReuseIdentifier: BackupTableViewCell.reusableIdentifier)
@@ -19,7 +19,7 @@ class BackupViewController: BaseViewController {
         return view
     }()
     
-    lazy var formatter: DateFormatter = {
+    let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-KR")
         formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm EE"
@@ -33,14 +33,14 @@ class BackupViewController: BaseViewController {
         super.viewDidLoad()
         
         // 메인스레드에서 시간 지연
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        //
+        //        }
         fetchZipFile()
     }
     func fetchZipFile() {
         DocumentManager.shared.fetchDocumentZipFile { list, size in
-          
+            
             self.backupList = list
             
             guard let size = size else {
@@ -61,6 +61,7 @@ class BackupViewController: BaseViewController {
         let recoveryButton = UIBarButtonItem(title: "복구", style: .plain, target: self, action: #selector(recoveryButtonClicked))
         
         navigationItem.rightBarButtonItems = [backupButton,recoveryButton]
+        navigationController?.navigationBar.tintColor = .black
     }
     override func setConstraints() {
         tableView.snp.makeConstraints { make in
@@ -87,7 +88,7 @@ class BackupViewController: BaseViewController {
             showCautionAlert(title: "Document 위치에 오류가 있습니다.")
             return
         }
-      
+        
         // realmFile 경로 가져오기
         let memoFile = path.appendingPathComponent("memo.json")
         let categoryFile = path.appendingPathComponent("category.json")
@@ -109,7 +110,7 @@ class BackupViewController: BaseViewController {
             fetchZipFile()
             tableView.reloadData()
         } catch {
-            showCautionAlert(title: "압축 실패!!")
+            showCautionAlert(title: "압축 실패")
         }
     }
     
@@ -126,7 +127,7 @@ class BackupViewController: BaseViewController {
         self.present(vc, animated: true)
     }
     
-    private func restoreButtonClicked(zipfile: String) {
+    private func recoveryCellClicked(zipfile: String) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         let vc = TabViewController()
@@ -135,7 +136,7 @@ class BackupViewController: BaseViewController {
             showCautionAlert(title: "Document 위치에 오류가 있습니다.")
             return
         }
-      
+        
         let zipFile = path.appendingPathComponent(zipfile)
         
         do {
@@ -149,14 +150,14 @@ class BackupViewController: BaseViewController {
             try self.wishlistRepository.overwriteRealm()
             try self.categoryRepository.overwriteRealm()
             
-            self.showCautionAlert(title: "복구 완료~")
+            self.showCautionAlert(title: "복구 완료")
             sceneDelegate?.window?.rootViewController = vc
             sceneDelegate?.window?.makeKeyAndVisible()
-
+            
         } catch {
             showCautionAlert(title: "압축 해제에 실패했습니다.")
         }
-      
+        
     }
     
     @objc private func recoveryButtonClicked() {
@@ -166,12 +167,12 @@ class BackupViewController: BaseViewController {
         documentPicker.allowsMultipleSelection = false
         self.present(documentPicker, animated: true)
     }
-
+    
 }
 
 extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      
+        
         return backupList.count
     }
     
@@ -187,7 +188,35 @@ extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let file = backupList[indexPath.row].title
         
-        restoreButtonClicked(zipfile: file)
+        showMemoAlert(title: "해당 파일을 복구하시겠습니까?", button: "확인") { [weak self] _ in
+            guard let self = self else { return }
+            self.recoveryCellClicked(zipfile: file)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "") { action, view, completionHandler in
+            
+            guard let path = DocumentManager.shared.documentDirectoryPath() else {
+                self.showCautionAlert(title: "Document 위치에 오류가 있습니다.")
+                return
+            }
+            
+            let zipFile = path.appendingPathComponent(self.backupList[indexPath.row].title)
+            
+            do {
+                try FileManager.default.removeItem(at: zipFile)
+                self.fetchZipFile()
+                self.tableView.reloadData()
+            } catch {
+                self.showCautionAlert(title: "백업 파일 삭제에 실패했습니다")
+            }
+            
+        }
+        
+        delete.image = UIImage(systemName: "trash.fill")
+        
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 
@@ -230,7 +259,7 @@ extension BackupViewController: UIDocumentPickerDelegate {
                     try self.wishlistRepository.overwriteRealm()
                     try self.categoryRepository.overwriteRealm()
                     
-                    self.showCautionAlert(title: "복구 완료~")
+                    self.showCautionAlert(title: "복구 완료")
                     sceneDelegate?.window?.rootViewController = vc
                     sceneDelegate?.window?.makeKeyAndVisible()
                     // 앱을 껏다 켜야 복구가 된 것을 볼 수 있는데 해결하기 위해 window rootView를 바꿔줌
@@ -248,14 +277,14 @@ extension BackupViewController: UIDocumentPickerDelegate {
                         print("progress: \(progress)")
                     }, fileOutputHandler: { unzippedFile in
                         print("unZippedFile: \(unzippedFile)")
-                       
+                        
                     })
                     
                     try self.repository.overwriteRealm()
                     try self.wishlistRepository.overwriteRealm()
                     try self.categoryRepository.overwriteRealm()
                     
-                    self.showCautionAlert(title: "복구 완료~")
+                    self.showCautionAlert(title: "복구 완료")
                     sceneDelegate?.window?.rootViewController = vc
                     sceneDelegate?.window?.makeKeyAndVisible()
                     
@@ -266,8 +295,8 @@ extension BackupViewController: UIDocumentPickerDelegate {
         } else {
             showCautionAlert(title: "선택한 파일은 복구할 수 없습니다.")
         }
-        
-        
     }
+    
+    
 }
 
