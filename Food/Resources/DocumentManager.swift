@@ -24,8 +24,13 @@ enum DocumentError: Error {
     case jsonDecodeError
 }
 
-struct DocumentManager {
+class DocumentManager {
+    
+    static let shared = DocumentManager()
+    
+    private init() { }
   
+    
     func documentDirectoryPath() -> URL? {
         guard let documentDiretory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
@@ -86,35 +91,45 @@ struct DocumentManager {
         }
     }
     
-    func fetchDocumentZipFile(completion: @escaping([String], [Double]?) -> ()) {
+    func fetchDocumentZipFile(completion: @escaping([DocumentFile], [Double]?) -> ()) {
         do {
             guard let path = documentDirectoryPath() else {return}
             
             let docs = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil)
             
+                       
             let zip = docs.filter {
                 $0.pathExtension == "zip"
             }
             
-            let result = zip.map {
-                $0.lastPathComponent
-            }
+            var documentFile: [DocumentFile] = []
             
+            for i in zip {
+                let title = i.lastPathComponent
+                let date = try FileManager.default.attributesOfItem(atPath: i.path)
+                let creationDate = date[FileAttributeKey.creationDate] as! Date
+                
+                documentFile.append(DocumentFile(title: title, date: creationDate))
+            }
+            documentFile.sort {
+                $0.date < $1.date
+            }
+
             let fileSize = zip.map {
                 try? FileManager.default.attributesOfItem(atPath: $0.path)[.size]
             } as? [Double]
             
-            completion(result, fileSize)
+            completion(documentFile, fileSize)
             
         } catch {
             print("Error")
         }
     }
     
-    func fetchJSONData() throws -> Data {
+    func fetchJSONData(json: String) throws -> Data {
         guard let documentPath = documentDirectoryPath() else { throw DocumentError.fetchDirectoryPathError }
         
-        let jsonDataPath = documentPath.appendingPathComponent("realm.json")
+        let jsonDataPath = documentPath.appendingPathComponent(json)
         
         do {
             return try Data(contentsOf: jsonDataPath)
@@ -124,8 +139,8 @@ struct DocumentManager {
         }
     }
     
-    func saveJsonToDocument(data: Data) throws {
-        guard let jsonDirectory = documentDirectoryPath()?.appendingPathComponent("realm.json") else { return }
+    func saveJsonToDocument(data: Data, json: String) throws {
+        guard let jsonDirectory = documentDirectoryPath()?.appendingPathComponent(json) else { return }
         
         try data.write(to: jsonDirectory)
     }

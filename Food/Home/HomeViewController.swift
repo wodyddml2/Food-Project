@@ -20,7 +20,6 @@ final class HomeViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
     let categoryRepository = UserCategoryRepository()
-    let documentManager = DocumentManager()
     
     let userCategory = UserCategory()
     var categoryTask: Results<UserCategory>?
@@ -154,7 +153,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if let randomBanner = randomBanner {
                 if randomBanner.count >= 3 {
                     
-                    bannerCell.bannerImageView.image = documentManager.loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
+                    bannerCell.bannerImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
                     bannerCell.bannerIntroLable.text = randomBanner[indexPath.item].storeName
                 } else {
                     bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
@@ -187,10 +186,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
                 if tasks.count == 1{
                     memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
-                    memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
+                    memoCell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
                 } else {
                     memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
-                    memoCell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+                    memoCell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
                 }
             }
             

@@ -7,9 +7,9 @@ import Zip
 class BackupViewController: BaseViewController {
 
     let repository = UserMemoListRepository()
-    
-    let documentManager = DocumentManager()
-    
+    let categoryRepository = UserCategoryRepository()
+    let wishlistRepository = UserWishListRepository()
+
     lazy var tableView: UITableView = {
        let view = UITableView()
         view.delegate = self
@@ -19,7 +19,14 @@ class BackupViewController: BaseViewController {
         return view
     }()
     
-    var backupList: [String] = []
+    lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko-KR")
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm EE"
+        return formatter
+    }()
+    
+    var backupList: [DocumentFile] = []
     var backupFileSize: [String] = []
     
     override func viewDidLoad() {
@@ -29,18 +36,18 @@ class BackupViewController: BaseViewController {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
 //
 //        }
-        
-        
         fetchZipFile()
     }
     func fetchZipFile() {
-        documentManager.fetchDocumentZipFile { list, size in
+        DocumentManager.shared.fetchDocumentZipFile { list, size in
+          
             self.backupList = list
+            
             guard let size = size else {
                 return
             }
             self.backupFileSize = size.map { fileSize in
-                String(format: "%.1f", fileSize / 1000)
+                String(format: "%.1f", fileSize / 1000000)
             }
         }
     }
@@ -49,7 +56,6 @@ class BackupViewController: BaseViewController {
     
     override func configureUI() {
         view.addSubview(tableView)
-        
         
         let backupButton = UIBarButtonItem(title: "백업", style: .plain, target: self, action: #selector(backupButtonClicked))
         let recoveryButton = UIBarButtonItem(title: "복구", style: .plain, target: self, action: #selector(recoveryButtonClicked))
@@ -63,35 +69,41 @@ class BackupViewController: BaseViewController {
     }
     
     @objc private func backupButtonClicked() {
-        let currentTime = Date()
+        
+        let currentTime = formatter.string(from: Date())
         
         var urlPaths = [URL]()
         
         do {
             try repository.saveEncodedJsonToDocument()
+            try categoryRepository.saveEncodedJsonToDocument()
+            try wishlistRepository.saveEncodedJsonToDocument()
         } catch {
             print("error")
         }
         
         // 도큐먼트 위치에 백업할 파일이 있는지 확인
-        guard let path = documentManager.documentDirectoryPath(), let imageFile = documentManager.ImageDirectoryPath() else {
+        guard let path = DocumentManager.shared.documentDirectoryPath(), let imageFile = DocumentManager.shared.ImageDirectoryPath() else {
             showCautionAlert(title: "Document 위치에 오류가 있습니다.")
             return
         }
       
         // realmFile 경로 가져오기
-        let realmFile = path.appendingPathComponent("realm.json") // realm file이 없을 수 있음
+        let memoFile = path.appendingPathComponent("memo.json")
+        let categoryFile = path.appendingPathComponent("category.json")
+        let wishlistFile = path.appendingPathComponent("wishlist.json")
+        
         
         // realm 파일이 있는지 없는지 확인
-        guard FileManager.default.fileExists(atPath: realmFile.path), FileManager.default.fileExists(atPath: imageFile.path) else {
+        guard FileManager.default.fileExists(atPath: memoFile.path), FileManager.default.fileExists(atPath: imageFile.path), FileManager.default.fileExists(atPath: categoryFile.path), FileManager.default.fileExists(atPath: wishlistFile.path) else {
             showCautionAlert(title: "백업할 파일이 없습니다.")
             return
         }
         // 파일의 url 배열에 담아준다.
-        urlPaths.append(contentsOf: [realmFile, imageFile])
+        urlPaths.append(contentsOf: [memoFile, categoryFile, wishlistFile, imageFile])
         // 백업 파일 압축: URL
         do {
-            let zipFilePath = try Zip.quickZipFiles(urlPaths, fileName: "Memo_\(currentTime)")
+            let zipFilePath = try Zip.quickZipFiles(urlPaths, fileName: currentTime)
             print("Archive Location\(zipFilePath)")
             showActivityViewController(date: currentTime)
             fetchZipFile()
@@ -99,28 +111,59 @@ class BackupViewController: BaseViewController {
         } catch {
             showCautionAlert(title: "압축 실패!!")
         }
-        
-        
-        
     }
+    
     // ActivityViewController
-    func showActivityViewController(date: Date) {
-        guard let path = documentManager.documentDirectoryPath() else {
+    func showActivityViewController(date: String) {
+        guard let path = DocumentManager.shared.documentDirectoryPath() else {
             showCautionAlert(title: "도큐먼트 위치에 오류가 있습니다.")
             return
         }
         // zipFile 경로 가져오기
-        let backupFileURL = path.appendingPathComponent("Memo_\(date).zip")
+        let backupFileURL = path.appendingPathComponent("\(date).zip")
         
         let vc = UIActivityViewController(activityItems: [backupFileURL], applicationActivities: [])
         self.present(vc, animated: true)
+    }
+    
+    private func restoreButtonClicked(zipfile: String) {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let vc = TabViewController()
+        
+        guard let path = DocumentManager.shared.documentDirectoryPath() else {
+            showCautionAlert(title: "Document 위치에 오류가 있습니다.")
+            return
+        }
+      
+        let zipFile = path.appendingPathComponent(zipfile)
+        
+        do {
+            try Zip.unzipFile(zipFile, destination: path, overwrite: true, password: nil, progress: { progress in
+                print("progress: \(progress)")
+            }, fileOutputHandler: { unzippedFile in
+                print("unZippedFile: \(unzippedFile)")
+            })
+            
+            try self.repository.overwriteRealm()
+            try self.wishlistRepository.overwriteRealm()
+            try self.categoryRepository.overwriteRealm()
+            
+            self.showCautionAlert(title: "복구 완료~")
+            sceneDelegate?.window?.rootViewController = vc
+            sceneDelegate?.window?.makeKeyAndVisible()
+
+        } catch {
+            showCautionAlert(title: "압축 해제에 실패했습니다.")
+        }
+      
     }
     
     @objc private func recoveryButtonClicked() {
         // 파일 앱 불러오기
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.archive], asCopy: true)
         documentPicker.delegate = self
-        documentPicker.allowsMultipleSelection = false // document에 여러 파일을 가져오지 못하게 false 해줌
+        documentPicker.allowsMultipleSelection = false
         self.present(documentPicker, animated: true)
     }
 
@@ -136,9 +179,15 @@ extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BackupTableViewCell.reusableIdentifier) as? BackupTableViewCell else {
             return UITableViewCell()
         }
-        cell.fileNameLabel.text = backupList[indexPath.row]
-        cell.fileSizeLabel.text = "\(backupFileSize[indexPath.row])KB"
+        cell.fileNameLabel.text = backupList[indexPath.row].title
+        cell.fileSizeLabel.text = "\(backupFileSize[indexPath.row])MB"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let file = backupList[indexPath.row].title
+        
+        restoreButtonClicked(zipfile: file)
     }
 }
 
@@ -157,14 +206,16 @@ extension BackupViewController: UIDocumentPickerDelegate {
             showCautionAlert(title: "선택하신 파일을 찾을 수 없습니다.")
             return
         }
-        guard let path = documentManager.documentDirectoryPath() else {
+        guard let path = DocumentManager.shared.documentDirectoryPath() else {
             showCautionAlert(title: "도큐먼트 위치에 오류가 있습니다.")
             return
         }
         // lastPathComponent는 파일이름과 확장자를 가져온다.
         // 압축파일의 경로를 가져온다.
         let sandBoxFileURL = path.appendingPathComponent(selectedFileURL.lastPathComponent)
-        if backupList.contains(sandBoxFileURL.lastPathComponent) {
+        if backupList.contains(where: {
+            $0.title == sandBoxFileURL.lastPathComponent
+        }) {
             if FileManager.default.fileExists(atPath: sandBoxFileURL.path) {
                 let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent) // 폴더 생성, 폴더 안에 파일 저장 공부 - 이미지들같은 경우
                 
@@ -173,11 +224,11 @@ extension BackupViewController: UIDocumentPickerDelegate {
                         print("progress: \(progress)")
                     }, fileOutputHandler: { unzippedFile in
                         print("unZippedFile: \(unzippedFile)")
-                        
-                        
                     })
                     
                     try self.repository.overwriteRealm()
+                    try self.wishlistRepository.overwriteRealm()
+                    try self.categoryRepository.overwriteRealm()
                     
                     self.showCautionAlert(title: "복구 완료~")
                     sceneDelegate?.window?.rootViewController = vc
@@ -197,8 +248,16 @@ extension BackupViewController: UIDocumentPickerDelegate {
                         print("progress: \(progress)")
                     }, fileOutputHandler: { unzippedFile in
                         print("unZippedFile: \(unzippedFile)")
-                        self.showCautionAlert(title: "복구 완료~")
+                       
                     })
+                    
+                    try self.repository.overwriteRealm()
+                    try self.wishlistRepository.overwriteRealm()
+                    try self.categoryRepository.overwriteRealm()
+                    
+                    self.showCautionAlert(title: "복구 완료~")
+                    sceneDelegate?.window?.rootViewController = vc
+                    sceneDelegate?.window?.makeKeyAndVisible()
                     
                 } catch {
                     showCautionAlert(title: "압축 해제에 실패했습니다.")
@@ -211,6 +270,4 @@ extension BackupViewController: UIDocumentPickerDelegate {
         
     }
 }
-// json으로 데이터를 만들어서 백/복이 깔끔 마이그레이션 걱정 덜한다. 좀 더 적합 json을 default.realm에 추가하고 scenedelegate로 root뷰를 바꾸는 것으로 가능
-// 복구 위치를 바꿔준다. 그 후 기존 렘을 없애주고 그 위치에 다시 넣어준다. 비추
-// 기존의 렘데이터가 남아있어서 문제가 생긴다. sceneDelegate는
+

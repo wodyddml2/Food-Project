@@ -12,7 +12,6 @@ import RealmSwift
 final class SubMemoViewController: BaseViewController {
     
     let repository = UserMemoListRepository()
-    let documentManager = DocumentManager()
     
     var category: String?
     var categoryKey: ObjectId?
@@ -145,7 +144,7 @@ extension SubMemoViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.storeRateLabel.text = "\(tasks[indexPath.item].storeRate)"
             cell.storeLocationLabel.text = tasks[indexPath.item].storeAdress
             
-            cell.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
+            cell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[indexPath.item].objectId).jpg")
         }
         
         return cell

@@ -11,8 +11,6 @@ class FixMemoViewController: BaseViewController {
 
     let mainView = FixMemoView()
     
-    let documentManager = DocumentManager()
-    
     var task: UserMemo?
     var category: String?
     
@@ -39,7 +37,7 @@ class FixMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            mainView.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            mainView.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
     }
    

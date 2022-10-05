@@ -14,6 +14,7 @@ import SnapKit
 
 enum SettingList: String, CaseIterable {
     case addCategory = "카테고리 추가"
+    case backup = "백업 / 복구"
 }
 
 enum InfoList: String, CaseIterable {
@@ -27,7 +28,7 @@ final class SettingViewController: BaseViewController {
     
     let infoList: [InfoList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
     
-    let settingList: [SettingList] = [.addCategory]
+    let settingList: [SettingList] = [.addCategory, .backup]
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()
@@ -96,6 +97,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             
             switch settingCell {
             case .addCategory: selectedVC = CategoryViewController()
+            case .backup: selectedVC =
+                BackupViewController()
             }
         } else {
             let infoCell = infoList[indexPath.row]

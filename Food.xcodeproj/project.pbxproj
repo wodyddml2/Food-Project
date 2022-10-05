@@ -68,6 +68,7 @@
 		63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8892028D73022002EDC7C /* UIButton+Extension.swift */; };
 		63F1E89F28E7407700FC67F4 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F1E89E28E7407700FC67F4 /* UIScreen+Extension.swift */; };
 		63F6153328D4E6230062C9FA /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F6153228D4E6230062C9FA /* DetailView.swift */; };
+		63F888C128EDAA6D005361D1 /* DocumentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F888C028EDAA6D005361D1 /* DocumentFile.swift */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
 		63FDE36328C62D5F00257D18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36228C62D5F00257D18 /* SceneDelegate.swift */; };
 		63FDE36A28C62D5F00257D18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63FDE36928C62D5F00257D18 /* Assets.xcassets */; };
@@ -140,6 +141,7 @@
 		63D8892028D73022002EDC7C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		63F1E89E28E7407700FC67F4 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		63F6153228D4E6230062C9FA /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		63F888C028EDAA6D005361D1 /* DocumentFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFile.swift; sourceTree = "<group>"; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FDE36228C62D5F00257D18 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		63FDE36928C62D5F00257D18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		63261AEE28D33915005E8501 /* InfoData */ = {
 			isa = PBXGroup;
 			children = (
+				63F888C028EDAA6D005361D1 /* DocumentFile.swift */,
 				63261AEF28D33947005E8501 /* RegionInfo.swift */,
 				63D700DF28D5C747006E10B7 /* BannerInfo.swift */,
 				6310878528D8CAC5001610C2 /* CategoryInfo.swift */,
@@ -580,6 +583,7 @@
 				63261AF028D33947005E8501 /* RegionInfo.swift in Sources */,
 				63D700E828D5D95A006E10B7 /* UserWishList.swift in Sources */,
 				63AD53BA28E467C200CAF193 /* NetworkMonitor.swift in Sources */,
+				63F888C128EDAA6D005361D1 /* DocumentFile.swift in Sources */,
 				63261AEA28D3089E005E8501 /* APIManager.swift in Sources */,
 				63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,

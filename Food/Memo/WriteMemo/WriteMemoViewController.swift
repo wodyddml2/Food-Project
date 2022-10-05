@@ -25,7 +25,6 @@ final class WriteMemoViewController: BaseViewController {
     private let mainView = WriteMemoView()
     
     let repository = UserMemoListRepository()
-    let documentManager = DocumentManager()
     let categoryRepository = UserCategoryRepository()
     
     var categoryTask: Results<UserCategory>?
@@ -121,7 +120,7 @@ final class WriteMemoViewController: BaseViewController {
                 
 
                 if let image = UIImage(named: "amda") {
-                    self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                    DocumentManager.shared.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                 }
                 
                 self.dismiss(animated: true)
@@ -163,7 +162,7 @@ final class WriteMemoViewController: BaseViewController {
                     
                     
                     if let image = UIImage(named: "amda") {
-                        self.documentManager.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
+                        DocumentManager.shared.saveImageToDocument(fileName: "\(task.objectId).jpg", image: (self.mainView.memoImageView.image ?? image))
                     }
                     
                     self.dismiss(animated: true)
@@ -217,7 +216,7 @@ final class WriteMemoViewController: BaseViewController {
             if mainView.currentRate > 0 {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
-            mainView.memoImageView.image = documentManager.loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            mainView.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(task.objectId).jpg")
         }
         
         mainView.storeSearchButton.addTarget(self, action: #selector(storeSearchButtonClicked), for: .touchUpInside)
