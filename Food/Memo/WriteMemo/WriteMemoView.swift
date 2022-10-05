@@ -80,6 +80,8 @@ final class WriteMemoView: BaseView {
     let storeLocationTextView: UITextView = {
         let view = UITextView()
         view.font = .systemFont(ofSize: 16)
+        view.isScrollEnabled = false
+        view.showsVerticalScrollIndicator = false
         view.text = TextViewPlaceholder.locationPlaceholder.rawValue
         view.textColor = .lightGray
         view.textAlignment = .left
@@ -208,7 +210,7 @@ final class WriteMemoView: BaseView {
             make.top.equalTo(storeNameField.snp.bottom).offset(20)
             make.centerX.equalTo(self)
             make.width.equalTo(storeSearchView.snp.width)
-            make.height.equalTo(50)
+            make.height.equalTo(35)
         }
         categoryTextField.snp.makeConstraints { make in
             make.top.equalTo(storeLocationTextView.snp.bottom).offset(20)

@@ -184,8 +184,7 @@ final class WriteMemoViewController: BaseViewController {
                     self.showCautionAlert(title: "메모 삭제를 실패했습니다.")
                 }
             }
-            
-            
+
             self.dismiss(animated: true)
         }
     }
@@ -376,6 +375,16 @@ extension WriteMemoViewController: UITextViewDelegate {
             
             let changeText = currentText.replacingCharacters(in: range, with: text)
             
+            if changeText.count <= 24 {
+                mainView.storeLocationTextView.snp.updateConstraints { make in
+                    make.height.equalTo(35)
+                }
+            } else {
+                mainView.storeLocationTextView.snp.updateConstraints { make in
+                    make.height.equalTo(55)
+                }
+            }
+            
             return changeText.count <= 35
         } else {
             return true
@@ -416,6 +425,8 @@ extension WriteMemoViewController: UITextViewDelegate {
                 mainView.storeReviewTextView.textColor = .lightGray
             }
             navigationController?.navigationBar.tintColor = .black
+            
+            removeKeyboardObserver()
             
             mainView.endEditing(true)
         }
