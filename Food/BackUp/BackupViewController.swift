@@ -15,7 +15,9 @@ class BackupViewController: BaseViewController {
         view.delegate = self
         view.dataSource = self
         view.register(BackupTableViewCell.self, forCellReuseIdentifier: BackupTableViewCell.reusableIdentifier)
-        view.rowHeight = 60
+        view.rowHeight = 50
+        view.showsVerticalScrollIndicator = false
+        view.bounces = false
         return view
     }()
     
@@ -32,10 +34,7 @@ class BackupViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 메인스레드에서 시간 지연
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        //
-        //        }
+       
         fetchZipFile()
     }
     func fetchZipFile() {
@@ -51,25 +50,42 @@ class BackupViewController: BaseViewController {
             }
         }
     }
-    
-    
+  
     
     override func configureUI() {
         view.addSubview(tableView)
-        
-        let backupButton = UIBarButtonItem(title: "백업", style: .plain, target: self, action: #selector(backupButtonClicked))
-        let recoveryButton = UIBarButtonItem(title: "복구", style: .plain, target: self, action: #selector(recoveryButtonClicked))
-        
-        navigationItem.rightBarButtonItems = [backupButton,recoveryButton]
+       
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(showActionSheet))
         navigationController?.navigationBar.tintColor = .black
     }
+    
     override func setConstraints() {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    @objc private func backupButtonClicked() {
+    @objc private func showActionSheet() {
+        let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let backup = UIAlertAction(title: "백업하기", style: .default) { _ in
+            self.backupButtonClicked()
+        }
+        
+        let fileApp = UIAlertAction(title: "파일 앱에서 복구하기", style: .default) { _ in
+            self.fileAppButtonClicked()
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        [backup, fileApp, cancel].forEach {
+            action.addAction($0)
+        }
+        
+        present(action, animated: true)
+    }
+    
+    private func backupButtonClicked() {
         
         let currentTime = formatter.string(from: Date())
         
@@ -160,7 +176,7 @@ class BackupViewController: BaseViewController {
         
     }
     
-    @objc private func recoveryButtonClicked() {
+    private func fileAppButtonClicked() {
         // 파일 앱 불러오기
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.archive], asCopy: true)
         documentPicker.delegate = self
@@ -172,25 +188,63 @@ class BackupViewController: BaseViewController {
 
 extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return backupList.count
+        if backupList.isEmpty {
+            return 1
+        } else {
+            return backupList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BackupTableViewCell.reusableIdentifier) as? BackupTableViewCell else {
             return UITableViewCell()
         }
-        cell.fileNameLabel.text = backupList[indexPath.row].title
-        cell.fileSizeLabel.text = "\(backupFileSize[indexPath.row])MB"
+        cell.selectionStyle = .none
+        
+        if backupList.isEmpty {
+            tableView.separatorStyle = .none
+            tableView.rowHeight = 300
+            cell.fileNameLabel.numberOfLines = 0
+            cell.fileNameLabel.textAlignment = .center
+            
+            cell.fileNameLabel.text = """
+            복구할 데이터가 없습니다.
+            
+            상단의 버튼을 이용하여
+            
+            현재 데이터를 백업해주세요 :)
+            """
+            cell.fileSizeLabel.text = ""
+            cell.fileNameLabel.snp.remakeConstraints { make in
+                make.center.equalTo(cell)
+            }
+                
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.rowHeight = 50
+            cell.fileNameLabel.numberOfLines = 1
+            cell.fileNameLabel.textAlignment = .left
+            cell.fileNameLabel.text = backupList[indexPath.row].title
+            cell.fileSizeLabel.text = "\(backupFileSize[indexPath.row])MB"
+            
+            cell.fileNameLabel.snp.remakeConstraints { make in
+                make.centerY.equalTo(cell)
+                make.leading.equalTo(16)
+                make.trailing.lessThanOrEqualTo(cell.fileSizeLabel.snp.leading).offset(-8)
+            }
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let file = backupList[indexPath.row].title
-        
-        showMemoAlert(title: "해당 파일을 복구하시겠습니까?", button: "확인") { [weak self] _ in
-            guard let self = self else { return }
-            self.recoveryCellClicked(zipfile: file)
+        if !backupList.isEmpty {
+            let file = backupList[indexPath.row].title
+            
+            showMemoAlert(title: "해당 파일을 복구하시겠습니까?", button: "확인") { [weak self] _ in
+                guard let self = self else { return }
+                self.recoveryCellClicked(zipfile: file)
+            }
         }
     }
     
@@ -216,7 +270,12 @@ extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
         
         delete.image = UIImage(systemName: "trash.fill")
         
-        return UISwipeActionsConfiguration(actions: [delete])
+        if backupList.isEmpty {
+           return nil
+        } else {
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+
     }
 }
 
