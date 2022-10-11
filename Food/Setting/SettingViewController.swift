@@ -106,21 +106,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             switch infoCell {
             case .appEvaluation:
                 moveToReview()
-//                if #available(iOS 14.0, *) {
-//                    guard let scene = UIApplication
-//                        .shared
-//                        .connectedScenes
-//                        .first(where: {
-//                            $0.activationState == .foregroundActive
-//                        }) as? UIWindowScene else { return }
-//                    SKStoreReviewController.requestReview(in: scene)
-//                } else {
-//                    SKStoreReviewController.requestReview()
-//                }
             case .appInquiry:
                 sendMail()
             case .versionInfo:
-                showCautionAlert(title: "Version 1.0")
+                showCautionAlert(title: "Version 1.1.1")
             case .openSource:
                 guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
                       let data = try? Data(contentsOf: url),

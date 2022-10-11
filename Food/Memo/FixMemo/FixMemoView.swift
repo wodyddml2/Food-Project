@@ -49,7 +49,7 @@ final class FixMemoView: BaseView {
         view.textColor = .white
         view.isEnabled = false
         view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
-        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.backgroundColor = .darkPink
         view.layer.cornerRadius = 5
         return view
     }()
@@ -57,7 +57,7 @@ final class FixMemoView: BaseView {
     let storeSearchView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
 
@@ -65,7 +65,7 @@ final class FixMemoView: BaseView {
         let view = UITextField()
         view.isEnabled = false
         view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         view.textAlignment = .left
         return view
     }()
@@ -78,7 +78,7 @@ final class FixMemoView: BaseView {
         view.textColor = .lightGray
         view.textAlignment = .left
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
     
@@ -90,7 +90,7 @@ final class FixMemoView: BaseView {
         view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
         view.textColor = .lightGray
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
     
@@ -124,7 +124,7 @@ final class FixMemoView: BaseView {
             let rateButton = UIButton()
             rateButton.isEnabled = false
             rateButton.setImage(starImage, for: .normal)
-            rateButton.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+            rateButton.tintColor = .darkPink
             rateButton.tag = i
             rateButtonArr += [rateButton]
             stackView.addArrangedSubview(rateButton)

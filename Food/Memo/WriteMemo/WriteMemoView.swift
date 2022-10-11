@@ -48,7 +48,7 @@ final class WriteMemoView: BaseView {
         view.textColor = .white
         view.font = .systemFont(ofSize: 14)
         view.attributedPlaceholder = NSAttributedString(string: "카테고리", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.cgColor])
-        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.backgroundColor = .darkPink
         view.layer.cornerRadius = 5
         return view
     }()
@@ -56,7 +56,7 @@ final class WriteMemoView: BaseView {
     let storeSearchView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
     let storeSearchButton: UIButton = {
@@ -64,7 +64,7 @@ final class WriteMemoView: BaseView {
         view.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         view.tintColor = .black
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
     
@@ -72,7 +72,7 @@ final class WriteMemoView: BaseView {
         let view = UITextField()
         view.font = .systemFont(ofSize: 16)
         view.attributedPlaceholder = NSAttributedString(string: "음식점 상호명을 적어주세요", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray.cgColor])
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         view.textAlignment = .left
         return view
     }()
@@ -86,7 +86,7 @@ final class WriteMemoView: BaseView {
         view.textColor = .lightGray
         view.textAlignment = .left
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         return view
     }()
     
@@ -112,7 +112,7 @@ final class WriteMemoView: BaseView {
         view.textColor = .lightGray
         view.inputAccessoryView = accessoryView
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         view.showsVerticalScrollIndicator = false
         return view
     }()
@@ -148,7 +148,7 @@ final class WriteMemoView: BaseView {
         for i in 0 ..< 5 {
             let rateButton = UIButton()
             rateButton.setImage(starImage, for: .normal)
-            rateButton.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+            rateButton.tintColor = .darkPink
             rateButton.tag = i
             rateButtonArr += [rateButton]
             stackView.addArrangedSubview(rateButton)

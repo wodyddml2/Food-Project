@@ -11,7 +11,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        view.backgroundColor = .lightPink
         
         view.contentMode = .scaleAspectFit
         view.layer.masksToBounds = true
@@ -22,7 +22,7 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
     let storePickImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "xmark.circle.fill")
-        view.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.tintColor = .darkPink
         return view
     }()
     

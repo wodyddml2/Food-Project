@@ -103,7 +103,7 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-        if categoryKey != nil && mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray {
+        if categoryKey != nil && mainView.storeNameField.text != "" && mainView.storeLocationTextView.textColor != .lightGray {
 
             showMemoAlert(title: "메모를 저장하시겠습니까?") { [weak self] _ in
                 guard let self = self else { return }
@@ -128,7 +128,7 @@ final class WriteMemoViewController: BaseViewController {
         } else if categoryKey == nil {
             showCautionAlert(title: "주의", message: "카테고리를 선택해주세요!")
         } else {
-            showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
+            showCautionAlert(title: "주의", message: "상호명과 주소란에 최소 한 글자 이상 적어주세요!!")
         }
         
         
@@ -137,7 +137,7 @@ final class WriteMemoViewController: BaseViewController {
     @objc func resaveButtonClicked() {
         
         if let task = task {
-            if mainView.storeNameField.text != nil && mainView.storeLocationTextView.textColor != .lightGray  {
+            if mainView.storeNameField.text != ""  && mainView.storeLocationTextView.textColor != .lightGray  {
                 
                 showMemoAlert(title: "메모를 수정하시겠습니까?") { [weak self] _ in
                     guard let self = self else { return }
@@ -168,7 +168,7 @@ final class WriteMemoViewController: BaseViewController {
                     self.dismiss(animated: true)
                 }
             } else {
-                showCautionAlert(title: "주의", message: "각 작성란에 최소 한 글자 이상 적어주세요!!")
+                showCautionAlert(title: "주의", message: "상호명과 주소란에 최소 한 글자 이상 적어주세요!!")
             }
         }
         
@@ -217,6 +217,16 @@ final class WriteMemoViewController: BaseViewController {
                 mainView.rateUpdate(tag: mainView.currentRate - 1)
             }
             mainView.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(task.objectId).jpg")
+            
+            if mainView.storeLocationTextView.text.count <= 23 {
+                mainView.storeLocationTextView.snp.updateConstraints { make in
+                    make.height.equalTo(35)
+                }
+            } else {
+                mainView.storeLocationTextView.snp.updateConstraints { make in
+                    make.height.equalTo(55)
+                }
+            }
         }
         
         mainView.storeSearchButton.addTarget(self, action: #selector(storeSearchButtonClicked), for: .touchUpInside)
@@ -374,7 +384,7 @@ extension WriteMemoViewController: UITextViewDelegate {
             
             let changeText = currentText.replacingCharacters(in: range, with: text)
             
-            if changeText.count <= 24 {
+            if changeText.count <= 23 {
                 mainView.storeLocationTextView.snp.updateConstraints { make in
                     make.height.equalTo(35)
                 }

@@ -7,19 +7,8 @@
 
 import UIKit
 
-enum SetColor: String {
-    case lightPink
-    case pink
-    case darkPink
-    case background
-}
 
-enum SetFont: String {
-    case light = "AppleSDGothicNeo-Light"
-    case medium = "AppleSDGothicNeo-Medium"
-    case semibold = "AppleSDGothicNeo-SemiBold"
-    case bold = "AppleSDGothicNeo-Bold"
-}
+
 
 final class TabViewController: UITabBarController {
     
@@ -61,7 +50,7 @@ final class TabViewController: UITabBarController {
         tabBar.scrollEdgeAppearance = appearance
    
         tabBar.backgroundColor = .white
-        tabBar.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+        tabBar.tintColor = .darkPink
     }
     
     

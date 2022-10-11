@@ -8,15 +8,7 @@
 import UIKit
 
 enum DocumentError: Error {
-    case createDirectoryError
-    case saveImageError
-    case removeDirectoryError
-    case fetchImagesError
-    case fetchZipFileError
     case fetchDirectoryPathError
-    
-    case compressionFailedError
-    case restoreFailedError
     
     case fetchJsonDataError
     

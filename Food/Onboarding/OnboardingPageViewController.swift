@@ -16,13 +16,13 @@ final class OnboardingPageViewController: BaseViewController {
     private let pageContorl: UIPageControl = {
         let view = UIPageControl()
         view.pageIndicatorTintColor = .lightGray
-        view.currentPageIndicatorTintColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.currentPageIndicatorTintColor = .darkPink
         return view
     }()
     
     private let continueButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.backgroundColor = .darkPink
         view.setTitle("계속하기", for: .normal)
         view.setTitleColor(UIColor.white, for: .normal)
         

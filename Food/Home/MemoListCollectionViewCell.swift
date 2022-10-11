@@ -34,7 +34,7 @@ final class MemoListCollectionViewCell: BaseCollectionViewCell {
         }
      
         setBorder(borderWidth: 0.3)
-        self.backgroundColor = UIColor(named: SetColor.lightPink.rawValue)
+        self.backgroundColor = .lightPink
     }
     
     override func setConstraints() {

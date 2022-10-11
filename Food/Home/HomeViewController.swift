@@ -95,7 +95,7 @@ final class HomeViewController: BaseViewController {
     func navigationSet() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
         
-        navigationController?.navigationBar.tintColor = UIColor(named: SetColor.darkPink.rawValue)
+        navigationController?.navigationBar.tintColor = .darkPink
         navigationItem.backButtonTitle = ""
         navigationItem.title = "홈"
     }
@@ -117,7 +117,7 @@ final class HomeViewController: BaseViewController {
         mainView.memoListTableView.register(MemoListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MemoListTableHeaderView.reusableIdentifier)
         mainView.memoListTableView.showsVerticalScrollIndicator = false
         mainView.memoListTableView.bounces = false
-        mainView.memoListTableView.backgroundColor = UIColor(named: SetColor.background.rawValue)
+        mainView.memoListTableView.backgroundColor = .background
     }
     
     @objc func wishListButtonClicked() {
@@ -279,7 +279,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tasks.isEmpty {
             mainView.memoListTableView.separatorStyle = .none
-            cell.backgroundColor = UIColor(named: SetColor.background.rawValue)
+            cell.backgroundColor = .background
             cell.memoListMoreButton.isHidden = true
             cell.memoListMoreImageView.isHidden = true
             cell.memoListMoreLabel.isHidden = true
@@ -331,7 +331,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tasks.isEmpty {
             header.categoryLabel.text = nil
-            header.contentView.backgroundColor = UIColor(named: SetColor.background.rawValue)
+            header.contentView.backgroundColor = .background
         } else {
             header.categoryLabel.text =
             categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category

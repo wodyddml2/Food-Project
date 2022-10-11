@@ -27,7 +27,7 @@ final class PopupView: BaseView {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 5
         view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
+        view.layer.borderColor = UIColor.lightPink.cgColor
         view.backgroundColor = .white
         return view
     }()
@@ -76,22 +76,22 @@ final class PopupView: BaseView {
     
     let popToDetailButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.backgroundColor = .darkPink
         view.layer.cornerRadius = 5
         view.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMaxYCorner)
         view.setTitle("더보기", for: .normal)
         view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
+        view.layer.borderColor = UIColor.lightPink.cgColor
         return view
     }()
     
     let wishListButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = UIColor(named: SetColor.darkPink.rawValue)
+        view.backgroundColor = .darkPink
         view.layer.cornerRadius = 5
         view.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner)
         view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor(named: SetColor.lightPink.rawValue)?.cgColor
+        view.layer.borderColor = UIColor.lightPink.cgColor
         view.setTitle("찜하기", for: .normal)
         return view
     }()

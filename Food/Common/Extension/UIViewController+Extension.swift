@@ -71,16 +71,3 @@ extension UIViewController {
     }
 }
 
-extension UIViewController {
-    func addNavBarImage() -> UIImageView {
-        
-        let image = UIImage(named: "amda")
-        
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = image
-    
-        return imageView
-    }
-}
