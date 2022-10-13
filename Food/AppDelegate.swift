@@ -87,7 +87,5 @@ extension AppDelegate: MessagingDelegate {
         object: nil,
         userInfo: dataDict
       )
-      // TODO: If necessary send token to application server.
-      // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 }

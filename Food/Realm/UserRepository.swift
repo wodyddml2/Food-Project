@@ -22,36 +22,41 @@ class UserWishListRepository {
             localRealm.add(item)
         }
     }
-
-    func deleteRecord(item: UserWishList) throws {
-        try localRealm.write {
-            localRealm.delete(item)
+    
+    func deleteRecord(item: UserWishList) {
+        do {
+            try localRealm.write {
+                localRealm.delete(item)
+            }
+        } catch let error {
+            print(error)
         }
+        
     }
     
     func saveEncodedJsonToDocument() throws {
-
+        
         let encodedJson = try encodeWishList(item: fecth())
-
+        
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "wishlist.json")
-
+        
     }
-
+    
     lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-KR")
         formatter.dateFormat = "MM월 dd일 hh:mm:ss EEEE"
         return formatter
     }()
-
+    
     func encodeWishList(item: Results<UserWishList>) throws -> Data {
         do {
             let encoder = JSONEncoder()
-
+            
             encoder.dateEncodingStrategy = .formatted(formatter)
-
+            
             let encodedData: Data = try encoder.encode(item)
-
+            
             return encodedData
         } catch {
             throw DocumentError.jsonEncodeError
@@ -61,31 +66,31 @@ class UserWishListRepository {
     func decodeJSON(_ memoData: Data) throws -> [UserWishList]? {
         do {
             let decoder = JSONDecoder()
-
+            
             decoder.dateDecodingStrategy = .formatted(formatter)
-
+            
             let decodedData: [UserWishList] = try decoder.decode([UserWishList].self, from: memoData)
-
+            
             return decodedData
         } catch {
             throw DocumentError.jsonDecodeError
         }
     }
-
+    
     func overwriteRealm() throws {
         let jsonData = try DocumentManager.shared.fetchJSONData(json: "wishlist.json")
-
+        
         guard let decodedData = try decodeJSON(jsonData) else { return }
-
+        
         try localRealm.write {
-//            localRealm.deleteAll()
+            //            localRealm.deleteAll()
             localRealm.add(decodedData)
         }
     }
 }
 
 class UserMemoListRepository {
- 
+    
     let localRealm = try! Realm()
     
     func fecth() -> Results<UserMemo> {
@@ -128,70 +133,70 @@ class UserMemoListRepository {
             localRealm.add(item)
         }
     }
- 
+    
     func deleteRecord(item: UserMemo) throws {
         removeImageFromDocument(fileName: "\(item.objectId).jpg")
-    
+        
         try localRealm.write {
             localRealm.delete(item)
         }
     }
     
-  
+    
     func fetchUpdate(completionHandler: @escaping () -> Void) throws {
-            try localRealm.write {
-                completionHandler()
-            }
+        try localRealm.write {
+            completionHandler()
+        }
     }
     //
     func saveEncodedJsonToDocument() throws {
-
+        
         let encodedJson = try encodeMemo(item: fecth())
-
+        
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "memo.json")
-
+        
     }
-
+    
     lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-KR")
         formatter.dateFormat = "MM월 dd일 hh:mm:ss EEEE"
         return formatter
     }()
-
+    
     func encodeMemo(item: Results<UserMemo>) throws -> Data {
         do {
             let encoder = JSONEncoder()
-
+            
             encoder.dateEncodingStrategy = .formatted(formatter)
-
+            
             let encodedData: Data = try encoder.encode(item)
-
+            
             return encodedData
         } catch {
             throw DocumentError.jsonEncodeError
         }
     }
-
+    
     
     
     func decodeJSON(_ memoData: Data) throws -> [UserMemo]? {
         do {
             let decoder = JSONDecoder()
-
+            
             decoder.dateDecodingStrategy = .formatted(formatter)
-
+            
             let decodedData: [UserMemo] = try decoder.decode([UserMemo].self, from: memoData)
-
+            
             return decodedData
         } catch {
             throw DocumentError.jsonDecodeError
         }
     }
-
+    
     func overwriteRealm() throws {
         let jsonData = try DocumentManager.shared.fetchJSONData(json: "memo.json")
-
+        
         guard let decodedData = try decodeJSON(jsonData) else { return }
         
         try localRealm.write {
@@ -218,7 +223,7 @@ class UserCategoryRepository {
             localRealm.add(item)
         }
     }
- 
+    
     func deleteRecord(item: UserCategory) throws {
         try localRealm.write {
             localRealm.delete(item)
@@ -226,28 +231,28 @@ class UserCategoryRepository {
     }
     
     func saveEncodedJsonToDocument() throws {
-
+        
         let encodedJson = try encodeCategory(item: fecth())
-
+        
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "category.json")
-
+        
     }
-
+    
     lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-KR")
         formatter.dateFormat = "MM월 dd일 hh:mm:ss EEEE"
         return formatter
     }()
-
+    
     func encodeCategory(item: Results<UserCategory>) throws -> Data {
         do {
             let encoder = JSONEncoder()
-
+            
             encoder.dateEncodingStrategy = .formatted(formatter)
-
+            
             let encodedData: Data = try encoder.encode(item)
-
+            
             return encodedData
         } catch {
             throw DocumentError.jsonEncodeError
@@ -257,24 +262,24 @@ class UserCategoryRepository {
     func decodeJSON(_ memoData: Data) throws -> [UserCategory]? {
         do {
             let decoder = JSONDecoder()
-
+            
             decoder.dateDecodingStrategy = .formatted(formatter)
-
+            
             let decodedData: [UserCategory] = try decoder.decode([UserCategory].self, from: memoData)
-
+            
             return decodedData
         } catch {
             throw DocumentError.jsonDecodeError
         }
     }
-
+    
     func overwriteRealm() throws {
         let jsonData = try DocumentManager.shared.fetchJSONData(json: "category.json")
-
+        
         guard let decodedData = try decodeJSON(jsonData) else { return }
-
+        
         try localRealm.write {
-//            localRealm.deleteAll()
+            //            localRealm.deleteAll()
             localRealm.add(decodedData)
         }
     }
