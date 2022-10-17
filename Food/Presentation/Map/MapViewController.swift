@@ -72,7 +72,7 @@ final class MapViewController: BaseViewController {
     }
     
     @objc private func currentLocationButtonClicked() {
-        if locationManager.authorizationStatus != .denied {
+        if locationManager.authorizationStatus != .denied && NetworkMonitor.shared.isConnected {
             currentIndex = 0
             mainView.mapCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
             
@@ -82,10 +82,15 @@ final class MapViewController: BaseViewController {
             markers.removeAll()
             
             checkUserDeviceLocationServiceAuthorization()
-        } else {
+        } else if !NetworkMonitor.shared.isConnected {
+            present(NetworkMonitor.shared.showNetworkAlert(), animated: true)
+        } else if locationManager.authorizationStatus == .denied {
             showRequestServiceAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
-        }
+        } 
+    
     }
+    
+   
     
 }
 
