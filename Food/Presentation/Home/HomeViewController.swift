@@ -21,7 +21,6 @@ final class HomeViewController: BaseViewController {
     let repository = UserMemoListRepository()
     let categoryRepository = UserCategoryRepository()
     
-//    let userCategory = UserCategory()
     var categoryTask: Results<UserCategory>?
     
     var allTask: Results<UserMemo>? {
@@ -47,6 +46,7 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +54,7 @@ final class HomeViewController: BaseViewController {
         if UserDefaults.standard.bool(forKey: "category") == false {
             categorySet()
         }
-        categoryTask = categoryRepository.fecth()
+        categoryTask = categoryRepository.fetch()
         
         tasks.removeAll()
         
@@ -67,7 +67,7 @@ final class HomeViewController: BaseViewController {
             }
         }
         
-        allTask = repository.fecth()
+        allTask = repository.fetch()
         navigationSet()
         
     }

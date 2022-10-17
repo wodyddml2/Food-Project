@@ -10,6 +10,7 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import NMapsMap
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NMFAuthManager.shared().clientId = APIKey.MapID
         NetworkMonitor.shared.startMonitoring()
+        
+        aboutRealmMigration()
         
         FirebaseApp.configure()
         
@@ -68,6 +71,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate {
+    func aboutRealmMigration() {
+        let config = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 { }
+        }
+        
+        Realm.Configuration.defaultConfiguration = config
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

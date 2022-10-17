@@ -49,7 +49,6 @@ final class WishListViewController: BaseViewController {
 
 extension WishListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return tasks?.count ?? 0
         return viewModel.numberOfInSection
     }
     

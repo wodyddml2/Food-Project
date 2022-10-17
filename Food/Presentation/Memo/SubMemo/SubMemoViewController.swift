@@ -53,7 +53,7 @@ final class SubMemoViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if categoryKey == nil {
-            tasks = repository.fecth()
+            tasks = repository.fetch()
             navigationItem.title = "메모"
         } else {
             if let categoryKey = categoryKey {

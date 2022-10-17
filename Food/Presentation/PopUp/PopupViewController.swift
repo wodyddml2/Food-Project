@@ -38,6 +38,13 @@ final class PopupViewController: BaseViewController {
         mainView.popToDetailButton.addTarget(self, action: #selector(popToDetailButtonClicked), for: .touchUpInside)
         mainView.wishListButton.addTarget(self, action: #selector(wishListButtonClicked), for: .touchUpInside)
         
+        guard let storeData = storeData else { return }
+        
+        if repository.fetchOverlap(address: storeData.adress, name: storeData.name).isEmpty {
+            mainView.wishListButton.setTitle("찜하기", for: .normal)
+        } else {
+            mainView.wishListButton.setTitle("찜 취소", for: .normal)
+        }
     }
     @objc private func backgroudViewButtonClicked() {
         self.dismiss(animated: false)
@@ -60,13 +67,24 @@ final class PopupViewController: BaseViewController {
         
         guard let regionData = regionData else { return }
         
-        let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
-        do {
-            try self.repository.addRealm(item: task)
-        } catch {
-            self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+        if repository.fetchOverlap(address: storeData.adress, name: storeData.name).isEmpty {
+            let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)", storeAllAddress: storeData.adress)
+            do {
+                try self.repository.addRealm(item: task)
+            } catch {
+                self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+            }
+            mainView.wishListButton.setTitle("찜 취소", for: .normal)
+            self.dismiss(animated: true)
+        } else {
+            guard let item = repository.fetchOverlap(address: storeData.adress, name: storeData.name).first else {return}
+            do {
+                try repository.deleteRecord(item: item)
+            } catch {
+                self.showCautionAlert(title: "찜 삭제를 실패했습니다.")
+            }
+            
+            mainView.wishListButton.setTitle("찜하기", for: .normal)
         }
-        
-        self.dismiss(animated: true)
     }
 }

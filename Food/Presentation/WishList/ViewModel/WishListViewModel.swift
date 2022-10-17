@@ -19,7 +19,7 @@ extension WishListViewModel {
         
         tasks.value.removeAll()
         
-        let allWishList = repository.fecth()
+        let allWishList = repository.fetch()
         
         allWishList.forEach { wish in
             tasks.value.append(wish)
@@ -47,8 +47,12 @@ extension WishListViewModel {
     }
     
     @objc func storePickButtonClicked(_ sender: UIButton) {
+        do {
+            try repository.deleteRecord(item: tasks.value[sender.tag])
+        } catch let error {
+            print(error)
+        }
         
-        repository.deleteRecord(item: tasks.value[sender.tag])
         tasks.value.remove(at: sender.tag)
     }
 }

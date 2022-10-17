@@ -43,7 +43,7 @@ class CategoryViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        categoryTasks = categoryRepository.fecth()
+        categoryTasks = categoryRepository.fetch()
         navigationController?.navigationBar.tintColor = .black
     }
     
@@ -121,7 +121,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 }
-                self.categoryTasks = self.categoryRepository.fecth()
+                self.categoryTasks = self.categoryRepository.fetch()
             }
             
         }
@@ -143,7 +143,7 @@ extension CategoryViewController: UITextFieldDelegate {
                 } catch {
                     showCautionAlert(title: "카테고리 추가를 실패했습니다.")
                 }
-                categoryTasks = categoryRepository.fecth()
+                categoryTasks = categoryRepository.fetch()
             } else {
                 showCautionAlert(title: "한글자 이상 입력해주세요!")
             }

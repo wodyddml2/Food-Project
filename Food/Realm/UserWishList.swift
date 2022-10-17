@@ -13,19 +13,22 @@ class UserWishList: Object, Codable {
     @Persisted var storeName: String
     @Persisted var storeURL: String?
     @Persisted var storeAdress: String
+    @Persisted var storeAllAddress: String
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     
-    convenience init(storeName: String, storeURL: String?, storeAdress: String) {
+    convenience init(storeName: String, storeURL: String?, storeAdress: String, storeAllAddress: String) {
         self.init()
         self.storeName = storeName
         self.storeURL = storeURL
         self.storeAdress = storeAdress
+        self.storeAllAddress = storeAllAddress
     }
     enum CodingKeys: String, CodingKey {
         case storeName
         case storeAdress
         case storeURL
+        case storeAllAddress
         case objectId
     }
     
@@ -35,6 +38,7 @@ class UserWishList: Object, Codable {
         try container.encode(storeName, forKey: .storeName)
         try container.encode(storeAdress, forKey: .storeAdress)
         try container.encode(storeURL, forKey: .storeURL)
+        try container.encode(storeAllAddress, forKey: .storeAllAddress)
     }
     
 }

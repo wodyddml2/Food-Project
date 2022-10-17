@@ -190,7 +190,7 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     override func configureUI() {
-        categoryTask = categoryRepository.fecth()
+        categoryTask = categoryRepository.fetch()
         
         if categoryKey == nil || task != nil {
             mainView.categoryTextField.tintColor = .clear

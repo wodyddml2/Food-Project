@@ -9,12 +9,37 @@ import UIKit
 
 import RealmSwift
 
-class UserWishListRepository {
+protocol UserRepositoryType {
+    associatedtype UserList
+    associatedtype User
+    
+    func fetch() -> UserList
+    
+    func addRealm(item: User) throws
+    
+    func deleteRecord(item: User) throws
+    
+    func saveEncodedJsonToDocument() throws
+    
+    func decodeJSON(_ memoData: Data) throws -> [User]?
+    
+    func overwriteRealm() throws
+}
+
+class UserWishListRepository: UserRepositoryType {
+
+    typealias UserList = Results<UserWishList>
+    
+    typealias User = UserWishList
     
     let localRealm = try! Realm()
     
-    func fecth() -> Results<UserWishList> {
+    func fetch() -> RealmSwift.Results<UserWishList> {
         return localRealm.objects(UserWishList.self)
+    }
+    
+    func fetchOverlap(address: String, name: String) -> Results<UserWishList> {
+        return localRealm.objects(UserWishList.self).filter("storeAllAddress == %@ && storeName == %@", address, name)
     }
     
     func addRealm(item: UserWishList) throws {
@@ -23,20 +48,15 @@ class UserWishListRepository {
         }
     }
     
-    func deleteRecord(item: UserWishList) {
-        do {
+    func deleteRecord(item: UserWishList) throws {
             try localRealm.write {
                 localRealm.delete(item)
             }
-        } catch let error {
-            print(error)
-        }
-        
     }
     
     func saveEncodedJsonToDocument() throws {
         
-        let encodedJson = try encodeWishList(item: fecth())
+        let encodedJson = try encodeWishList(item: fetch())
         
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "wishlist.json")
         
@@ -89,13 +109,20 @@ class UserWishListRepository {
     }
 }
 
-class UserMemoListRepository {
+class UserMemoListRepository: UserRepositoryType {
+    
+    typealias UserList = Results<UserMemo>
+    
+    typealias User = UserMemo
+    
+    
+    func fetch() -> RealmSwift.Results<UserMemo> {
+        return localRealm.objects(UserMemo.self)
+    }
+    
     
     let localRealm = try! Realm()
     
-    func fecth() -> Results<UserMemo> {
-        return localRealm.objects(UserMemo.self)
-    }
     
     func fetchCategory(category: ObjectId) -> Results<UserMemo> {
         return localRealm.objects(UserMemo.self).filter("storeCategory == %@", category)
@@ -151,7 +178,7 @@ class UserMemoListRepository {
     //
     func saveEncodedJsonToDocument() throws {
         
-        let encodedJson = try encodeMemo(item: fecth())
+        let encodedJson = try encodeMemo(item: fetch())
         
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "memo.json")
         
@@ -206,14 +233,17 @@ class UserMemoListRepository {
     }
 }
 
-class UserCategoryRepository {
+class UserCategoryRepository: UserRepositoryType {
+    typealias UserList = Results<UserCategory>
     
-    let localRealm = try! Realm()
+    typealias User = UserCategory
     
-    func fecth() -> Results<UserCategory> {
+    func fetch() -> RealmSwift.Results<UserCategory> {
         return localRealm.objects(UserCategory.self)
     }
     
+    let localRealm = try! Realm()
+
     func fetchCategory(category: ObjectId) -> Results<UserCategory> {
         return localRealm.objects(UserCategory.self).filter("objectId == %@", category)
     }
@@ -232,7 +262,7 @@ class UserCategoryRepository {
     
     func saveEncodedJsonToDocument() throws {
         
-        let encodedJson = try encodeCategory(item: fecth())
+        let encodedJson = try encodeCategory(item: fetch())
         
         try DocumentManager.shared.saveJsonToDocument(data: encodedJson, json: "category.json")
         

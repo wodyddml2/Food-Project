@@ -39,13 +39,21 @@ final class DetailViewController: BaseViewController {
     }
     
     @objc private func rightBarButtonClicked() {
+        guard let storeData = self.storeData else { return }
+        if repository.fetchOverlap(address: storeData.adress, name: storeData.name).isEmpty {
+            wishListRegister(storeData: storeData)
+        } else {
+            showCautionAlert(title: "이미 찜한 맛집입니다!")
+        }
         
+    }
+    
+    func wishListRegister(storeData: StoreInfo) {
         showMemoAlert(title: "찜 목록에 등록하시겠습니까?", button: "확인") { _ in
-            guard let storeData = self.storeData else { return }
             if self.regionData != nil {
                 guard let regionData = self.regionData else { return }
                 
-                let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)")
+                let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(regionData.firstArea) \(regionData.secondArea)", storeAllAddress: storeData.adress)
                 do {
                     try self.repository.addRealm(item: task)
                 } catch {
@@ -55,7 +63,7 @@ final class DetailViewController: BaseViewController {
             } else {
                 RequestSearchAPIManager.shared.requestRegion(lat: storeData.lon, lon: storeData.lat) { region in
                     DispatchQueue.main.async {
-                        let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(region.firstArea) \(region.secondArea)")
+                        let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(region.firstArea) \(region.secondArea)", storeAllAddress: storeData.adress)
                         do {
                             try self.repository.addRealm(item: task)
                         } catch {
@@ -67,7 +75,6 @@ final class DetailViewController: BaseViewController {
             }
             
         }
-        
     }
     
     override func configureUI() {
