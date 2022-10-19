@@ -15,25 +15,24 @@ import SnapKit
 enum SettingList: String, CaseIterable {
     case addCategory = "카테고리 추가"
     case backup = "백업 / 복구"
-}
-
-enum InfoList: String, CaseIterable {
     case appEvaluation = "리뷰 남기기"
     case appInquiry = "문의하기"
     case versionInfo = "버전 정보"
     case openSource = "오픈소스 라이선스"
 }
 
+
 final class SettingViewController: BaseViewController {
     
-    let infoList: [InfoList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
+    let infoList: [SettingList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
     
     let settingList: [SettingList] = [.addCategory, .backup]
+    
+    var dataSource: UITableViewDiffableDataSource<Int, SettingList>?
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()
         view.delegate = self
-        view.dataSource = self
         view.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.reusableIdentifier)
         view.register(SettingTableHeaderView.self, forHeaderFooterViewReuseIdentifier: SettingTableHeaderView.reusableIdentifier)
         view.showsVerticalScrollIndicator = false
@@ -52,7 +51,7 @@ final class SettingViewController: BaseViewController {
         
         navigationItem.backButtonTitle = ""
         navigationItem.title = "설정"
-        
+        configureDataSource()
     }
     
     override func setConstraints() {
@@ -63,47 +62,54 @@ final class SettingViewController: BaseViewController {
     
 }
 
-extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? settingList.count : infoList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.reusableIdentifier, for: indexPath) as? SettingTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.selectionStyle = .none
-        if indexPath.section == 0 {
-            cell.settingLabel.text = settingList[indexPath.row].rawValue
-        } else {
-            cell.settingLabel.text = infoList[indexPath.row].rawValue
-        }
+extension SettingViewController {
+    private func configureDataSource() {
+        dataSource = UITableViewDiffableDataSource(tableView: settingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.reusableIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            if indexPath.section == 0 {
+                cell.settingLabel.text = self.settingList[indexPath.row].rawValue
+            } else {
+                cell.settingLabel.text = self.infoList[indexPath.row].rawValue
+            }
+            return cell
+        })
         
-        return cell
+        settingTableView.dataSource = dataSource
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Int, SettingList>()
+        snapshot.appendSections([0, 1])
+        snapshot.appendItems(settingList, toSection: 0)
+        snapshot.appendItems(infoList, toSection: 1)
+        
+        dataSource?.apply(snapshot)
     }
+}
+
+extension SettingViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        
+        guard let dataSource = dataSource else {return}
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {return}
         var selectedVC: UIViewController?
        
         if indexPath.section == 0 {
-            let settingCell = settingList[indexPath.row]
-            
-            switch settingCell {
+            switch item {
             case .addCategory: selectedVC = CategoryViewController()
             case .backup: selectedVC =
                 BackupViewController()
+            case .appEvaluation:
+                break
+            case .appInquiry:
+                break
+            case .versionInfo:
+                break
+            case .openSource:
+                break
             }
         } else {
-            let infoCell = infoList[indexPath.row]
-            
-            switch infoCell {
+            switch item {
             case .appEvaluation:
                 moveToReview()
             case .appInquiry:
@@ -122,6 +128,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 vc.acknowledgements = acknowList.acknowledgements
                 vc.acknowledgements.append(acknow)
                 transition(vc, transitionStyle: .push)
+            case .addCategory:
+                break
+            case .backup:
+                break
             }
         }
         

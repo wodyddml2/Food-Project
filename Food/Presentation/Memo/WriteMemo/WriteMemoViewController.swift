@@ -333,8 +333,6 @@ extension WriteMemoViewController: CropViewControllerDelegate {
         mainView.memoImageView.image = image
         self.dismiss(animated: true)
     }
-    
-    
 }
 
 extension WriteMemoViewController: UITextFieldDelegate {
@@ -352,7 +350,11 @@ extension WriteMemoViewController: UITextFieldDelegate {
         
         return changeText.count <= 17
     }
-   
+    
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        removeKeyboardObserver()
+//        return true
+//    }
 }
 
 extension WriteMemoViewController: UITextViewDelegate {
@@ -400,16 +402,16 @@ extension WriteMemoViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.textViewNotPlaceholder()
     }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if textView == mainView.storeLocationTextView {
             textView.textViewPlaceholder(placeholderText: TextViewPlaceholder.locationPlaceholder.rawValue)
         } else {
             textView.textViewPlaceholder(placeholderText: TextViewPlaceholder.reviewPlaceholder.rawValue)
-            
-            removeKeyboardObserver()
             mainView.endEditing(true)
         }
+        
     }
 }
 
@@ -430,7 +432,7 @@ extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         mainView.categoryTextField.text = categoryTask?[row].category
         categoryKey = categoryTask?[row].objectId
     }
-    
+
     func setPickerView() {
         let pickerView = UIPickerView()
         pickerView.delegate = self

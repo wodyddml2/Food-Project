@@ -32,7 +32,6 @@ final class SubMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let filterButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "slider.horizontal.3"), primaryAction: nil, menu: filterButtonClicked())
         
