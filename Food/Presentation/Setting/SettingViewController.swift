@@ -81,7 +81,6 @@ extension SettingViewController {
         snapshot.appendSections([0, 1])
         snapshot.appendItems(settingList, toSection: 0)
         snapshot.appendItems(infoList, toSection: 1)
-        
         dataSource?.apply(snapshot)
     }
 }
@@ -92,6 +91,7 @@ extension SettingViewController: UITableViewDelegate {
 
         guard let dataSource = dataSource else {return}
         guard let item = dataSource.itemIdentifier(for: indexPath) else {return}
+        
         var selectedVC: UIViewController?
        
         if indexPath.section == 0 {

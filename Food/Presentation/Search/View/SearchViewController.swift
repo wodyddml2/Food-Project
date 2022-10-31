@@ -27,7 +27,7 @@ final class SearchViewController: BaseViewController {
         bind()
     }
     
-    func bind() {
+    private func bind() {
         viewModel.list.bind { store in
             DispatchQueue.main.async {
                 self.mainView.searchTableView.reloadData()
@@ -87,12 +87,26 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        viewModel.cellForRowAt(tableView, indexPath: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.selectionStyle = .none
+        
+        cell.storeNameLabel.text = viewModel.indexRow(index: indexPath.row).name
+        cell.storeNumberLabel.text = viewModel.indexRow(index: indexPath.row).phone
+        cell.storeLocationLabel.text = viewModel.indexRow(index: indexPath.row).adress
+
+        cell.searchToDetailImageView.image = viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
+
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if viewModel.memoCheck.value {
-            delegate?.searchInfoMemo(storeName: viewModel.list.value[indexPath.row].name, storeAdress: viewModel.list.value[indexPath.row].adress)
+            delegate?.searchInfoMemo(
+                storeName: viewModel.indexRow(index: indexPath.row).name,
+                storeAdress: viewModel.indexRow(index: indexPath.row).adress
+            )
             self.dismiss(animated: true)
         } else {
             let vc = DetailViewController()

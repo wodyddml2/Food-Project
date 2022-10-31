@@ -4,8 +4,7 @@
 //
 //  Created by J on 2022/10/12.
 //
-
-import UIKit
+import Foundation
 
 
 class WishListViewModel {
@@ -32,27 +31,18 @@ extension WishListViewModel {
         return tasks.value.count
     }
     
-    func cellForItemAt(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishListCollectionViewCell.reusableIdentifier, for: indexPath) as? WishListCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.storeNameLabel.text = tasks.value[indexPath.item].storeName
-        cell.storeLocationLabel.text = tasks.value[indexPath.item].storeAdress
-        
-        cell.storePickButton.tag = indexPath.item
-        cell.storePickButton.addTarget(self, action: #selector(storePickButtonClicked), for: .touchUpInside)
-        
-        return cell
+    func indexItem(index: Int) -> UserWishList {
+        return tasks.value[index]
     }
     
-    @objc func storePickButtonClicked(_ sender: UIButton) {
+    
+    func storePickButtonClicked(index: Int) {
         do {
-            try repository.deleteRecord(item: tasks.value[sender.tag])
+            try repository.deleteRecord(item: tasks.value[index])
         } catch let error {
             print(error)
         }
         
-        tasks.value.remove(at: sender.tag)
+        tasks.value.remove(at: index)
     }
 }

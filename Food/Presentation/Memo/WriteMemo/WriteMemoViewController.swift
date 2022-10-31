@@ -65,7 +65,6 @@ final class WriteMemoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mainView.storeNameField.delegate = self
         mainView.storeLocationTextView.delegate = self
         mainView.storeReviewTextView.delegate = self
@@ -340,6 +339,7 @@ extension WriteMemoViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = mainView.storeNameField.text else {
             return false
@@ -350,11 +350,6 @@ extension WriteMemoViewController: UITextFieldDelegate {
         
         return changeText.count <= 17
     }
-    
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        removeKeyboardObserver()
-//        return true
-//    }
 }
 
 extension WriteMemoViewController: UITextViewDelegate {
@@ -410,6 +405,7 @@ extension WriteMemoViewController: UITextViewDelegate {
         } else {
             textView.textViewPlaceholder(placeholderText: TextViewPlaceholder.reviewPlaceholder.rawValue)
             mainView.endEditing(true)
+            removeKeyboardObserver()
         }
         
     }
@@ -419,11 +415,11 @@ extension WriteMemoViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+   
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return categoryTask?.count ?? 0
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return categoryTask?[row].category
     }
