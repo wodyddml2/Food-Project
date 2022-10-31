@@ -48,7 +48,7 @@ final class MapViewController: BaseViewController {
    
     }
    
-    @objc func networkNotificationObserver() {
+    @objc private func networkNotificationObserver() {
         mainView.mapView.authorize()
     }
     override func navigationSetup() {

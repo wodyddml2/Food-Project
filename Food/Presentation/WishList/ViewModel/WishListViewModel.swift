@@ -7,7 +7,7 @@
 import Foundation
 
 
-class WishListViewModel {
+final class WishListViewModel {
     private let repository = UserWishListRepository()
     
     var tasks = Observable([UserWishList]())

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SearchViewModel {
+final class SearchViewModel {
     var list: Observable<[StoreInfo]> = Observable([])
     
     var memoCheck: Observable<Bool> = Observable(false)

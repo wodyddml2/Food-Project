@@ -9,7 +9,7 @@ import UIKit
 
 class FixMemoViewController: BaseViewController {
 
-    let mainView = FixMemoView()
+    private let mainView = FixMemoView()
     
     var task: UserMemo?
     var category: String?

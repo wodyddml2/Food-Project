@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class NotNetworkViewController: BaseViewController {
+final class NotNetworkViewController: BaseViewController {
     let networkLabel: UILabel = {
        let view = UILabel()
         view.textAlignment = .center
@@ -33,8 +33,4 @@ class NotNetworkViewController: BaseViewController {
         }
        
     }
-    
-
- 
-
 }

@@ -11,7 +11,7 @@ import RealmSwift
 
 final class SubMemoViewController: BaseViewController {
     
-    let repository = UserMemoListRepository()
+    private let repository = UserMemoListRepository()
     
     var category: String?
     var categoryKey: ObjectId?
@@ -41,7 +41,7 @@ final class SubMemoViewController: BaseViewController {
     }
     
 
-    @objc func plusButtonClicked() {
+    @objc private func plusButtonClicked() {
         let vc = WriteMemoViewController()
         if categoryKey != nil {
             vc.categoryKey = categoryKey
@@ -68,7 +68,7 @@ final class SubMemoViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    func filterAction(fetchRate: Results<UserMemo>, fetchVisit: Results<UserMemo>, fetchRecentDate: Results<UserMemo>) -> UIMenu {
+    private func filterAction(fetchRate: Results<UserMemo>, fetchVisit: Results<UserMemo>, fetchRecentDate: Results<UserMemo>) -> UIMenu {
         let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) {[weak self] _ in
             guard let self = self else {return}
             self.tasks = fetchRate
@@ -88,7 +88,7 @@ final class SubMemoViewController: BaseViewController {
         return menu
     }
     
-    func filterButtonClicked() -> UIMenu {
+    private func filterButtonClicked() -> UIMenu {
         if category == nil {
             
             return filterAction(

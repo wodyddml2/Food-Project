@@ -3,13 +3,13 @@ import UIKit
 import SnapKit
 import Zip
 
-class BackupViewController: BaseViewController {
+final class BackupViewController: BaseViewController {
     
-    let repository = UserMemoListRepository()
-    let categoryRepository = UserCategoryRepository()
-    let wishlistRepository = UserWishListRepository()
+    private let repository = UserMemoListRepository()
+    private let categoryRepository = UserCategoryRepository()
+    private let wishlistRepository = UserWishListRepository()
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
@@ -20,22 +20,22 @@ class BackupViewController: BaseViewController {
         return view
     }()
     
-    let formatter: DateFormatter = {
+    private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko-KR")
         formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm EE"
         return formatter
     }()
     
-    var backupList: [DocumentFile] = []
-    var backupFileSize: [String] = []
+    private var backupList: [DocumentFile] = []
+    private var backupFileSize: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         fetchZipFile()
     }
-    func fetchZipFile() {
+    private func fetchZipFile() {
         DocumentManager.shared.fetchDocumentZipFile { list, size in
             
             self.backupList = list
@@ -129,7 +129,7 @@ class BackupViewController: BaseViewController {
     }
     
     // ActivityViewController
-    func showActivityViewController(date: String) {
+    private func showActivityViewController(date: String) {
         guard let path = DocumentManager.shared.documentDirectoryPath() else {
             showCautionAlert(title: "도큐먼트 위치에 오류가 있습니다.")
             return

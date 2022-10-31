@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class MemoListTableHeaderView: UITableViewHeaderFooterView {
+final class MemoListTableHeaderView: UITableViewHeaderFooterView {
     
     let categoryLabel: UILabel = {
         let view = UILabel()

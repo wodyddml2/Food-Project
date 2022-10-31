@@ -12,23 +12,22 @@ import StoreKit
 import AcknowList
 import SnapKit
 
-enum SettingList: String, CaseIterable {
-    case addCategory = "카테고리 추가"
-    case backup = "백업 / 복구"
-    case appEvaluation = "리뷰 남기기"
-    case appInquiry = "문의하기"
-    case versionInfo = "버전 정보"
-    case openSource = "오픈소스 라이선스"
-}
-
-
 final class SettingViewController: BaseViewController {
     
-    let infoList: [SettingList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
+    enum SettingList: String, CaseIterable {
+        case addCategory = "카테고리 추가"
+        case backup = "백업 / 복구"
+        case appEvaluation = "리뷰 남기기"
+        case appInquiry = "문의하기"
+        case versionInfo = "버전 정보"
+        case openSource = "오픈소스 라이선스"
+    }
     
-    let settingList: [SettingList] = [.addCategory, .backup]
+    private let infoList: [SettingList] = [ .appEvaluation, .appInquiry, .openSource, .versionInfo]
     
-    var dataSource: UITableViewDiffableDataSource<Int, SettingList>?
+    private let settingList: [SettingList] = [.addCategory, .backup]
+    
+    private var dataSource: UITableViewDiffableDataSource<Int, SettingList>?
     
     private lazy var settingTableView: UITableView = {
         let view = UITableView()

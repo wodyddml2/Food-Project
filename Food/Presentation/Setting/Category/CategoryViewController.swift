@@ -9,9 +9,9 @@ import UIKit
 
 import RealmSwift
 
-class CategoryViewController: BaseViewController {
+final class CategoryViewController: BaseViewController {
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
@@ -22,7 +22,7 @@ class CategoryViewController: BaseViewController {
         return view
     }()
     
-    lazy var  categoryTextField: UITextField = {
+    private lazy var  categoryTextField: UITextField = {
         let view = UITextField()
         view.delegate = self
         view.textAlignment = .center
@@ -31,10 +31,10 @@ class CategoryViewController: BaseViewController {
         return view
     }()
     
-    let repository = UserMemoListRepository()
-    let categoryRepository = UserCategoryRepository()
+    private let repository = UserMemoListRepository()
+    private let categoryRepository = UserCategoryRepository()
     
-    var categoryTasks: Results<UserCategory>? {
+    private var categoryTasks: Results<UserCategory>? {
         didSet {
             tableView.reloadData()
         }

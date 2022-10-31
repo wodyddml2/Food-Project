@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SettingTableHeaderView: UITableViewHeaderFooterView {
+final class SettingTableHeaderView: UITableViewHeaderFooterView {
     
     let headerLabel: UILabel = {
         let view = UILabel()

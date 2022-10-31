@@ -70,7 +70,7 @@ extension WishListViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
-    @objc func storePickButtonTapped(_ sender: UIButton) {
+    @objc private func storePickButtonTapped(_ sender: UIButton) {
         viewModel.storePickButtonClicked(index: sender.tag)
     }
     

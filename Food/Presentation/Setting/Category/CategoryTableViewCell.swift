@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class CategoryTableViewCell: BaseTableViewCell {
+final class CategoryTableViewCell: BaseTableViewCell {
     
     let categoryLabel: UILabel = {
         let view = UILabel()

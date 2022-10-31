@@ -24,8 +24,8 @@ final class WriteMemoViewController: BaseViewController {
     
     private let mainView = WriteMemoView()
     
-    let repository = UserMemoListRepository()
-    let categoryRepository = UserCategoryRepository()
+    private let repository = UserMemoListRepository()
+    private let categoryRepository = UserCategoryRepository()
     
     var categoryTask: Results<UserCategory>?
     
@@ -38,20 +38,20 @@ final class WriteMemoViewController: BaseViewController {
     
     var memoCheck: Bool = false
     
-    lazy var imagePicker: UIImagePickerController = {
+    private lazy var imagePicker: UIImagePickerController = {
         let view = UIImagePickerController()
         view.delegate = self
         return view
     }()
     
-    let configuration: PHPickerConfiguration = {
+    private let configuration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
         return configuration
     }()
     
-    lazy var phPicker: PHPickerViewController = {
+    private lazy var phPicker: PHPickerViewController = {
         let view = PHPickerViewController(configuration: configuration)
         view.delegate = self
         return view
@@ -101,7 +101,7 @@ final class WriteMemoViewController: BaseViewController {
         }
     }
     
-    @objc func saveButtonClicked() {
+    @objc private func saveButtonClicked() {
         if categoryKey != nil && mainView.storeNameField.text != "" && mainView.storeLocationTextView.textColor != .lightGray {
 
             showMemoAlert(title: "메모를 저장하시겠습니까?") { [weak self] _ in
@@ -130,7 +130,7 @@ final class WriteMemoViewController: BaseViewController {
         }
     }
     
-    @objc func resaveButtonClicked() {
+    @objc private func resaveButtonClicked() {
         
         if let task = task {
             if mainView.storeNameField.text != ""  && mainView.storeLocationTextView.textColor != .lightGray  {
@@ -169,7 +169,7 @@ final class WriteMemoViewController: BaseViewController {
         }
         
     }
-    @objc func deleteButtonClicked() {
+    @objc private func deleteButtonClicked() {
         showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { [weak self] _ in
             guard let self = self else { return }
             if let task = self.task {
@@ -184,7 +184,7 @@ final class WriteMemoViewController: BaseViewController {
         }
     }
     
-    @objc func backButtonClicked() {
+    @objc private func backButtonClicked() {
         self.dismiss(animated: true)
     }
     
@@ -229,7 +229,7 @@ final class WriteMemoViewController: BaseViewController {
         transition(vc, transitionStyle: .presentNavigation)
     }
     
-    func menuImageButtonClicked() -> UIMenu {
+    private func menuImageButtonClicked() -> UIMenu {
         let camera = UIAction(title: "카메라", image: UIImage(systemName: "camera")) { [weak self] _ in
             guard let self = self else {return}
             let status = AVCaptureDevice.authorizationStatus(for: .video)

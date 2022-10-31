@@ -16,10 +16,10 @@ final class HomeViewController: BaseViewController {
     
     private var nowPage = 0
     
-    let category = CategoryInfo()
+    private let category = CategoryInfo()
     
-    let repository = UserMemoListRepository()
-    let categoryRepository = UserCategoryRepository()
+    private let repository = UserMemoListRepository()
+    private let categoryRepository = UserCategoryRepository()
     
     var categoryTask: Results<UserCategory>?
     
@@ -37,7 +37,7 @@ final class HomeViewController: BaseViewController {
         }
     }
     
-    lazy var randomBanner = allTask?.shuffled()
+    private lazy var randomBanner = allTask?.shuffled()
     
     override func loadView() {
         self.view = mainView
@@ -72,7 +72,7 @@ final class HomeViewController: BaseViewController {
         
     }
     
-    func categorySet() {
+    private func categorySet() {
         
         for i in category.categoryInfo {
             let info = UserCategory(category: i)
@@ -92,7 +92,7 @@ final class HomeViewController: BaseViewController {
         
     }
     
-    func navigationSet() {
+    private func navigationSet() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(wishListButtonClicked))
         
         navigationController?.navigationBar.tintColor = .darkPink
@@ -207,7 +207,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             transition(vc, transitionStyle: .present)
         }
     }
-    func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0

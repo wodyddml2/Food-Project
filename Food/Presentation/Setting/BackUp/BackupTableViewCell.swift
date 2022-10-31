@@ -2,7 +2,7 @@ import UIKit
 
 import SnapKit
 
-class BackupTableViewCell: BaseTableViewCell {
+final class BackupTableViewCell: BaseTableViewCell {
     let fileNameLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont(name: SetFont.medium.rawValue, size: 15)
