@@ -90,57 +90,26 @@ final class WriteMemoView: BaseView {
         return view
     }()
     
-    lazy var storeReviewButton: UIButton = {
-       let view = UIButton()
-        view.setTitle("완료", for: .normal)
-        view.setTitleColor(.black, for: .normal)
-        view.backgroundColor = .lightGray
-        view.addTarget(self, action: #selector(storeReviewButtonClicked), for: .touchUpInside)
-        return view
-    }()
-    
-    lazy var accessoryView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: 40))
-        view.backgroundColor = .lightGray
-        return view
-    }()
-    
     lazy var storeReviewTextView: UITextView = {
         let view = UITextView()
         view.font = .systemFont(ofSize: 16)
         view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
         view.textColor = .lightGray
-        view.inputAccessoryView = accessoryView
         view.layer.cornerRadius = 5
         view.backgroundColor = .lightPink
         view.showsVerticalScrollIndicator = false
         return view
     }()
-    
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
-    @objc func storeReviewButtonClicked() {
-        self.endEditing(true)
-    }
-    
-    @objc func viewTapGesture() {
-        self.endEditing(true)
-    }
-    
+
     override func configureUI() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
-        self.addGestureRecognizer(tapGesture)
-        
         [ memoImageView, categoryTextField ,storeSearchView , storeSearchButton, storeNameField, storeLocationTextView, stackView, storeReviewTextView].forEach {
             self.addSubview($0)
         }
-        
-        accessoryView.addSubview(storeReviewButton)
-        
+
         starNumber = 5
     }
     
@@ -231,12 +200,5 @@ final class WriteMemoView: BaseView {
             make.width.equalTo(storeSearchView.snp.width)
             make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-10)
         }
-        
-        storeReviewButton.snp.makeConstraints { make in
-            make.top.bottom.equalTo(accessoryView)
-            make.trailing.equalTo(accessoryView.snp.trailing).offset(-8)
-            make.width.equalTo(storeReviewButton.snp.height).multipliedBy(1.3)
-        }
-        
     }
 }

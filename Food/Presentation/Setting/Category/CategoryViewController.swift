@@ -81,7 +81,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         
-        if indexPath.row == 0 {
+        if indexPath.row == indexPath.first {
             cell.isHidden = true
         } else {
             cell.isHidden = false
@@ -93,25 +93,22 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 0
-        } else {
-            return 50
-        }
+        return indexPath.row == indexPath.first ? 0 : 50
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "") { action, view, completionHandler in
-            if indexPath.row != 0 {
+            if indexPath.row != indexPath.first {
                 if let tasks = self.categoryTasks {
                     do {
                         try self.repository.fetchUpdate {
                             self.repository.fetchCategory(category: tasks[indexPath.row].objectId).forEach { memo in
-                                memo.storeCategory = tasks[0].objectId
+                                guard let task = tasks.first else {return}
+                                memo.storeCategory = task.objectId
                             }
                         }
                     } catch {
-                        print("error")
+                        self.showCautionAlert(title: "카테고리 삭제에 실패했습니다.")
                     }
                     
                     do {
@@ -149,7 +146,6 @@ extension CategoryViewController: UITextFieldDelegate {
             }
         }
         
-        textField.resignFirstResponder()
         textField.text = nil
         return true
     }

@@ -134,7 +134,6 @@ final class WriteMemoViewController: BaseViewController {
         
         if let task = task {
             if mainView.storeNameField.text != ""  && mainView.storeLocationTextView.textColor != .lightGray  {
-                
                 showMemoAlert(title: "메모를 수정하시겠습니까?") { [weak self] _ in
                     guard let self = self else { return }
                     if self.mainView.storeReviewTextView.textColor == .lightGray {
@@ -167,7 +166,6 @@ final class WriteMemoViewController: BaseViewController {
                 showCautionAlert(title: "주의", message: "상호명과 주소란에 최소 한 글자 이상 적어주세요!!")
             }
         }
-        
     }
     @objc private func deleteButtonClicked() {
         showMemoAlert(title: "메모를 삭제하시겠습니까?",button: "삭제") { [weak self] _ in
@@ -222,7 +220,6 @@ final class WriteMemoViewController: BaseViewController {
     }
     
     @objc func storeSearchButtonClicked() {
-      
         let vc = SearchViewController()
         vc.viewModel.memoCheck.value = true
         vc.delegate = self
@@ -270,13 +267,8 @@ final class WriteMemoViewController: BaseViewController {
        
         return menu
     }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        removeKeyboardObserver()
-    }
 }
+
 extension WriteMemoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
@@ -335,11 +327,6 @@ extension WriteMemoViewController: CropViewControllerDelegate {
 }
 
 extension WriteMemoViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = mainView.storeNameField.text else {
             return false
@@ -386,14 +373,6 @@ extension WriteMemoViewController: UITextViewDelegate {
         }
     }
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        if textView == mainView.storeReviewTextView {
-            setKeyboardObserver()
-        }
-        
-        return true
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.textViewNotPlaceholder()
     }
@@ -404,8 +383,6 @@ extension WriteMemoViewController: UITextViewDelegate {
             textView.textViewPlaceholder(placeholderText: TextViewPlaceholder.locationPlaceholder.rawValue)
         } else {
             textView.textViewPlaceholder(placeholderText: TextViewPlaceholder.reviewPlaceholder.rawValue)
-            mainView.endEditing(true)
-            removeKeyboardObserver()
         }
         
     }

@@ -64,6 +64,7 @@
 		63AD53B728E4377000CAF193 /* SettingTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53B628E4377000CAF193 /* SettingTableHeaderView.swift */; };
 		63AD53BA28E467C200CAF193 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53B928E467C200CAF193 /* NetworkMonitor.swift */; };
 		63AD53BC28E4C3EB00CAF193 /* NotNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */; };
+		63BADFD4294712810085834E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63BADFD3294712810085834E /* IQKeyboardManagerSwift */; };
 		63D4B36F28DEF58B001681EE /* MemoListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B36E28DEF58B001681EE /* MemoListTableHeaderView.swift */; };
 		63D4B37128DF556B001681EE /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B37028DF556B001681EE /* UIView+Extension.swift */; };
 		63D700E028D5C747006E10B7 /* BannerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700DF28D5C747006E10B7 /* BannerInfo.swift */; };
@@ -186,6 +187,7 @@
 				634EFCF128F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				63A9B0B128C74E6300201418 /* SnapKit in Frameworks */,
 				637F4E0928E2F8FC002F7DA6 /* AcknowList in Frameworks */,
+				63BADFD4294712810085834E /* IQKeyboardManagerSwift in Frameworks */,
 				63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */,
 				634EFCF528F51C0E009D2512 /* FirebaseMessaging in Frameworks */,
 				637F8FEB28E1B23000EE67EF /* TOCropViewController in Frameworks */,
@@ -570,6 +572,7 @@
 				634EFCF028F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				634EFCF228F51C0E009D2512 /* FirebaseCrashlytics */,
 				634EFCF428F51C0E009D2512 /* FirebaseMessaging */,
+				63BADFD3294712810085834E /* IQKeyboardManagerSwift */,
 			);
 			productName = Food;
 			productReference = 638FCAAB28D1A08A00AC84D3 /* Food.app */;
@@ -608,6 +611,7 @@
 				637F8FE728E1B22F00EE67EF /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */,
 				634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				63BADFD2294712810085834E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 63FDE35428C62D5F00257D18;
 			projectDirPath = "";
@@ -924,7 +928,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaeyong.Food;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -960,7 +964,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaeyong.Food;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1049,6 +1053,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		63BADFD2294712810085834E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
 		63D700E128D5D8AF006E10B7 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -1109,6 +1121,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63A9B0AF28C74E6300201418 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		63BADFD3294712810085834E /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63BADFD2294712810085834E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		63D700E228D5D8AF006E10B7 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

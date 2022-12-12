@@ -235,9 +235,12 @@ extension MapViewController {
             requestLocationStore(lat: 37.571323, lng: 126.977511)
             
             showRequestServiceAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
+            
         case .authorizedWhenInUse:
             locationManager.distanceFilter = 100000
             locationManager.startUpdatingLocation()
+            
+            
         default: print("default")
         }
     }

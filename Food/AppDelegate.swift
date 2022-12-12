@@ -7,6 +7,7 @@
 
 import UIKit
 
+import IQKeyboardManagerSwift
 import FirebaseCore
 import FirebaseMessaging
 import NMapsMap
@@ -52,6 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("FCM registration token: \(token)")
           }
         }
+        
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "완료"
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         
         return true
     }
