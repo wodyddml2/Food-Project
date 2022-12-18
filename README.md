@@ -8,6 +8,7 @@
 - 출시 기간 약 3주(2022.09.08 ~ 2022.09.29)
 - 주변 맛집을 간편하게 찾고 기억에 남는 맛집을 기록을 하는 앱
 
+
 > **프로젝트 기능**
 > 
 - 네이버 지도 SDK와 카카오 로컬 API를 이용해 주변 맛집 정보 제공
@@ -19,6 +20,7 @@
 - **Realm** 객체 filter 처리로 방문순, 별점순, 날짜순 메모 정렬
 - **Codable**로 Encoding, Decoding을 통한 데이터 형식 변환을 통해 백업 / 복구 기능
 - **Network** framework를 통해 네트워크 연결 상태 체크
+
 
 > **개발 공수 및 사용 기술**
 > 
@@ -42,6 +44,7 @@ Home 베너 기능, 카테고리 별 메모 목록 tableView, collectionView를 
 | 앱 업데이트  | 2022.09.30 ~ | 백업 복구 기능, 메모 작성 화면 개선, 지도 버그 개선, 찜 버튼 클릭 시 중복 저장 문제 개선, 키보드 문제 개선 |
 | Reject | 2022.10.07 | 카메라 권한 처리 문구 수정 |
 
+
 **Stack** 
 
 Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
@@ -55,6 +58,7 @@ FirebaseAnalytics(Crashlytics)
 MVC, Singleton Pattern 
 
 SPM, CocoaPods
+
 
 > **Trouble Shooting**
 > 
@@ -190,6 +194,7 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 https://www.figma.com/file/NplxckTKwBDybqAUmF7ylf/SeSAC-%EA%B0%9C%EC%9D%B8-%EC%95%B1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1
 
 <img width="618" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-11-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_7 13 33" src="https://user-images.githubusercontent.com/83345066/208294257-c4c5370d-81e9-4290-a62b-242afc5e566b.png">
+
 
 > **Version Update**
 > 
