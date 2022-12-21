@@ -153,6 +153,13 @@ final class BackupViewController: BaseViewController {
         let zipFile = path.appendingPathComponent(zipfile)
         
         do {
+            
+            try Zip.unzipFile(zipFile, destination: path, overwrite: true, password: nil, progress: { progress in
+                print("progress: \(progress)")
+            }, fileOutputHandler: { unzippedFile in
+                print("unZippedFile: \(unzippedFile)")
+            })
+            
             try self.repository.overwriteRealm()
             try self.wishlistRepository.overwriteRealm()
             try self.categoryRepository.overwriteRealm()
@@ -299,6 +306,11 @@ extension BackupViewController: UIDocumentPickerDelegate {
                 let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent) // 폴더 생성, 폴더 안에 파일 저장 공부 - 이미지들같은 경우
                 
                 do {
+                    try Zip.unzipFile(fileURL, destination: path, overwrite: true, password: nil, progress: { progress in
+                        print("progress: \(progress)")
+                    }, fileOutputHandler: { unzippedFile in
+                        print("unZippedFile: \(unzippedFile)")
+                    })
                     
                     try self.repository.overwriteRealm()
                     try self.wishlistRepository.overwriteRealm()
@@ -318,6 +330,12 @@ extension BackupViewController: UIDocumentPickerDelegate {
                     
                     let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent)
       
+                    try Zip.unzipFile(fileURL, destination: path, overwrite: true, password: nil, progress: { progress in
+                        print("progress: \(progress)")
+                    }, fileOutputHandler: { unzippedFile in
+                        print("unZippedFile: \(unzippedFile)")
+                        
+                    })
                     try self.repository.overwriteRealm()
                     try self.wishlistRepository.overwriteRealm()
                     try self.categoryRepository.overwriteRealm()
