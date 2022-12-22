@@ -50,7 +50,8 @@
 > 
 
 ▶︎  **앱 심사 리젝 사유 - 5.1.1 Legal: Privacy - Data Collection and Storage**
-<br/><br/>
+<img width="530" alt="스크린샷 2022-12-22 오후 6 01 23" src="https://user-images.githubusercontent.com/83345066/209108283-69d636fb-7a8b-49d0-bf6a-a37578217382.png">
+<img width="345" alt="스크린샷 2022-12-22 오후 6 01 31" src="https://user-images.githubusercontent.com/83345066/209108420-96660805-00c8-4d26-a924-0ef672ff6fd1.png">
 Apple 앱 심사에서 카메라 권한 문구의 설명이 충분하지 않다는 Reject 사유를 전달받음
 
 ‘카메라를 사용하기 위해’ 라는 모호한 문구 보다는 Apple 앱 심사 지침에 맞는 더 명확한 표현을 위해 카메라가 어디에 사용이 될 것인지를 나타낼 수 있게끔 ‘음식 다이어리 작성을 위해’ 라는 문구로 변경하여 재심사 통과
