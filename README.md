@@ -169,6 +169,7 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 https://www.figma.com/file/NplxckTKwBDybqAUmF7ylf/SeSAC-%EA%B0%9C%EC%9D%B8-%EC%95%B1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1
 
 <img width="618" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-11-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_7 13 33" src="https://user-images.githubusercontent.com/83345066/208294257-c4c5370d-81e9-4290-a62b-242afc5e566b.png">
+
 <br/><br/>
 > **Version Update**
 > 
