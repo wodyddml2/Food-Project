@@ -21,8 +21,21 @@
 - **Codable**로 Encoding, Decoding을 통한 데이터 형식 변환을 통해 백업 / 복구 기능
 - **Network** framework를 통해 네트워크 연결 상태 체크
   
-  
-> **개발 공수 및 사용 기술**
+> **Stack** 
+>
+Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
+
+TOCropViewController, Zip, Acknowlist, IQKeyboardSwift 
+
+Alamofire, SwiftyJson, Realm, Codable
+
+FirebaseAnalytics(Crashlytics)
+
+MVC, Singleton Pattern 
+
+SPM, CocoaPods
+
+> **개발 공수**
 > 
 - 개발 기간: 2022.09.08 ~ 2022.09.29 (약 3주) - 기획, 디자인, 개발, 출시, 업데이트 등
 
@@ -43,21 +56,6 @@ Home 베너 기능, 카테고리 별 메모 목록 tableView, collectionView를 
 목업 이미지 준비, 앱에 대한 설명, 개인 정보 처리 방침 |
 | 앱 업데이트  | 2022.09.30 ~ | 백업 복구 기능, 메모 작성 화면 개선, 지도 버그 개선, 찜 버튼 클릭 시 중복 저장 문제 개선, 키보드 문제 개선 |
 | Reject | 2022.10.07 | 카메라 권한 처리 문구 수정 |
-    
-  
-**Stack** 
-
-Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
-
-TOCropViewController, Zip, Acknowlist, IQKeyboardSwift 
-
-Alamofire, SwiftyJson, Realm, Codable
-
-FirebaseAnalytics(Crashlytics)
-
-MVC, Singleton Pattern 
-
-SPM, CocoaPods
     
   
 > **Trouble Shooting**
