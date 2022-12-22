@@ -62,7 +62,6 @@ Apple 앱 심사에서 카메라 권한 문구의 설명이 충분하지 않다�
 처음 진행하는 앱 출시 과정에서 Reject을 받는 중요한 경험을 하였고 가볍게 지나칠 수 있는 권한 처리 문구들을 사용자들 입장에서 무슨 목적인지 한 눈에 알아볼 수 있도록 세심하게 체크하는 과정이 필요하다는 것을 배움
 <br/><br/>
 ▶︎  **Annotation 겹치는 현상**
-<br/><br/>
 <img width="184" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_10 44 16" src="https://user-images.githubusercontent.com/83345066/208294314-9cb64573-42fd-4f7a-8f11-8b57302dc797.png">
 
 ```swift
@@ -86,7 +85,6 @@ CLLocationManager 클래스의 프로퍼티인 **distanceFilter**를 사용해 �
 이 이슈로 인해 distanceFilter 프로퍼티의 기능 뿐만 아니라 이런 불필요한 함수 호출을 체크하고 막아 앱의 성능을 개선을 시킬 수 있는 역량을 키울 수 있었음
 <br/><br/>
 ▶︎  **UITableView의 section별 UICollectionView 설정 시 화면 중복, scroll 문제** 
-<br/><br/>
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.reusableIdentifier, for: indexPath) as? MemoListTableViewCell else {
@@ -112,7 +110,6 @@ UITableViewCell의 재사용하기 전 시점인 **prepareForReuse**에서 colle
 UITableViewCell 안에 UICollectionView를 넣어주어 cell의 재사용이 많은 코드에서는 각 적절한 시점에서 cell을 다시 그려주는 작업이 필요하다는 것을 알게되면서 문제를 해결하기 위해 tableViewCell과 collectionViewCell의 LifeCycle에 대해 다시 공부하면서 시점에 대한 처리를 더욱 유연하게 다룰 수 있게 됨
 <br/><br/>
 ▶︎  **카테고리 삭제 시 메모 목록에서 index error**
-<br/><br/>
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reusableIdentifier, for: indexPath) as? CategoryTableViewCell else {
