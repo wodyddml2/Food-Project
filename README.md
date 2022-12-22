@@ -7,19 +7,7 @@
 - 1인 출시 프로젝트(기획, 개발, 출시)
 - 출시 기간 약 3주(2022.09.08 ~ 2022.09.29)
 - 주변 맛집을 간편하게 찾고 기억에 남는 맛집을 기록을 하는 앱
-<br/><br/>
 
-> **프로젝트 기능**
-> 
-- 네이버 지도 SDK와 카카오 로컬 API를 이용해 주변 맛집 정보 제공
-- **Realm**을 이용해 지도, 검색에서 원하는 맛집 찜 목록에 추가 / 삭제
-- **Realm**과 **FileManager**를 이용해 작성한 메모 데이터, 이미지 저장 / 삭제 / 수정
-- **UIImagePicker**와 **PHPicker**를 이용하여 사진 / 앨범 접근하고 **TOCropViewController** 로 사진 편집
-- 데이터 스키마 구성 시 메모 객체와 엮어서 구성하여 카테고리 추가, 삭제 기능
-- **Realm** 객체 filter 처리로 카테고리별 메모 분류
-- **Realm** 객체 filter 처리로 방문순, 별점순, 날짜순 메모 정렬
-- **Codable**로 Encoding, Decoding을 통한 데이터 형식 변환을 통해 백업 / 복구 기능
-- **Network** framework를 통해 네트워크 연결 상태 체크
 <br/><br/>
 > **Stack**
 > 
@@ -29,6 +17,33 @@
 - FirebaseAnalytics(Crashlytics)
 - MVC, Singleton Pattern
 - SPM, CocoaPods
+
+<br/><br/>
+> **프로젝트 기능**
+> 
+- 지도와 검색을 이용해 주변 맛집 정보 제공
+- 검색한 맛집 찜 목록 추가, 삭제
+- 맛집 정보와 리뷰 저장, 삭제, 수정
+- 음식 사진 편집, 저장, 삭제, 수정
+- 메모 목록 최신순, 별점순, 방문순 정렬
+- 음식 카테고리 추가, 삭제
+- 백업, 복구 기능
+
+<br/><br/>
+> **프로젝트 기술 적용**
+>
+- **네이버 지도 SDK**와 **카카오 로컬 API**를 통해 맛집 정보 표시
+- **Realm** **Database** CRUD, 정규화
+- **Realm** **migration** 작업을 통한 버전 관리
+- **FileManager**를 통해 Document 폴더 접근
+    - 이미지  CRUD
+    - **Codable**로 데이터 형식 변환과 **Zip**의 파일 압축, 압축 해제를 통해 백업, 복구
+- **PHPickerController, UIImagePickerController** 앨범, 카메라 접근
+- **TOCropViewController** 사진 편집
+- **Network** Framework을 이용해 실시간 모니터링으로 네트워크 연결 상태 체크 및 대응
+- **WebView**로 맛집 상세 정보 페이지 구현
+- **FirebaseAnalytics(Crashlytics)** 사용자의 활동 정보 통계와 특정 이벤트 수집, 실시간 분석을 통해 사용자들의 불편 최소화
+
 <br/><br/>
 > **개발 공수 및 사용 기술**
 > 
