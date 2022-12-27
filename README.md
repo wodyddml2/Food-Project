@@ -32,14 +32,17 @@
 <br/><br/>
 > **프로젝트 기술 적용**
 >
+- **Singleton** pattern 서버 통신의 로직을 하나의 객체만을 생성해 메모리 낭비 방지
+- **Delegate** pattern을 통해 데이터 전달
+- **TableView 내부에 CollectionView** 삽입을 통한 복잡한 layout 처리
+- **Timer**로 CollectionView 자동 스크롤
 - **네이버 지도 SDK**와 **카카오 로컬 API**를 통해 맛집 정보 표시
-- **Realm** **Database** CRUD, 정규화
-- **Realm** **migration** 작업을 통한 버전 관리
-- **FileManager**를 통해 Document 폴더 접근
-    - 이미지  CRUD
-    - **Codable**로 데이터 형식 변환과 **Zip**의 파일 압축, 압축 해제를 통해 백업, 복구
+    - location **authorizationStatus**에 따라 분기 처리
+    - 현재 CollectionViewCell index 값의 Annotation에 색상 표시
+- **Realm** **Database** CRUD, 정규화 및 **migration** 작업을 통한 버전 관리
+- **FileManager**를 통해 Document 폴더에 접근해 이미지 및 **Codable**로 데이터 형식 변환된 압축 파일(백업) 저장
 - **PHPickerController, UIImagePickerController** 앨범, 카메라 접근
-- **TOCropViewController** 사진 편집
+- **TOCropViewController** 사진 편집을 통한 이미지 리사이징
 - **Network** Framework을 이용해 실시간 모니터링으로 네트워크 연결 상태 체크 및 대응
 - **WebView**로 맛집 상세 정보 페이지 구현
 - **FirebaseAnalytics(Crashlytics)** 사용자의 활동 정보 통계와 특정 이벤트 수집, 실시간 분석을 통해 사용자들의 불편 최소화
@@ -215,3 +218,31 @@ https://www.figma.com/file/NplxckTKwBDybqAUmF7ylf/SeSAC-%EA%B0%9C%EC%9D%B8-%EC%9
 - 2022.12.12 업데이트
 - IQKeyboard를 적용하여 키보드 window를 내릴 시 임의로 올린 화면이 깨지는 부분 수정
 
+<br/><br/>
+> **프로젝트 회고**
+> 
+첫 앱스토어 출시 프로젝트를 하면서 처음으로 기획과 디자인, 개발을 모두 진행하게 되었다.
+진행 도중에 기획과 디자인 변경을 여러번 겪게 되었고 중간에 발생하는 변경사항에 대해 대처하는 법을 배울 수 있었다.
+또한 다시 한 번 프로젝트의 코드를 돌아보며 처리하지 못한 아쉬운 부분들을 생각해 볼 수 있었다.
+
+1. 중복 코드
+    
+    출시 기한에 맞춰 프로젝트 완성을 하려다보니 중복적인 코드를 여러개 볼 수 있었다.
+    그렇다보니 코드도 지저분해지고 유지보수 측면에서도 비효율적이게 되었기 때문에 따로 extension에 정리를 해놓거나 BaseVC에 따로 정리해서 가독성과 유지보수 측면에서 효율을 늘려야겠다.
+    
+2. 폴더링
+    
+    프로젝트 진행하면서 폴더링을 처음 해보다보니 좀 더 세분화된 깔끔한 폴더링을 진행하지 못한 것 같다.
+    협업 시 팀원이 알아보기 쉽도록 각 역할에 맞게 더욱 세분화해서 폴더링을 해야겠다.
+    
+3. 문자열 처리
+    
+    자주 사용하는 문자열을 다른 처리 없이 사용한 흔적들을 여러 곳에서 볼 수 있었다.
+    이렇게되면 나중에 해당 문자열을 수정 시 하나씩 모두 처리를 해줘야하기에 유지보수 측면에서 상당히 비효율적일 것이기 때문에 효율적인 관리를 위해 enum으로 문자열을 묶어 보완을 해야겠다.
+    
+4. MVC 패턴
+    
+    MVC 패턴의 View의 역할을 하는 것은 View의 파일에서 로직을 모두 처리해야하는데 그런 부분들을 제대로 처리하지 못한 부분들이 있었다.
+    패턴의 구조와 역할을 제대로 이해하고 로직을 처리할 수 있도록 다시 공부하고 보완을 해야겠다.
+    
+    또한 MVC 패턴은 뷰컨트롤러의 역할이 너무 커지는 것 같기에 다음에는 비즈니스 로직을 따로 분리할 수 있도록 MVVM 패턴을 공부하고 적용시켜봐야겠다.
