@@ -27,16 +27,16 @@ final class SearchViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
+//        bind()
     }
     
-    private func bind() {
-        viewModel.list.bind { store in
-            DispatchQueue.main.async {
-                self.mainView.searchTableView.reloadData()
-            }
-        }
-    }
+//    private func bind() {
+//        viewModel.list.bind { store in
+//            DispatchQueue.main.async {
+//                self.mainView.searchTableView.reloadData()
+//            }
+//        }
+//    }
     
     override func configureUI() {
         searchControllerSetup()
@@ -55,19 +55,7 @@ final class SearchViewController: BaseViewController {
         mainView.searchController.searchResultsUpdater = self
     }
     
-    private func searchTableViewSetup() {
-        mainView.searchTableView.delegate = self
-        mainView.searchTableView.prefetchDataSource = self
-        
-        viewModel.storeList.bind(to: mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.reusableIdentifier, cellType: SearchTableViewCell.self)) { index, info, cell in
-            cell.storeNameLabel.text = info.name
-            cell.storeNumberLabel.text = info.phone
-            cell.storeLocationLabel.text = info.adress
-
-            cell.searchToDetailImageView.image = self.viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
-        }
-        .disposed(by: disposeBag)
-    }
+   
 }
 
 extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
@@ -77,7 +65,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
 
         pageCount = 1
 
-        viewModel.list.value.removeAll()
+        viewModel.list.removeAll()
         
         viewModel.fetchSearch(query: searchBar.text ?? "", pageCount: pageCount) { store in
             DispatchQueue.main.async {
@@ -89,51 +77,51 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     }
 }
 
-extension SearchViewController: UITableViewDelegate{
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return viewModel.numberOfRowsInSection
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {
-//            return UITableViewCell()
-//        }
-//
-//        cell.storeNameLabel.text = viewModel.indexRow(index: indexPath.row).name
-//        cell.storeNumberLabel.text = viewModel.indexRow(index: indexPath.row).phone
-//        cell.storeLocationLabel.text = viewModel.indexRow(index: indexPath.row).adress
-//
-//        cell.searchToDetailImageView.image = viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
-//
-//        return cell
-//    }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if viewModel.memoCheck.value {
-//            delegate?.searchInfoMemo(
-//                storeName: viewModel.indexRow(index: indexPath.row).name,
-//                storeAdress: viewModel.indexRow(index: indexPath.row).adress
-//            )
-//            self.dismiss(animated: true)
-//        } else {
-//            let vc = DetailViewController()
-//            vc.webID = viewModel.list.value[indexPath.row].webID
-//            vc.storeData = viewModel.list.value[indexPath.row]
-//            transition(vc, transitionStyle: .presentFullNavigation)
-//        }
-//    }
-}
+extension SearchViewController: UITableViewDelegate {
+    private func searchTableViewSetup() {
+        viewModel.storeList
+            .bind(to: mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.reusableIdentifier, cellType: SearchTableViewCell.self)) { index, info, cell in
+            cell.storeNameLabel.text = info.name
+            cell.storeNumberLabel.text = info.phone
+            cell.storeLocationLabel.text = info.adress
 
-extension SearchViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            if viewModel.list.value.count - 1 == indexPath.row && viewModel.list.value.count < 45 {
-                pageCount += 1
-
-                viewModel.fetchSearch(query: mainView.searchController.searchBar.text ?? "", pageCount: pageCount) { _ in
+            cell.searchToDetailImageView.image = self.viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
+        }
+        .disposed(by: disposeBag)
+        
+        mainView.searchTableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        mainView.searchTableView.rx.modelSelected(StoreInfo.self)
+            .withUnretained(self)
+            .bind { vc, info in
+                if vc.viewModel.memoCheck.value {
+                    vc.delegate?.searchInfoMemo(
+                        storeName: info.name,
+                        storeAdress: info.adress
+                    )
+                    vc.dismiss(animated: true)
+                } else {
+                    let viewController = DetailViewController()
+                    viewController.webID = info.webID
+                    viewController.storeData = info
+                    vc.transition(viewController, transitionStyle: .presentFullNavigation)
                 }
             }
-        }
-
+            .disposed(by: disposeBag)
+        
+        mainView.searchTableView.rx.prefetchRows
+            .withUnretained(self)
+            .bind (onNext: { vc, indexPaths in
+                for indexPath in indexPaths {
+                    if vc.viewModel.list.count - 1 == indexPath.row && vc.viewModel.list.count < 45 {
+                        vc.pageCount += 1
+                        
+                        vc.viewModel.fetchSearch(query: vc.mainView.searchController.searchBar.text ?? "", pageCount: vc.pageCount) { _ in
+                        }
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
