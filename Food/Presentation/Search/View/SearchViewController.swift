@@ -7,14 +7,17 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class SearchViewController: BaseViewController {
     
     private let mainView = SearchView()
     
-    private var storeData: [StoreInfo] = []
     private var pageCount = 1
     
     let viewModel = SearchViewModel()
+    let disposeBag = DisposeBag()
     
     var delegate: UserMemoDelegate?
     
@@ -48,17 +51,22 @@ final class SearchViewController: BaseViewController {
     }
    
     private func searchControllerSetup() {
-        mainView.searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         mainView.searchController.searchBar.delegate = self
         mainView.searchController.searchResultsUpdater = self
     }
     
     private func searchTableViewSetup() {
         mainView.searchTableView.delegate = self
-        mainView.searchTableView.dataSource = self
         mainView.searchTableView.prefetchDataSource = self
-        mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
         
+        viewModel.storeList.bind(to: mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.reusableIdentifier, cellType: SearchTableViewCell.self)) { index, info, cell in
+            cell.storeNameLabel.text = info.name
+            cell.storeNumberLabel.text = info.phone
+            cell.storeLocationLabel.text = info.adress
+
+            cell.searchToDetailImageView.image = self.viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
+        }
+        .disposed(by: disposeBag)
     }
 }
 
@@ -81,45 +89,39 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection
-    }
+extension SearchViewController: UITableViewDelegate{
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return viewModel.numberOfRowsInSection
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {
+//            return UITableViewCell()
+//        }
+//
+//        cell.storeNameLabel.text = viewModel.indexRow(index: indexPath.row).name
+//        cell.storeNumberLabel.text = viewModel.indexRow(index: indexPath.row).phone
+//        cell.storeLocationLabel.text = viewModel.indexRow(index: indexPath.row).adress
+//
+//        cell.searchToDetailImageView.image = viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
+//
+//        return cell
+//    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.selectionStyle = .none
-        
-        cell.storeNameLabel.text = viewModel.indexRow(index: indexPath.row).name
-        cell.storeNumberLabel.text = viewModel.indexRow(index: indexPath.row).phone
-        cell.storeLocationLabel.text = viewModel.indexRow(index: indexPath.row).adress
-
-        cell.searchToDetailImageView.image = viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
-
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if viewModel.memoCheck.value {
-            delegate?.searchInfoMemo(
-                storeName: viewModel.indexRow(index: indexPath.row).name,
-                storeAdress: viewModel.indexRow(index: indexPath.row).adress
-            )
-            self.dismiss(animated: true)
-        } else {
-            let vc = DetailViewController()
-            vc.webID = viewModel.list.value[indexPath.row].webID
-            vc.storeData = viewModel.list.value[indexPath.row]
-            transition(vc, transitionStyle: .presentFullNavigation)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 95
-    }
-
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if viewModel.memoCheck.value {
+//            delegate?.searchInfoMemo(
+//                storeName: viewModel.indexRow(index: indexPath.row).name,
+//                storeAdress: viewModel.indexRow(index: indexPath.row).adress
+//            )
+//            self.dismiss(animated: true)
+//        } else {
+//            let vc = DetailViewController()
+//            vc.webID = viewModel.list.value[indexPath.row].webID
+//            vc.storeData = viewModel.list.value[indexPath.row]
+//            transition(vc, transitionStyle: .presentFullNavigation)
+//        }
+//    }
 }
 
 extension SearchViewController: UITableViewDataSourcePrefetching {

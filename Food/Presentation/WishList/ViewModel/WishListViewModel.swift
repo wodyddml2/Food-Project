@@ -10,7 +10,7 @@ import Foundation
 final class WishListViewModel {
     private let repository = UserWishListRepository()
     
-    var tasks = Observable([UserWishList]())
+    var tasks = CObservable([UserWishList]())
 }
 
 extension WishListViewModel {

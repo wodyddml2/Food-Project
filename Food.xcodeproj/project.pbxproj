@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6310878628D8CAC5001610C2 /* CategoryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6310878528D8CAC5001610C2 /* CategoryInfo.swift */; };
+		63237CB9295C363000203FD7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 63237CB8295C363000203FD7 /* RxCocoa */; };
+		63237CBB295C363000203FD7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63237CBA295C363000203FD7 /* RxSwift */; };
+		63237CBE295C646200203FD7 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63237CBD295C646200203FD7 /* ViewModelType.swift */; };
 		63258C3C28CDBC3E007638DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C3B28CDBC3D007638DC /* HomeViewController.swift */; };
 		63258C4128CDC6A3007638DC /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4028CDC6A3007638DC /* TabViewController.swift */; };
 		63258C4428CDC6B1007638DC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4328CDC6B1007638DC /* MapViewController.swift */; };
@@ -98,6 +101,7 @@
 		0B97DD886F7E094DE54658D7 /* Pods-Food.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Food.release.xcconfig"; path = "Target Support Files/Pods-Food/Pods-Food.release.xcconfig"; sourceTree = "<group>"; };
 		2A3F550CCBF53068DFB8E380 /* Pods_Food.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Food.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6310878528D8CAC5001610C2 /* CategoryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInfo.swift; sourceTree = "<group>"; };
+		63237CBD295C646200203FD7 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		63258C3B28CDBC3D007638DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		63258C4028CDC6A3007638DC /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		63258C4328CDC6B1007638DC /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +196,9 @@
 				634EFCF528F51C0E009D2512 /* FirebaseMessaging in Frameworks */,
 				637F8FEB28E1B23000EE67EF /* TOCropViewController in Frameworks */,
 				634EFCF328F51C0E009D2512 /* FirebaseCrashlytics in Frameworks */,
+				63237CB9295C363000203FD7 /* RxCocoa in Frameworks */,
 				C21CD95C1C651E063C2F0996 /* Pods_Food.framework in Frameworks */,
+				63237CBB295C363000203FD7 /* RxSwift in Frameworks */,
 				63A0A31E28DC55FD002D01EA /* Zip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,6 +213,14 @@
 				0B97DD886F7E094DE54658D7 /* Pods-Food.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		63237CBC295C645200203FD7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				63237CBD295C646200203FD7 /* ViewModelType.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		63258C3E28CDC630007638DC /* Home */ = {
@@ -515,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				635011AC28F5AE5A00E2E6FF /* Observable.swift */,
+				63237CBC295C645200203FD7 /* Protocol */,
 				638C028D28F68D9500174F0B /* Base */,
 			);
 			path = Utility;
@@ -573,6 +588,8 @@
 				634EFCF228F51C0E009D2512 /* FirebaseCrashlytics */,
 				634EFCF428F51C0E009D2512 /* FirebaseMessaging */,
 				63BADFD3294712810085834E /* IQKeyboardManagerSwift */,
+				63237CB8295C363000203FD7 /* RxCocoa */,
+				63237CBA295C363000203FD7 /* RxSwift */,
 			);
 			productName = Food;
 			productReference = 638FCAAB28D1A08A00AC84D3 /* Food.app */;
@@ -612,6 +629,7 @@
 				637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */,
 				634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				63BADFD2294712810085834E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				63237CB7295C363000203FD7 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 63FDE35428C62D5F00257D18;
 			projectDirPath = "";
@@ -746,6 +764,7 @@
 				63A0A31928DC55D9002D01EA /* BackupViewController.swift in Sources */,
 				63FDE38528C6317200257D18 /* SecondViewController.swift in Sources */,
 				63FDE38328C6316C00257D18 /* FirstViewController.swift in Sources */,
+				63237CBE295C646200203FD7 /* ViewModelType.swift in Sources */,
 				6371861328EED53500BCBF91 /* SetFont.swift in Sources */,
 				638FCAAD28D1A63500AC84D3 /* SearchTableViewCell.swift in Sources */,
 				6329218428D0D0CE000DC3E5 /* DetailViewController.swift in Sources */,
@@ -997,6 +1016,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		63237CB7295C363000203FD7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1072,6 +1099,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		63237CB8295C363000203FD7 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63237CB7295C363000203FD7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		63237CBA295C363000203FD7 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63237CB7295C363000203FD7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		63261AE728D3032A005E8501 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */;

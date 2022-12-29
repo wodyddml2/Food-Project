@@ -12,13 +12,15 @@ import SnapKit
 final class SearchView: BaseView {
     let searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        
+        search.searchBar.setValue("취소", forKey: "cancelButtonText")
         return search
     }()
     
     let searchTableView: UITableView = {
         let view = UITableView()
         view.keyboardDismissMode = .onDrag
+        view.rowHeight = 95
+        view.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
         return view
     }()
     

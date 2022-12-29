@@ -140,7 +140,6 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         if scrollView.contentOffset.x > targetContentOffset.pointee.x {
             roundedIndex = floor(index)
-            
         } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
             roundedIndex = ceil(index)
         } else {
