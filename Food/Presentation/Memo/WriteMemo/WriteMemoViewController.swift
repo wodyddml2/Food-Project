@@ -221,7 +221,7 @@ final class WriteMemoViewController: BaseViewController {
     
     @objc func storeSearchButtonClicked() {
         let vc = SearchViewController()
-        vc.viewModel.memoCheck.value = true
+        vc.viewModel.memoCheck = true
         vc.delegate = self
         transition(vc, transitionStyle: .presentNavigation)
     }

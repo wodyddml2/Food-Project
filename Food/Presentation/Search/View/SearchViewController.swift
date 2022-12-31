@@ -27,20 +27,12 @@ final class SearchViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        bind()
     }
     
-//    private func bind() {
-//        viewModel.list.bind { store in
-//            DispatchQueue.main.async {
-//                self.mainView.searchTableView.reloadData()
-//            }
-//        }
-//    }
     
     override func configureUI() {
         searchControllerSetup()
-        searchTableViewSetup()
+        bindTableView()
     }
     
     override func navigationSetup() {
@@ -78,14 +70,14 @@ extension SearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
 }
 
 extension SearchViewController: UITableViewDelegate {
-    private func searchTableViewSetup() {
+    private func bindTableView() {
         viewModel.storeList
             .bind(to: mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.reusableIdentifier, cellType: SearchTableViewCell.self)) { index, info, cell in
             cell.storeNameLabel.text = info.name
             cell.storeNumberLabel.text = info.phone
             cell.storeLocationLabel.text = info.adress
 
-            cell.searchToDetailImageView.image = self.viewModel.memoCheck.value == true ? nil : UIImage(systemName: "chevron.right")
+            cell.searchToDetailImageView.image = self.viewModel.memoCheck == true ? nil : UIImage(systemName: "chevron.right")
         }
         .disposed(by: disposeBag)
         
@@ -95,7 +87,7 @@ extension SearchViewController: UITableViewDelegate {
         mainView.searchTableView.rx.modelSelected(StoreInfo.self)
             .withUnretained(self)
             .bind { vc, info in
-                if vc.viewModel.memoCheck.value {
+                if vc.viewModel.memoCheck {
                     vc.delegate?.searchInfoMemo(
                         storeName: info.name,
                         storeAdress: info.adress

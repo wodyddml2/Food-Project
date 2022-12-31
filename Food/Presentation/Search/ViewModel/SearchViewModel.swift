@@ -14,7 +14,7 @@ final class SearchViewModel {
     
     var list: [StoreInfo] = []
     
-    var memoCheck: CObservable<Bool> = CObservable(false)
+    var memoCheck: Bool = false
     
     func fetchSearch(query: String, pageCount: Int, completion: @escaping ([StoreInfo]) -> Void ) {
         RequestSearchAPIManager.shared.requestStore(query: query, page: pageCount) { [weak self] store in

@@ -7,7 +7,11 @@
 
 import UIKit
 
+import RxSwift
+
 final class WishListCollectionViewCell: BaseCollectionViewCell {
+    
+    var disposeBag = DisposeBag()
     
     let storeImageView: UIImageView = {
         let view = UIImageView()
@@ -52,6 +56,9 @@ final class WishListCollectionViewCell: BaseCollectionViewCell {
         super.init(frame: frame)
     }
     
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+    }
     
     override func configureUI() {
         

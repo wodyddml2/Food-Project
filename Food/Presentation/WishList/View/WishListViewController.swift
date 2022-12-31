@@ -7,16 +7,16 @@
 
 import UIKit
 
-import RealmSwift
+import RxSwift
+import RxCocoa
 
 final class WishListViewController: BaseViewController {
     
     let viewModel = WishListViewModel()
+    var disposeBag = DisposeBag()
     
-    private lazy var wishListCollectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        view.delegate = self
-        view.dataSource = self
         view.register(WishListCollectionViewCell.self, forCellWithReuseIdentifier: WishListCollectionViewCell.reusableIdentifier)
         return view
     }()
@@ -32,55 +32,58 @@ final class WishListViewController: BaseViewController {
     }
     
     override func configureUI() {
-        view.addSubview(wishListCollectionView)
-        wishListCollectionView.collectionViewLayout = collectionViewLayout()
+        view.addSubview(collectionView)
+        collectionView.collectionViewLayout = collectionViewLayout()
     }
     
     override func setConstraints() {
-        wishListCollectionView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
     private func bind() {
+        viewModel.wishList
+            .bind(to: collectionView.rx.items(cellIdentifier: WishListCollectionViewCell.reusableIdentifier, cellType: WishListCollectionViewCell.self)) { index, info, cell in
+                cell.storeNameLabel.text = info.storeName
+                cell.storeLocationLabel.text = info.storeAdress
+                
+                cell.storePickButton.tag = index
+                cell.storePickButton.rx.tap
+                    .bind { _ in
+                        
+                    }
+                    .disposed(by: cell.disposeBag)
+                
+            }.disposed(by: disposeBag)
+        
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+
+        
+        collectionView.rx.modelSelected(UserWishList.self)
+            .withUnretained(self)
+            .bind { vc, info in
+                let viewController = DetailViewController()
+
+                viewController.webID = info.storeURL
+                
+                vc.transition(viewController, transitionStyle: .presentFullNavigation)
+            }
+            .disposed(by: disposeBag)
+    
         viewModel.fetchData()
-        viewModel.tasks.bind { _ in
-            self.wishListCollectionView.reloadData()
-        }
     }
 }
 
-extension WishListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfInSection
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishListCollectionViewCell.reusableIdentifier, for: indexPath) as? WishListCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.storeNameLabel.text = viewModel.indexItem(index: indexPath.item).storeName
-        cell.storeLocationLabel.text = viewModel.indexItem(index: indexPath.item).storeAdress
-        
-        cell.storePickButton.tag = indexPath.item
-        cell.storePickButton.addTarget(self, action: #selector(storePickButtonTapped), for: .touchUpInside)
-        
-        return cell
-    }
-    
-    @objc private func storePickButtonTapped(_ sender: UIButton) {
-        viewModel.storePickButtonClicked(index: sender.tag)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailViewController()
+extension WishListViewController: UICollectionViewDelegate {
 
-        vc.webID = viewModel.tasks.value[indexPath.item].storeURL
-        
-        transition(vc, transitionStyle: .presentFullNavigation)
-    }
+    
+//    @objc private func storePickButtonTapped(_ sender: UIButton) {
+//        viewModel.storePickButtonClicked(index: sender.tag)
+//    }
+    
+
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()

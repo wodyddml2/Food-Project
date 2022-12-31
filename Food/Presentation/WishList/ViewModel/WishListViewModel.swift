@@ -6,43 +6,39 @@
 //
 import Foundation
 
+import RxSwift
 
 final class WishListViewModel {
     private let repository = UserWishListRepository()
     
-    var tasks = CObservable([UserWishList]())
+    var tasks = [UserWishList]()
+    var wishList: PublishSubject<[UserWishList]> = PublishSubject()
 }
 
 extension WishListViewModel {
     func fetchData(){
         
-        tasks.value.removeAll()
-        
+        tasks.removeAll()
         let allWishList = repository.fetch()
         
-        allWishList.forEach { wish in
-            tasks.value.append(wish)
+        allWishList.forEach { value in
+            tasks.append(value)
         }
+        
+        wishList.onNext(tasks)
     }
 }
 
 extension WishListViewModel {
-    var numberOfInSection: Int {
-        return tasks.value.count
-    }
-    
-    func indexItem(index: Int) -> UserWishList {
-        return tasks.value[index]
-    }
-    
+  
     
     func storePickButtonClicked(index: Int) {
         do {
-            try repository.deleteRecord(item: tasks.value[index])
+            try repository.deleteRecord(item: tasks[index])
         } catch let error {
             print(error)
         }
         
-        tasks.value.remove(at: index)
+        tasks.remove(at: index)
     }
 }
