@@ -43,6 +43,7 @@ final class WishListViewController: BaseViewController {
     }
     
     private func bind() {
+        disposeBag = DisposeBag()
         viewModel.wishList
             .bind(to: collectionView.rx.items(cellIdentifier: WishListCollectionViewCell.reusableIdentifier, cellType: WishListCollectionViewCell.self)) { index, info, cell in
                 cell.storeNameLabel.text = info.storeName
