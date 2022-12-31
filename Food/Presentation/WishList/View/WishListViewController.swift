@@ -51,8 +51,9 @@ final class WishListViewController: BaseViewController {
                 
                 cell.storePickButton.tag = index
                 cell.storePickButton.rx.tap
-                    .bind { _ in
-                        
+                    .withUnretained(self)
+                    .bind { vc, _ in
+                        vc.viewModel.storePickButtonClicked(index: cell.storePickButton.tag)
                     }
                     .disposed(by: cell.disposeBag)
                 
@@ -78,13 +79,6 @@ final class WishListViewController: BaseViewController {
 }
 
 extension WishListViewController: UICollectionViewDelegate {
-
-    
-//    @objc private func storePickButtonTapped(_ sender: UIButton) {
-//        viewModel.storePickButtonClicked(index: sender.tag)
-//    }
-    
-
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()

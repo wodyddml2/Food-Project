@@ -17,7 +17,6 @@ final class WishListViewModel {
 
 extension WishListViewModel {
     func fetchData(){
-        
         tasks.removeAll()
         let allWishList = repository.fetch()
         
@@ -27,10 +26,6 @@ extension WishListViewModel {
         
         wishList.onNext(tasks)
     }
-}
-
-extension WishListViewModel {
-  
     
     func storePickButtonClicked(index: Int) {
         do {
@@ -40,5 +35,6 @@ extension WishListViewModel {
         }
         
         tasks.remove(at: index)
+        wishList.onNext(tasks)
     }
 }
