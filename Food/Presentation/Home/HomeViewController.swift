@@ -300,8 +300,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func memoListMoreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
-        vc.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
-        vc.categoryKey = tasks[sender.tag][0].storeCategory
+        vc.viewModel.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
+        vc.viewModel.categoryKey = tasks[sender.tag][0].storeCategory
         
         transition(vc, transitionStyle: .push)
     }
