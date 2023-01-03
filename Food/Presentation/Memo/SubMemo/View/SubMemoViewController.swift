@@ -17,15 +17,6 @@ final class SubMemoViewController: BaseViewController {
     let viewModel = SubMemoViewModel()
     var disposeBag = DisposeBag()
     
-    var category: String?
-    var categoryKey: ObjectId?
-//
-//    var tasks: Results<UserMemo>? {
-//        didSet {
-//            collectionView.reloadData()
-//        }
-//    }
-    
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         view.showsVerticalScrollIndicator = false
@@ -42,6 +33,65 @@ final class SubMemoViewController: BaseViewController {
         navigationItem.rightBarButtonItems = [plusButton, filterButton]
     }
     
+    override func configureUI() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = viewModel.categoryKey == nil ? "메모" : viewModel.category
+        navigationController?.navigationBar.tintColor = .black
+        disposeBag = DisposeBag()
+        bindViewModel()
+        viewModel.fetch()
+    }
+}
+
+extension SubMemoViewController {
+    private func filterAction(fetchRate: Results<UserMemo>, fetchVisit: Results<UserMemo>, fetchRecentDate: Results<UserMemo>) -> UIMenu {
+        let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) {[weak self] _ in
+            guard let self = self else {return}
+            self.viewModel.tasks.onNext(fetchRate)
+        }
+        
+        let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) {[weak self] _ in
+            guard let self = self else {return}
+            self.viewModel.tasks.onNext(fetchVisit)
+        }
+        
+        let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) {[weak self] _ in
+            guard let self = self else {return}
+            self.viewModel.tasks.onNext(fetchRecentDate)
+        }
+        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
+        
+        return menu
+    }
+    
+    private func filterButtonClicked() -> UIMenu {
+        if viewModel.category == nil {
+            return filterAction(
+                fetchRate: repository.fetchSort(sort: "storeRate"),
+                fetchVisit: repository.fetchSort(sort: "storeVisit"),
+                fetchRecentDate: repository.fetchSort(sort: "storeDate")
+            )
+        } else {
+            guard let categoryKey = self.viewModel.categoryKey else {
+                return UIMenu()
+            }
+            return filterAction(
+                fetchRate: repository.fetchCategorySort(sort: "storeRate", category: categoryKey),
+                fetchVisit: repository.fetchCategorySort(sort: "storeVisit", category: categoryKey),
+                fetchRecentDate: repository.fetchCategorySort(sort: "storeDate", category: categoryKey)
+            )
+        }
+    }
+}
+
+extension SubMemoViewController {
     func bindViewModel() {
         plusButton.rx.tap
             .withUnretained(self)
@@ -82,66 +132,6 @@ final class SubMemoViewController: BaseViewController {
                 vc.transition(viewCotroller, transitionStyle: .presentFullNavigation)
             }
             .disposed(by: disposeBag)
-    }
-    
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.title = viewModel.categoryKey == nil ? "메모" : viewModel.category
-        navigationController?.navigationBar.tintColor = .black
-        disposeBag = DisposeBag()
-        bindViewModel()
-        viewModel.fetch()
-    }
-    
-    
-    private func filterAction(fetchRate: Results<UserMemo>, fetchVisit: Results<UserMemo>, fetchRecentDate: Results<UserMemo>) -> UIMenu {
-        let rate = UIAction(title: "별점순", image: UIImage(systemName: "star.fill")) {[weak self] _ in
-            guard let self = self else {return}
-//            self.tasks = fetchRate
-        }
-        
-        let visit = UIAction(title: "방문순", image: UIImage(systemName: "person.3.fill")) {[weak self] _ in
-            guard let self = self else {return}
-//            self.tasks = fetchVisit
-        }
-        
-        let recentDate = UIAction(title: "최신순", image: UIImage(systemName: "tray.and.arrow.down.fill")) {[weak self] _ in
-            guard let self = self else {return}
-//            self.tasks = fetchRecentDate
-        }
-        let menu = UIMenu(title: "원하는 방식으로 정렬해주세요.", options: .displayInline, children: [recentDate, rate, visit])
-        
-        return menu
-    }
-    
-    private func filterButtonClicked() -> UIMenu {
-        if viewModel.category == nil {
-            
-            return filterAction(
-                fetchRate: repository.fetchSort(sort: "storeRate"),
-                fetchVisit: repository.fetchSort(sort: "storeVisit"),
-                fetchRecentDate: repository.fetchSort(sort: "storeDate")
-            )
-            
-        } else {
-            guard let categoryKey = self.viewModel.categoryKey else {
-                return UIMenu()
-            }
-            
-            return filterAction(
-                fetchRate: repository.fetchCategorySort(sort: "storeRate", category: categoryKey),
-                fetchVisit: repository.fetchCategorySort(sort: "storeVisit", category: categoryKey),
-                fetchRecentDate: repository.fetchCategorySort(sort: "storeDate", category: categoryKey)
-            )
-        } 
-    }
-    
-    override func configureUI() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 }
 
