@@ -45,6 +45,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
     }
     
     override func configureUI() {
@@ -82,6 +83,11 @@ final class MemoListTableViewCell: BaseTableViewCell {
         
     }
     
-    
+    func itemHidden(color: UIColor, hidden: Bool) {
+        backgroundColor = color
+        memoListMoreButton.isHidden = hidden
+        memoListMoreImageView.isHidden = hidden
+        memoListMoreLabel.isHidden = hidden
+    }
     
 }

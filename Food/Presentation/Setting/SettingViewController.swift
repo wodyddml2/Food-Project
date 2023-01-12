@@ -65,7 +65,6 @@ extension SettingViewController {
     private func configureDataSource() {
         dataSource = UITableViewDiffableDataSource(tableView: settingTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.reusableIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
-            cell.selectionStyle = .none
             if indexPath.section == 0 {
                 cell.settingLabel.text = self.settingList[indexPath.row].rawValue
             } else {

@@ -183,7 +183,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     make.top.equalTo(memoCell.memoImageView.snp.bottom).offset(8)
                     make.bottom.equalTo(-8)
                 }
-                if tasks.count == 1{
+                if tasks.count == 1 {
                     memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
                     memoCell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
                 } else {
@@ -251,13 +251,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tasks.isEmpty {
-            return 1
-        } else {
-            return tasks.count
-        }
-        
+        tasks.isEmpty ? 1 : tasks.count
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -266,7 +262,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.reusableIdentifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
-        cell.selectionStyle = .none
         
         cell.memoListCollectionView.delegate = self
         cell.memoListCollectionView.dataSource = self
@@ -278,16 +273,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tasks.isEmpty {
             mainView.memoListTableView.separatorStyle = .none
-            cell.backgroundColor = .background
-            cell.memoListMoreButton.isHidden = true
-            cell.memoListMoreImageView.isHidden = true
-            cell.memoListMoreLabel.isHidden = true
+            cell.itemHidden(color: .background, hidden: true)
         } else {
             mainView.memoListTableView.separatorStyle = .singleLine
-            cell.backgroundColor = .white
-            cell.memoListMoreButton.isHidden = false
-            cell.memoListMoreImageView.isHidden = false
-            cell.memoListMoreLabel.isHidden = false
+            cell.itemHidden(color: .white, hidden: false)
         }
         
         cell.memoListCollectionView.tag = indexPath.section

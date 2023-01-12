@@ -197,7 +197,6 @@ extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BackupTableViewCell.reusableIdentifier) as? BackupTableViewCell else {
             return UITableViewCell()
         }
-        cell.selectionStyle = .none
         
         if backupList.isEmpty {
             tableView.separatorStyle = .none

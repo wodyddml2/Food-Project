@@ -78,14 +78,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reusableIdentifier, for: indexPath) as? CategoryTableViewCell else {
             return UITableViewCell()
         }
-        
-        cell.selectionStyle = .none
-        
-        if indexPath.row == indexPath.first {
-            cell.isHidden = true
-        } else {
-            cell.isHidden = false
-        }
+        cell.isHidden = indexPath.row == indexPath.first ? true : false
         
         cell.categoryLabel.text = categoryTasks?[indexPath.row].category
         
