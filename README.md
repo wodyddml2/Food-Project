@@ -2,14 +2,19 @@
 
 <img width="983" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-11-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_7 22 38" src="https://user-images.githubusercontent.com/83345066/208294338-4de941f5-1865-45a1-aca6-bf2f0c0fc82e.png">
 
-> **Introduction**
-> 
+## 💁🏻‍♂️ **Introduction**
+
 - 1인 출시 프로젝트(기획, 개발, 출시)
 - 출시 기간 약 3주(2022.09.08 ~ 2022.09.29)
 - 주변 맛집을 간편하게 찾고 기억에 남는 맛집을 기록을 하는 앱
+- 지도와 검색을 이용해 주변 맛집 정보를 제공합니다
+- 원하는 맛집을 찜할 수 있습니다
+- 맛집에 대해 기록, 수정이 가능합니다
+- 데이터 백업 복구가 가능합니다
+<br></br>
 
-<br/><br/>
-> **Stack**
+## ⚙️ **Stack**
+> 기술 및 라이브러리
 > 
 - Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
 - RxSwift, RxCocoa
@@ -19,19 +24,9 @@
 - MVC, MVVM, Singleton Pattern
 - SPM, CocoaPods
 
-<br/><br/>
-> **프로젝트 기능**
-> 
-- 지도와 검색을 이용해 주변 맛집 정보 제공
-- 검색한 맛집 찜 목록 추가, 삭제
-- 맛집 정보와 리뷰 저장, 삭제, 수정
-- 음식 사진 편집, 저장, 삭제, 수정
-- 메모 목록 최신순, 별점순, 방문순 정렬
-- 음식 카테고리 추가, 삭제
-- 백업, 복구 기능
 
 <br/><br/>
-> **프로젝트 기술 적용**
+> 프로젝트 기술 적용
 >
 - **Singleton** pattern 서버 통신의 로직을 하나의 객체만을 생성해 메모리 낭비 방지
 - **Delegate** pattern을 통해 데이터 전달
@@ -49,8 +44,7 @@
 - **FirebaseAnalytics(Crashlytics)** 사용자의 활동 정보 통계와 특정 이벤트 수집, 실시간 분석을 통해 사용자들의 불편 최소화
 
 <br/><br/>
-> **개발 공수**
-> 
+## 📝 개발 공수 
 - 개발 기간: 2022.09.08 ~ 2022.09.29 (약 3주) - 기획, 디자인, 개발, 출시, 업데이트 등
 
 |                       진행 사항 |                       진행 기간 |                       세부 내역 |
@@ -66,11 +60,11 @@
 | Reject | 2022.10.07 | 카메라 권한 처리 문구 수정 |
 
 <br/><br/>
-<br/><br/>
-> **Trouble Shooting**
-> 
+## ⚒ **Trouble Shooting**
 
-▶︎  **앱 심사 리젝 사유 - 5.1.1 Legal: Privacy - Data Collection and Storage**
+
+> **앱 심사 리젝 사유 - 5.1.1 Legal: Privacy - Data Collection and Storage**
+> 
 <img width="530" alt="스크린샷 2022-12-22 오후 6 01 23" src="https://user-images.githubusercontent.com/83345066/209108283-69d636fb-7a8b-49d0-bf6a-a37578217382.png">
 <img width="345" alt="스크린샷 2022-12-22 오후 6 01 31" src="https://user-images.githubusercontent.com/83345066/209108420-96660805-00c8-4d26-a924-0ef672ff6fd1.png">
 Apple 앱 심사에서 카메라 권한 문구의 설명이 충분하지 않다는 Reject 사유를 전달받음
@@ -78,8 +72,10 @@ Apple 앱 심사에서 카메라 권한 문구의 설명이 충분하지 않다�
 ‘카메라를 사용하기 위해’ 라는 모호한 문구 보다는 Apple 앱 심사 지침에 맞는 더 명확한 표현을 위해 카메라가 어디에 사용이 될 것인지를 나타낼 수 있게끔 ‘음식 다이어리 작성을 위해’ 라는 문구로 변경하여 재심사 통과
 
 처음 진행하는 앱 출시 과정에서 Reject을 받는 중요한 경험을 하였고 가볍게 지나칠 수 있는 권한 처리 문구들을 사용자들 입장에서 무슨 목적인지 한 눈에 알아볼 수 있도록 세심하게 체크하는 과정이 필요하다는 것을 배움
-<br/><br/>
-▶︎  **Annotation 겹치는 현상**
+
+<br><br/>
+>  **Annotation 겹치는 현상**
+>  
 
 <img width="184" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-14_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_10 44 16" src="https://user-images.githubusercontent.com/83345066/208294314-9cb64573-42fd-4f7a-8f11-8b57302dc797.png">
 
@@ -102,8 +98,10 @@ CLLocationManager 클래스의 프로퍼티인 **distanceFilter**를 사용해 �
 만약 Annotation이 겹치는 문제가 없었다면 불필요한 **startUpdatingLocation()** 함수의 호출이 없다고 생각 했을텐데
 
 이 이슈로 인해 distanceFilter 프로퍼티의 기능 뿐만 아니라 이런 불필요한 함수 호출을 체크하고 막아 앱의 성능을 개선을 시킬 수 있는 역량을 키울 수 있었음
-<br/><br/>
-▶︎  **UITableView의 section별 UICollectionView 설정 시 화면 중복, scroll 문제** 
+
+<br><br/>
+>  **UITableView의 section별 UICollectionView 설정 시 화면 중복, scroll 문제** 
+>  
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.reusableIdentifier, for: indexPath) as? MemoListTableViewCell else {
@@ -127,8 +125,10 @@ override func prepareForReuse() {
 UITableViewCell의 재사용하기 전 시점인 **prepareForReuse**에서 collectionView를 **reload**해줌으로써 scroll을 원위치 시키고 **UITableViewCell을 재사용하여 그려주는 시점**에서 collectionView를 **reload**해줌으로써 section 별 collectionView를 그려줘 문제를 해결
 
 UITableViewCell 안에 UICollectionView를 넣어주어 cell의 재사용이 많은 코드에서는 각 적절한 시점에서 cell을 다시 그려주는 작업이 필요하다는 것을 알게되면서 문제를 해결하기 위해 tableViewCell과 collectionViewCell의 LifeCycle에 대해 다시 공부하면서 시점에 대한 처리를 더욱 유연하게 다룰 수 있게 됨
-<br/><br/>
-▶︎  **카테고리 삭제 시 메모 목록에서 index error**
+
+<br><br/>
+> 카테고리 삭제 시 메모 목록에서 index error
+> 
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reusableIdentifier, for: indexPath) as? CategoryTableViewCell else {
@@ -181,17 +181,10 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 **이외 카테고리 삭제** 시 해당 메모의 데이터들을 **기본 카테고리로 이동**시키도록 **DB를 업데이트 처리**하여 해결
 
 사용자 입장과 로직을 충분히 고려하지 못해 발생한 이슈로 맛집 메모가 들어있는 카테고리를 삭제할 때는 error를 잡는 것뿐만 아니라 어떻게 처리를 해줘야 사용자 입장에서 불편함을 느끼지 않을 수 있을까 고민하고 해결하는 시간을 가지면서 사용자의 입장을 고려할 수 있는 개발자의 역량을 키울 수 있게 됨
-<br/><br/>
-> **UI 초안**
-> 
+<br><br/>
 
-https://www.figma.com/file/NplxckTKwBDybqAUmF7ylf/SeSAC-%EA%B0%9C%EC%9D%B8-%EC%95%B1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1
+## ⭐️ Version Update
 
-<img width="618" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-11-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_7 13 33" src="https://user-images.githubusercontent.com/83345066/208294257-c4c5370d-81e9-4290-a62b-242afc5e566b.png">
-
-<br/><br/>
-> **Version Update**
-> 
 
 **1.0.0**
 
@@ -220,8 +213,8 @@ https://www.figma.com/file/NplxckTKwBDybqAUmF7ylf/SeSAC-%EA%B0%9C%EC%9D%B8-%EC%9
 - IQKeyboard를 적용하여 키보드 window를 내릴 시 임의로 올린 화면이 깨지는 부분 수정
 
 <br/><br/>
-> **프로젝트 회고**
-> 
+## 🔥 프로젝트 회고
+
 첫 앱스토어 출시 프로젝트를 하면서 처음으로 기획과 디자인, 개발을 모두 진행하게 되었다.
 진행 도중에 기획과 디자인 변경을 여러번 겪게 되었고 중간에 발생하는 변경사항에 대해 대처하는 법을 배울 수 있었다.
 또한 다시 한 번 프로젝트의 코드를 돌아보며 처리하지 못한 아쉬운 부분들을 생각해 볼 수 있었다.
