@@ -12,10 +12,11 @@
 > **Stack**
 > 
 - Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
+- RxSwift, RxCocoa
 - TOCropViewController, Zip, Acknowlist, IQKeyboardSwift
 - Alamofire, SwiftyJson, Realm, Codable
 - FirebaseAnalytics(Crashlytics)
-- MVC, Singleton Pattern
+- MVC, MVVM, Singleton Pattern
 - SPM, CocoaPods
 
 <br/><br/>
