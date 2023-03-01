@@ -28,20 +28,37 @@
 <br/><br/>
 > 프로젝트 기술 적용
 >
-- **Singleton** pattern 서버 통신의 로직을 하나의 객체만을 생성해 메모리 낭비 방지
-- **Delegate** pattern을 통해 데이터 전달
-- **TableView 내부에 CollectionView** 삽입을 통한 복잡한 layout 처리
-- **Timer**로 CollectionView 자동 스크롤
-- **네이버 지도 SDK**와 **카카오 로컬 API**를 통해 맛집 정보 표시
+- **Database**
+    - **Realm** Database **CRUD**, **정규화** 및 **migration** 작업을 통한 버전 관리
+- **Design Pattern**
+    - **Singleton** 패턴으로 하나의 객체만을 생성해 메모리 낭비 방지
+    - **Delegate** 패턴을 통해 데이터 전달
+- **Main View**
+    - **UITableView 내부에 UICollectionView** 삽입을 통한 복잡한 layout 처리
+    - **Timer**를 이용해 UICollectionView 자동 스크롤
+- **Map View**
+    - **네이버 지도 SDK**와 **카카오 로컬 API**를 통해 맛집 정보 표시
     - location **authorizationStatus**에 따라 분기 처리
-    - 현재 CollectionViewCell index 값의 Annotation에 색상 표시
-- **Realm** **Database** CRUD, 정규화 및 **migration** 작업을 통한 버전 관리
-- **FileManager**를 통해 Document 폴더에 접근해 이미지 및 **Codable**로 데이터 형식 변환된 압축 파일(백업) 저장
-- **PHPickerController, UIImagePickerController** 앨범, 카메라 접근
-- **TOCropViewController** 사진 편집을 통한 이미지 리사이징
+    - 현재 UICollectionViewCell index 값에 따라 Annotation 색상 표시
+- **Search View**
+    - 검색 시 **카카오 로컬 API**를 통해 음식점 정보 **GET**
+- **Restaurant** **Information View**
+    - **WebView**로 맛집 상세 정보 페이지 구현
+- **MeMo View**
+    - Realm **쿼리 연산자**를 이용한 **Filter** 처리로 메모 정렬
+- **MeMo Write View**
+    - **PHPickerController, UIImagePickerController** 앨범, 카메라 접근
+    - **TOCropViewController** 사진 편집을 통한 이미지 리사이징
+    - 검색을 통한 음식점 상호명, 주소 입력으로 사용자 불편 최소화
+    - 카테고리 별 저장
+- **FileManager**를 이용해 json 형식의 압축 파일 백업, 복구
 - **Network** Framework을 이용해 실시간 모니터링으로 네트워크 연결 상태 체크 및 대응
-- **WebView**로 맛집 상세 정보 페이지 구현
-- **FirebaseAnalytics(Crashlytics)** 사용자의 활동 정보 통계와 특정 이벤트 수집, 실시간 분석을 통해 사용자들의 불편 최소화
+
+<br/><br/>
+> Refactoring
+>
+- **MVVM** 패턴을 이용한 비즈니스 로직 분리
+- **RxSwift**, **RxCocoa**를 이용해 데이터 스트림을 비동기적인 흐름으로 처리
 
 <br/><br/>
 ## 📝 개발 공수 
