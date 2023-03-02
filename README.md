@@ -30,6 +30,8 @@
 >
 - **Database**
     - **Realm** Database **CRUD**, **정규화** 및 **migration** 작업을 통한 버전 관리
+- **Network**
+    - **Alamofire**의 **URLRequestConvertible** 프로토콜을 이용해 라우터 모듈화
 - **Design Pattern**
     - **Singleton** 패턴으로 하나의 객체만을 생성해 메모리 낭비 방지
     - **Delegate** 패턴을 통해 데이터 전달
