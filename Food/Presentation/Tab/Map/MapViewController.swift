@@ -19,7 +19,7 @@ final class MapViewController: BaseViewController {
     private var markers = [NMFMarker]()
     
     private var regionData: RegionInfo?
-    private var storeData: [StoreInfo] = []
+    private var storeData: [StoreVO] = []
     
     private var currentIndex: CGFloat = 0
     
@@ -173,38 +173,45 @@ extension MapViewController {
     private func requestLocationStore(lat: Double, lng: Double) {
         RequestSearchAPIManager.shared.requestRegion(lat: lat, lon: lng) { region in
             self.regionData = region
-            RequestSearchAPIManager.shared.requestStore(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1) { store in
-                self.storeData = store
-                
-                DispatchQueue.main.async {
-                    for stores in store {
-                        let marker = NMFMarker()
-                        marker.position = NMGLatLng(lat: stores.lon, lng: stores.lat)
-                        marker.iconImage = NMF_MARKER_IMAGE_RED
-                        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-                            
-                            if let firstIndex = store.firstIndex(of: stores) {
-                                self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
-                                self.currentIndex = CGFloat(firstIndex)
-                                self.markers.forEach {
-                                    $0.iconImage = NMF_MARKER_IMAGE_RED
+            RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1)) { result in
+                switch result {
+                case .success(let success):
+                    self.storeData = success.documents.map({ $0.toDomain() })
+                    
+                    DispatchQueue.main.async {
+                        for store in success.documents {
+                            let marker = NMFMarker()
+                            marker.position = NMGLatLng(lat: store.toDomain().lon, lng: store.toDomain().lat)
+                            marker.iconImage = NMF_MARKER_IMAGE_RED
+                            marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+                                
+                                if let firstIndex = success.documents.firstIndex(of: store) {
+                                    self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
+                                    self.currentIndex = CGFloat(firstIndex)
+                                    self.markers.forEach {
+                                        $0.iconImage = NMF_MARKER_IMAGE_RED
+                                    }
+                                    marker.iconImage = NMF_MARKER_IMAGE_YELLOW
                                 }
-                                marker.iconImage = NMF_MARKER_IMAGE_YELLOW
+                                self.updateCamera(latLang: marker.position)
+                                
+                                return true
                             }
-                            self.updateCamera(latLang: marker.position)
+                            self.markers.append(marker)
                             
-                            return true
+                            marker.mapView = self.mainView.mapView
                         }
-                        self.markers.append(marker)
-                        
-                        marker.mapView = self.mainView.mapView
+                        self.markers[Int(self.currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
+                        //
+                        self.mainView.mapView.positionMode = .direction
+                        self.mainView.mapCollectionView.reloadData()
                     }
-                    self.markers[Int(self.currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
-                    //
-                    self.mainView.mapView.positionMode = .direction
-                    self.mainView.mapCollectionView.reloadData()
+                case .failure(let failure):
+                    print(failure)
                 }
             }
+            
+    
         }
         
         updateCamera(latLang: NMGLatLng(lat: lat, lng: lng))

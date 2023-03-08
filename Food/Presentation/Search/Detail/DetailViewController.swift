@@ -15,7 +15,7 @@ final class DetailViewController: BaseViewController {
     
     var webID: String?
     
-    var storeData: StoreInfo?
+    var storeData: StoreVO?
     var regionData: RegionInfo?
     
     override func loadView() {
@@ -48,7 +48,7 @@ final class DetailViewController: BaseViewController {
         
     }
     
-    private func wishListRegister(storeData: StoreInfo) {
+    private func wishListRegister(storeData: StoreVO) {
         showMemoAlert(title: "찜 목록에 등록하시겠습니까?", button: "확인") { _ in
             if self.regionData != nil {
                 guard let regionData = self.regionData else { return }

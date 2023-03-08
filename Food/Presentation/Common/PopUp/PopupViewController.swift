@@ -15,7 +15,7 @@ final class PopupViewController: BaseViewController {
     private let repository = UserWishListRepository()
     
     var regionData: RegionInfo?
-    var storeData: StoreInfo?
+    var storeData: StoreVO?
     
     override func loadView() {
         self.view = mainView
