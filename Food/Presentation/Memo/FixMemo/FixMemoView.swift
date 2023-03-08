@@ -48,7 +48,7 @@ final class FixMemoView: BaseView {
         view.textAlignment = .center
         view.textColor = .white
         view.isEnabled = false
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
+        view.font = .gothicNeo(.SemiBold)
         view.backgroundColor = .darkPink
         view.layer.cornerRadius = 5
         return view
@@ -64,7 +64,7 @@ final class FixMemoView: BaseView {
     let storeNameField: UITextField = {
         let view = UITextField()
         view.isEnabled = false
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
+        view.font = .gothicNeo()
         view.backgroundColor = .lightPink
         view.textAlignment = .left
         return view
@@ -73,7 +73,7 @@ final class FixMemoView: BaseView {
     let storeLocationTextView: UITextView = {
         let view = UITextView()
         view.isEditable = false
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
+        view.font = .gothicNeo()
         view.text = TextViewPlaceholder.locationPlaceholder.rawValue
         view.textColor = .lightGray
         view.textAlignment = .left
@@ -86,7 +86,7 @@ final class FixMemoView: BaseView {
     let storeReviewTextView: UITextView = {
         let view = UITextView()
         view.isEditable = false
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 16)
+        view.font = .gothicNeo()
         view.text = TextViewPlaceholder.reviewPlaceholder.rawValue
         view.textColor = .lightGray
         view.layer.cornerRadius = 5
@@ -96,7 +96,7 @@ final class FixMemoView: BaseView {
     
     let storeVisitLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 18)
+        view.font = .gothicNeo(.SemiBold, size: 18)
         view.textAlignment = .center
         return view
     }()

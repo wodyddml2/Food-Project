@@ -41,7 +41,7 @@ final class TabViewController: UITabBarController {
         let tabBarAppearance = UITabBarItemAppearance()
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .white
-        tabBarAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: SetFont.bold.rawValue, size: 10)!]
+        tabBarAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.gothicNeo(.Bold, size: 10)]
         appearance.stackedLayoutAppearance = tabBarAppearance
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance

@@ -18,7 +18,7 @@ final class BannerCollectionViewCell: BaseCollectionViewCell {
     
     let bannerIntroLable: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 20)
+        view.font = .gothicNeo(.SemiBold, size: 20)
         view.textColor = .white
         return view
     }()

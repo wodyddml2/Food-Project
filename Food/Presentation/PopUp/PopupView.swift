@@ -41,14 +41,14 @@ final class PopupView: BaseView {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 20)
+        view.font = .gothicNeo(.SemiBold, size: 20)
         view.textAlignment = .center
         return view
     }()
     
     let storeCategoryLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
+        view.font = .gothicNeo(size: 14)
         view.textAlignment = .center
         return view
     }()
@@ -62,14 +62,14 @@ final class PopupView: BaseView {
     let storeLocationLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
+        view.font = .gothicNeo(size: 14)
         return view
     }()
     
     let storePhoneLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
+        view.font = .gothicNeo(size: 14)
         return view
     }()
     

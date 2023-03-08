@@ -14,7 +14,7 @@ final class SettingTableHeaderView: UITableViewHeaderFooterView {
     let headerLabel: UILabel = {
         let view = UILabel()
         view.textColor = .black
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 18)
+        view.font = .gothicNeo(size: 18)
         return view
     }()
     

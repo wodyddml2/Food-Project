@@ -29,13 +29,13 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     
     let storeNameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 14)
+        view.font = .gothicNeo(.SemiBold, size: 14)
         
         return view
     }()
     let storeLocationLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 12)
+        view.font = .gothicNeo(size: 12)
         return view
     }()
   
@@ -48,13 +48,13 @@ final class SubMemoCollectionViewCell: BaseCollectionViewCell {
     
     let storeRateLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 12)
+        view.font = .gothicNeo(.SemiBold, size: 12)
         return view
     }()
     
     let storeVisitLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 12)
+        view.font = .gothicNeo(.SemiBold, size: 12)
         return view
     }()
     

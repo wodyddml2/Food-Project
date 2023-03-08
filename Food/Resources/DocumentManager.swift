@@ -21,7 +21,7 @@ class DocumentManager {
     static let shared = DocumentManager()
     
     private init() { }
-  
+    
     
     func documentDirectoryPath() -> URL? {
         guard let documentDiretory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -89,7 +89,6 @@ class DocumentManager {
             
             let docs = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil)
             
-                       
             let zip = docs.filter {
                 $0.pathExtension == "zip"
             }
@@ -106,7 +105,7 @@ class DocumentManager {
             documentFile.sort {
                 $0.date < $1.date
             }
-
+            
             let fileSize = zip.map {
                 try? FileManager.default.attributesOfItem(atPath: $0.path)[.size]
             } as? [Double]

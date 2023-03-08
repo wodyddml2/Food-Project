@@ -13,7 +13,7 @@ final class PageView: BaseView {
     let onboardingTitleLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: SetFont.semibold.rawValue, size: 16)
+        view.font = .gothicNeo(.SemiBold)
         view.textAlignment = .center
         return view
     }()
@@ -21,7 +21,7 @@ final class PageView: BaseView {
     let onboardingIntroLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: SetFont.medium.rawValue, size: 14)
+        view.font = .gothicNeo(size: 14)
         view.textAlignment = .center
         view.textColor = .lightGray
         return view

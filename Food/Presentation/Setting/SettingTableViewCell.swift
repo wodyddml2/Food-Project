@@ -13,7 +13,7 @@ final class SettingTableViewCell: BaseTableViewCell {
     
     let settingLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: SetFont.light.rawValue, size: 15)
+        view.font = .gothicNeo(.Light, size: 15)
         return view
     }()
     
