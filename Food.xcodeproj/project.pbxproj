@@ -218,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				63237CBD295C646200203FD7 /* ViewModelType.swift */,
+				63258C4F28CDD520007638DC /* ReusableProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -240,6 +241,9 @@
 			children = (
 				63258C4028CDC6A3007638DC /* TabViewController.swift */,
 				63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */,
+				63258C3E28CDC630007638DC /* Home */,
+				634C57A728D1D7600067B44F /* Memo */,
+				63258C4228CDC6A7007638DC /* Map */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -257,6 +261,7 @@
 		63258C4528CDC6B7007638DC /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				6329218228D0D09E000DC3E5 /* Detail */,
 				638C028F28F68DBF00174F0B /* View */,
 				638C028E28F68DB300174F0B /* ViewModel */,
 			);
@@ -281,23 +286,8 @@
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
 				635D472429B88A8600C08D80 /* GoogleService-Info.plist */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
-				63258C4F28CDD520007638DC /* ReusableProtocol.swift */,
-				63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */,
-				63AD53B928E467C200CAF193 /* NetworkMonitor.swift */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		63261AEE28D33915005E8501 /* InfoData */ = {
-			isa = PBXGroup;
-			children = (
-				63F888C028EDAA6D005361D1 /* DocumentFile.swift */,
-				63261AEF28D33947005E8501 /* RegionInfo.swift */,
-				63D700DF28D5C747006E10B7 /* BannerInfo.swift */,
-				6310878528D8CAC5001610C2 /* CategoryInfo.swift */,
-				63261AF128D345F8005E8501 /* StoreInfo.swift */,
-			);
-			path = InfoData;
 			sourceTree = "<group>";
 		};
 		6329217D28D0BA75000DC3E5 /* PopUp */ = {
@@ -367,10 +357,32 @@
 		635D472329B889CC00C08D80 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				63D700EB28D5ECC9006E10B7 /* APIKey.swift */,
 				63261AE928D3089E005E8501 /* APIManager.swift */,
+				63D700EB28D5ECC9006E10B7 /* APIKey.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		635D472A29B8924A00C08D80 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				63D700E628D5D948006E10B7 /* Realm */,
+				63F888C028EDAA6D005361D1 /* DocumentFile.swift */,
+				63261AEF28D33947005E8501 /* RegionInfo.swift */,
+				63D700DF28D5C747006E10B7 /* BannerInfo.swift */,
+				6310878528D8CAC5001610C2 /* CategoryInfo.swift */,
+				63261AF128D345F8005E8501 /* StoreInfo.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		635D472B29B892E600C08D80 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */,
+				63AD53B928E467C200CAF193 /* NetworkMonitor.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		6380C24628E2002D00518679 /* Category */ = {
@@ -390,15 +402,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		638C028D28F68D9500174F0B /* Base */ = {
+		638C028D28F68D9500174F0B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				6329217D28D0BA75000DC3E5 /* PopUp */,
 				63FDE37728C62EE300257D18 /* BaseViewController.swift */,
 				63FDE37D28C62F0000257D18 /* BaseView.swift */,
 				63FDE37B28C62EFA00257D18 /* BaseCollectionViewCell.swift */,
 				63FDE37928C62EEF00257D18 /* BaseTableViewCell.swift */,
 			);
-			path = Base;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		638C028E28F68DB300174F0B /* ViewModel */ = {
@@ -430,17 +443,12 @@
 		638C029128F68F8100174F0B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				638C028D28F68D9500174F0B /* Base */,
+				638C028D28F68D9500174F0B /* Common */,
 				63FDE37F28C6311D00257D18 /* Onboarding */,
 				63258C3F28CDC660007638DC /* Tab */,
 				634C57A228D1D2FC0067B44F /* WishList */,
-				63258C3E28CDC630007638DC /* Home */,
-				634C57A728D1D7600067B44F /* Memo */,
-				63258C4228CDC6A7007638DC /* Map */,
 				63258C4528CDC6B7007638DC /* Search */,
 				63258C4828CDC6E2007638DC /* Setting */,
-				6329218228D0D09E000DC3E5 /* Detail */,
-				6329217D28D0BA75000DC3E5 /* PopUp */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -530,13 +538,12 @@
 				634EFCFA28F51D5D009D2512 /* Food.entitlements */,
 				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
+				635D472B29B892E600C08D80 /* Domain */,
 				635D472329B889CC00C08D80 /* Network */,
 				638C029128F68F8100174F0B /* Presentation */,
-				63AD53B828E466B700CAF193 /* Extension */,
-				63261AE328D2D314005E8501 /* Resources */,
-				63D700E628D5D948006E10B7 /* Realm */,
-				63261AEE28D33915005E8501 /* InfoData */,
+				635D472A29B8924A00C08D80 /* Data */,
 				63FDE37628C62ECF00257D18 /* Utility */,
+				63261AE328D2D314005E8501 /* Resources */,
 				63FDE36E28C62D5F00257D18 /* Info.plist */,
 			);
 			path = Food;
@@ -546,6 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				63237CBC295C645200203FD7 /* Protocol */,
+				63AD53B828E466B700CAF193 /* Extension */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
