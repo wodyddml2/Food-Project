@@ -18,7 +18,7 @@ final class MapViewController: BaseViewController {
     
     private var markers = [NMFMarker]()
     
-    private var regionData: RegionInfo?
+    private var regionData: RegionVO?
     private var storeData: [StoreVO] = []
     
     private var currentIndex: CGFloat = 0
@@ -170,51 +170,57 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
 }
 extension MapViewController {
     
-    private func requestLocationStore(lat: Double, lng: Double) {
-        RequestSearchAPIManager.shared.requestRegion(lat: lat, lon: lng) { region in
-            self.regionData = region
-            RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1)) { result in
-                switch result {
-                case .success(let success):
-                    self.storeData = success.documents.map({ $0.toDomain() })
-                    
-                    DispatchQueue.main.async {
-                        for store in success.documents {
-                            let marker = NMFMarker()
-                            marker.position = NMGLatLng(lat: store.toDomain().lon, lng: store.toDomain().lat)
-                            marker.iconImage = NMF_MARKER_IMAGE_RED
-                            marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-                                
-                                if let firstIndex = success.documents.firstIndex(of: store) {
-                                    self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
-                                    self.currentIndex = CGFloat(firstIndex)
-                                    self.markers.forEach {
-                                        $0.iconImage = NMF_MARKER_IMAGE_RED
-                                    }
-                                    marker.iconImage = NMF_MARKER_IMAGE_YELLOW
-                                }
-                                self.updateCamera(latLang: marker.position)
-                                
-                                return true
-                            }
-                            self.markers.append(marker)
-                            
-                            marker.mapView = self.mainView.mapView
-                        }
-                        self.markers[Int(self.currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
-                        //
-                        self.mainView.mapView.positionMode = .direction
-                        self.mainView.mapCollectionView.reloadData()
-                    }
-                case .failure(let failure):
-                    print(failure)
-                }
+    private func requestLocation(lat: Double, lng: Double) {
+        RequestSearchAPIManager.shared.requestAPI(type: RegionInfo.self, router: Router.region(lon: lng, lat: lat)) { region in
+            switch region {
+            case .success(let success):
+                self.regionData = success.results[0].region.toDomain()
+                self.requestStore(region: success.results[0].region.toDomain())
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
-            
-    
         }
-        
         updateCamera(latLang: NMGLatLng(lat: lat, lng: lng))
+    }
+    
+    private func requestStore(region: RegionVO) {
+        RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1)) { result in
+            switch result {
+            case .success(let success):
+                self.storeData = success.documents.map({ $0.toDomain() })
+                
+                DispatchQueue.main.async {
+                    for store in success.documents {
+                        let marker = NMFMarker()
+                        marker.position = NMGLatLng(lat: store.toDomain().lon, lng: store.toDomain().lat)
+                        marker.iconImage = NMF_MARKER_IMAGE_RED
+                        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+                            
+                            if let firstIndex = success.documents.firstIndex(of: store) {
+                                self.mainView.mapCollectionView.scrollToItem(at: NSIndexPath(item: firstIndex, section: 0) as IndexPath , at: .left, animated: true)
+                                self.currentIndex = CGFloat(firstIndex)
+                                self.markers.forEach {
+                                    $0.iconImage = NMF_MARKER_IMAGE_RED
+                                }
+                                marker.iconImage = NMF_MARKER_IMAGE_YELLOW
+                            }
+                            self.updateCamera(latLang: marker.position)
+                            
+                            return true
+                        }
+                        self.markers.append(marker)
+                        
+                        marker.mapView = self.mainView.mapView
+                    }
+                    self.markers[Int(self.currentIndex)].iconImage = NMF_MARKER_IMAGE_YELLOW
+                    //
+                    self.mainView.mapView.positionMode = .direction
+                    self.mainView.mapCollectionView.reloadData()
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
     }
     
     private func updateCamera(latLang: NMGLatLng) {
@@ -238,7 +244,7 @@ extension MapViewController {
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
             
-            requestLocationStore(lat: 37.571323, lng: 126.977511)
+            requestLocation(lat: 37.571323, lng: 126.977511)
             
             showRequestServiceAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
             
@@ -261,7 +267,7 @@ extension MapViewController: CLLocationManagerDelegate {
       
         locationManager.stopUpdatingLocation()
    
-        requestLocationStore(lat: coordinate.latitude, lng: coordinate.longitude)
+        requestLocation(lat: coordinate.latitude, lng: coordinate.longitude)
     }
     
     

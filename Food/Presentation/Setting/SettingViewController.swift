@@ -113,7 +113,7 @@ extension SettingViewController: UITableViewDelegate {
             case .appInquiry:
                 sendMail()
             case .versionInfo:
-                showCautionAlert(title: "Version 1.1.3")
+                showCautionAlert(title: "Version 1.1.5")
             case .openSource:
                 guard let url = Bundle.main.url(forResource: "Package", withExtension: "resolved"),
                       let data = try? Data(contentsOf: url),
