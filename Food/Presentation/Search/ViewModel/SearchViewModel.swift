@@ -10,19 +10,24 @@ import Foundation
 import RxSwift
 
 final class SearchViewModel {
-    var storeList: PublishSubject<[StoreInfo]> = PublishSubject()
+    var storeList: PublishSubject<[StoreVO]> = PublishSubject()
     
-    var list: [StoreInfo] = []
+    var list: [StoreVO] = []
     
     var memoCheck: Bool = false
     
-    func fetchSearch(query: String, pageCount: Int, completion: @escaping ([StoreInfo]) -> Void ) {
-        RequestSearchAPIManager.shared.requestStore(query: query, page: pageCount) { [weak self] store in
+    func fetchSearch(query: String, pageCount: Int, completion: @escaping ([Document]) -> Void ) {
+        RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: query, page: pageCount)) { [weak self] result in
             guard let self = self else { return }
-
-            self.list.append(contentsOf: store)
-            self.storeList.onNext(self.list)
-            completion(store)
+            switch result {
+            case .success(let result):
+                self.list.append(contentsOf: result.documents.map {$0.toDomain()})
+                self.storeList.onNext(self.list)
+                completion(result.documents)
+            case .failure(let error):
+                print(error)
+            }
+            
         }
     }
 }

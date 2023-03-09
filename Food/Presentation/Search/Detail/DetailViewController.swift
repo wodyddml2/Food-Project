@@ -15,8 +15,8 @@ final class DetailViewController: BaseViewController {
     
     var webID: String?
     
-    var storeData: StoreInfo?
-    var regionData: RegionInfo?
+    var storeData: StoreVO?
+    var regionData: RegionVO?
     
     override func loadView() {
         self.view = mainView
@@ -48,7 +48,7 @@ final class DetailViewController: BaseViewController {
         
     }
     
-    private func wishListRegister(storeData: StoreInfo) {
+    private func wishListRegister(storeData: StoreVO) {
         showMemoAlert(title: "찜 목록에 등록하시겠습니까?", button: "확인") { _ in
             if self.regionData != nil {
                 guard let regionData = self.regionData else { return }
@@ -61,16 +61,21 @@ final class DetailViewController: BaseViewController {
                 }
                 
             } else {
-                RequestSearchAPIManager.shared.requestRegion(lat: storeData.lon, lon: storeData.lat) { region in
-                    DispatchQueue.main.async {
-                        let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(region.firstArea) \(region.secondArea)", storeAllAddress: storeData.adress)
-                        do {
-                            try self.repository.addRealm(item: task)
-                        } catch {
-                            self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+                RequestSearchAPIManager.shared.requestAPI(type: RegionInfo.self, router: Router.region(lon: storeData.lat, lat: storeData.lon)) { region in
+                    switch region {
+                    case .success(let success):
+                        let area = success.results[0].region.toDomain()
+                        DispatchQueue.main.async {
+                            let task = UserWishList(storeName: storeData.name, storeURL: storeData.webID, storeAdress: "\(area.firstArea) \(area.secondArea)", storeAllAddress: storeData.adress)
+                            do {
+                                try self.repository.addRealm(item: task)
+                            } catch {
+                                self.showCautionAlert(title: "찜 목록 저장에 실패했습니다.")
+                            }
                         }
+                    case .failure(let failure):
+                        print(failure.localizedDescription)
                     }
-                    
                 }
             }
             

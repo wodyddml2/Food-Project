@@ -84,7 +84,7 @@ extension SearchViewController: UITableViewDelegate {
         mainView.searchTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        mainView.searchTableView.rx.modelSelected(StoreInfo.self)
+        mainView.searchTableView.rx.modelSelected(StoreVO.self)
             .withUnretained(self)
             .bind { vc, info in
                 if vc.viewModel.memoCheck {

@@ -32,7 +32,7 @@ final class WriteMemoViewController: BaseViewController {
     var task: UserMemo?
     var delegate: UserMemoDelegate?
     
-    var storeData: StoreInfo?
+    var storeData: StoreVO?
     
     var categoryKey: ObjectId?
     

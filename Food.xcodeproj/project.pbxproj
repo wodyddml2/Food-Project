@@ -21,7 +21,6 @@
 		63258C5028CDD520007638DC /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63258C4F28CDD520007638DC /* ReusableProtocol.swift */; };
 		63261AE828D3032A005E8501 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 63261AE728D3032A005E8501 /* Alamofire */; };
 		63261AEA28D3089E005E8501 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63261AE928D3089E005E8501 /* APIManager.swift */; };
-		63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 63261AEC28D30A3A005E8501 /* SwiftyJSON */; };
 		63261AF028D33947005E8501 /* RegionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63261AEF28D33947005E8501 /* RegionInfo.swift */; };
 		63261AF228D345F8005E8501 /* StoreInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63261AF128D345F8005E8501 /* StoreInfo.swift */; };
 		6329217A28D0A79E000DC3E5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329217928D0A79E000DC3E5 /* MapView.swift */; };
@@ -38,14 +37,14 @@
 		634C57B728D1F1B90067B44F /* SubMemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57B628D1F1B90067B44F /* SubMemoCollectionViewCell.swift */; };
 		634C57BA28D1FB360067B44F /* WriteMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57B928D1FB360067B44F /* WriteMemoViewController.swift */; };
 		634C57BC28D1FB490067B44F /* WriteMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C57BB28D1FB490067B44F /* WriteMemoView.swift */; };
-		634EFCF128F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 634EFCF028F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		634EFCF328F51C0E009D2512 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 634EFCF228F51C0E009D2512 /* FirebaseCrashlytics */; };
-		634EFCF528F51C0E009D2512 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 634EFCF428F51C0E009D2512 /* FirebaseMessaging */; };
 		634EFCF928F51D17009D2512 /* Package.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 634EFCF828F51D17009D2512 /* Package.resolved */; };
 		635011AB28F5A64500E2E6FF /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635011AA28F5A64500E2E6FF /* UITextView+Extension.swift */; };
 		635011AF28F5B54400E2E6FF /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635011AE28F5B54400E2E6FF /* SearchViewModel.swift */; };
 		6354093028D0732800D03CAD /* MemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */; };
 		6354093228D0733500D03CAD /* MemoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */; };
+		635AB0A329B8B89B00AF549D /* StoreVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AB0A229B8B89B00AF549D /* StoreVO.swift */; };
+		635AB0A529B8BC9800AF549D /* RegionVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AB0A429B8BC9800AF549D /* RegionVO.swift */; };
+		635D472D29B8973400C08D80 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635D472C29B8973400C08D80 /* Router.swift */; };
 		6371861128EED0A800BCBF91 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371861028EED0A800BCBF91 /* UIColor+Extension.swift */; };
 		6371861328EED53500BCBF91 /* UIFont+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371861228EED53500BCBF91 /* UIFont+Custom.swift */; };
 		637F4E0928E2F8FC002F7DA6 /* AcknowList in Frameworks */ = {isa = PBXBuildFile; productRef = 637F4E0828E2F8FC002F7DA6 /* AcknowList */; };
@@ -133,7 +132,9 @@
 		635011AE28F5B54400E2E6FF /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewCell.swift; sourceTree = "<group>"; };
 		6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCollectionViewCell.swift; sourceTree = "<group>"; };
-		635D472429B88A8600C08D80 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		635AB0A229B8B89B00AF549D /* StoreVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreVO.swift; sourceTree = "<group>"; };
+		635AB0A429B8BC9800AF549D /* RegionVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionVO.swift; sourceTree = "<group>"; };
+		635D472C29B8973400C08D80 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6371861028EED0A800BCBF91 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		6371861228EED53500BCBF91 /* UIFont+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Custom.swift"; sourceTree = "<group>"; };
 		637F8FEC28E1C7C400EE67EF /* UserCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategory.swift; sourceTree = "<group>"; };
@@ -187,14 +188,10 @@
 				63261AE828D3032A005E8501 /* Alamofire in Frameworks */,
 				637F8FE928E1B23000EE67EF /* CropViewController in Frameworks */,
 				63D700E528D5D8AF006E10B7 /* RealmSwift in Frameworks */,
-				634EFCF128F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				63A9B0B128C74E6300201418 /* SnapKit in Frameworks */,
 				637F4E0928E2F8FC002F7DA6 /* AcknowList in Frameworks */,
 				63BADFD4294712810085834E /* IQKeyboardManagerSwift in Frameworks */,
-				63261AED28D30A3A005E8501 /* SwiftyJSON in Frameworks */,
-				634EFCF528F51C0E009D2512 /* FirebaseMessaging in Frameworks */,
 				637F8FEB28E1B23000EE67EF /* TOCropViewController in Frameworks */,
-				634EFCF328F51C0E009D2512 /* FirebaseCrashlytics in Frameworks */,
 				63237CB9295C363000203FD7 /* RxCocoa in Frameworks */,
 				C21CD95C1C651E063C2F0996 /* Pods_Food.framework in Frameworks */,
 				63237CBB295C363000203FD7 /* RxSwift in Frameworks */,
@@ -284,7 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				63FDE36928C62D5F00257D18 /* Assets.xcassets */,
-				635D472429B88A8600C08D80 /* GoogleService-Info.plist */,
 				63FDE36B28C62D5F00257D18 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -354,11 +350,21 @@
 			path = WriteMemo;
 			sourceTree = "<group>";
 		};
+		635AB0A129B8B88F00AF549D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				635AB0A229B8B89B00AF549D /* StoreVO.swift */,
+				635AB0A429B8BC9800AF549D /* RegionVO.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		635D472329B889CC00C08D80 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				63261AE928D3089E005E8501 /* APIManager.swift */,
 				63D700EB28D5ECC9006E10B7 /* APIKey.swift */,
+				635D472C29B8973400C08D80 /* Router.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -367,11 +373,11 @@
 			isa = PBXGroup;
 			children = (
 				63D700E628D5D948006E10B7 /* Realm */,
-				63F888C028EDAA6D005361D1 /* DocumentFile.swift */,
+				63261AF128D345F8005E8501 /* StoreInfo.swift */,
 				63261AEF28D33947005E8501 /* RegionInfo.swift */,
+				63F888C028EDAA6D005361D1 /* DocumentFile.swift */,
 				63D700DF28D5C747006E10B7 /* BannerInfo.swift */,
 				6310878528D8CAC5001610C2 /* CategoryInfo.swift */,
-				63261AF128D345F8005E8501 /* StoreInfo.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -379,6 +385,7 @@
 		635D472B29B892E600C08D80 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				635AB0A129B8B88F00AF549D /* Models */,
 				63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */,
 				63AD53B928E467C200CAF193 /* NetworkMonitor.swift */,
 			);
@@ -536,8 +543,8 @@
 			isa = PBXGroup;
 			children = (
 				634EFCFA28F51D5D009D2512 /* Food.entitlements */,
-				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
+				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
 				635D472B29B892E600C08D80 /* Domain */,
 				635D472329B889CC00C08D80 /* Network */,
 				638C029128F68F8100174F0B /* Presentation */,
@@ -590,7 +597,6 @@
 				63FDE35A28C62D5F00257D18 /* Frameworks */,
 				63FDE35B28C62D5F00257D18 /* Resources */,
 				5E8629DDDE82C5E4D0953721 /* [CP] Embed Pods Frameworks */,
-				635011A728F566E200E2E6FF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -600,16 +606,12 @@
 			packageProductDependencies = (
 				63A9B0B028C74E6300201418 /* SnapKit */,
 				63261AE728D3032A005E8501 /* Alamofire */,
-				63261AEC28D30A3A005E8501 /* SwiftyJSON */,
 				63D700E228D5D8AF006E10B7 /* Realm */,
 				63D700E428D5D8AF006E10B7 /* RealmSwift */,
 				63A0A31D28DC55FD002D01EA /* Zip */,
 				637F8FE828E1B23000EE67EF /* CropViewController */,
 				637F8FEA28E1B23000EE67EF /* TOCropViewController */,
 				637F4E0828E2F8FC002F7DA6 /* AcknowList */,
-				634EFCF028F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				634EFCF228F51C0E009D2512 /* FirebaseCrashlytics */,
-				634EFCF428F51C0E009D2512 /* FirebaseMessaging */,
 				63BADFD3294712810085834E /* IQKeyboardManagerSwift */,
 				63237CB8295C363000203FD7 /* RxCocoa */,
 				63237CBA295C363000203FD7 /* RxSwift */,
@@ -645,12 +647,10 @@
 			packageReferences = (
 				63A9B0AF28C74E6300201418 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				63D700E128D5D8AF006E10B7 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				63A0A31C28DC55FD002D01EA /* XCRemoteSwiftPackageReference "Zip" */,
 				637F8FE728E1B22F00EE67EF /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */,
-				634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				63BADFD2294712810085834E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				63237CB7295C363000203FD7 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
@@ -693,25 +693,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Food/Pods-Food-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		635011A728F566E200E2E6FF /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		8756B7346B2EB7610BE2621A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -756,8 +737,11 @@
 				63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63A0A31B28DC55E5002D01EA /* BackupTableViewCell.swift in Sources */,
+				635AB0A329B8B89B00AF549D /* StoreVO.swift in Sources */,
 				63D700EE28D5ECF1006E10B7 /* DocumentManager.swift in Sources */,
+				635AB0A529B8BC9800AF549D /* RegionVO.swift in Sources */,
 				6310878628D8CAC5001610C2 /* CategoryInfo.swift in Sources */,
+				635D472D29B8973400C08D80 /* Router.swift in Sources */,
 				63D4B37128DF556B001681EE /* UIView+Extension.swift in Sources */,
 				63FDE37A28C62EEF00257D18 /* BaseTableViewCell.swift in Sources */,
 				6380C24A28E2019C00518679 /* CategoryTableViewCell.swift in Sources */,
@@ -1054,22 +1038,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
 		637F4E0728E2F8FC002F7DA6 /* XCRemoteSwiftPackageReference "AcknowList" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vtourraine/AcknowList.git";
@@ -1135,26 +1103,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63261AE628D3032A005E8501 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		63261AEC28D30A3A005E8501 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63261AEB28D30A3A005E8501 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		634EFCF028F51C0E009D2512 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		634EFCF228F51C0E009D2512 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		634EFCF428F51C0E009D2512 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 634EFCEF28F51C0E009D2512 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		637F4E0828E2F8FC002F7DA6 /* AcknowList */ = {
 			isa = XCSwiftPackageProductDependency;
