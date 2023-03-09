@@ -19,8 +19,7 @@
 - Swift, UIKit, SnapKit, CoreLocation, NMapsMap, PHPicker, UIImagePicker, FileManager, Network
 - RxSwift, RxCocoa
 - TOCropViewController, Zip, Acknowlist, IQKeyboardSwift
-- Alamofire, SwiftyJson, Realm, Codable
-- FirebaseAnalytics(Crashlytics)
+- Alamofire, Realm, Codable
 - MVC, MVVM, Singleton Pattern
 - SPM, CocoaPods
 
@@ -222,12 +221,16 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 **1.1.3**
 
 - 2022.11.01 업데이트
-- Firebase Analytics, Firebase Crashlytics 적용
 
 **1.1.4**
 
 - 2022.12.12 업데이트
 - IQKeyboard를 적용하여 키보드 window를 내릴 시 임의로 올린 화면이 깨지는 부분 수정
+
+**1.1.5**
+
+- 2023.03.09 업데이트
+- SwiftyJSON 제거, Codable 적용
 
 <br/><br/>
 ## 🔥 프로젝트 회고
