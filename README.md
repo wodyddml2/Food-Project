@@ -227,11 +227,6 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 - 2022.12.12 업데이트
 - IQKeyboard를 적용하여 키보드 window를 내릴 시 임의로 올린 화면이 깨지는 부분 수정
 
-**1.1.5**
-
-- 2023.03.09 업데이트
-- SwiftyJSON 제거, Codable 적용
-
 <br/><br/>
 ## 🔥 프로젝트 회고
 
