@@ -36,7 +36,7 @@ struct Document: Codable {
 
 extension Document: Equatable {
     func toDomain() -> StoreVO {
-        return .init(phone: phone, lat: Double(x)!, lon: Double(y)!, adress: addressName, name: placeName, webID: placeURL, category: categoryName)
+        return .init(phone: phone, lat: Double(x) ?? 0.0, lon: Double(y) ?? 0.0, adress: addressName, name: placeName, webID: placeURL, category: categoryName)
     }
 }
 

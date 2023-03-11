@@ -23,19 +23,17 @@ final class MapViewController: BaseViewController {
     
     private var currentIndex: CGFloat = 0
     
-    
     override func loadView() {
         self.view = mainView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
     override func configureUI() {
         locationManager.delegate = self
         
-
         mapCollectionViewSetup()
         checkUserDeviceLocationServiceAuthorization()
         
@@ -45,9 +43,9 @@ final class MapViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(networkNotificationObserver), name: Notification.Name("network"), object: nil)
-   
+        
     }
-   
+    
     @objc private func networkNotificationObserver() {
         mainView.mapView.authorize()
     }
@@ -64,7 +62,7 @@ final class MapViewController: BaseViewController {
         mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
         mainView.mapCollectionView.collectionViewLayout = mapCollectionViewLayout()
         mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
-       
+        
     }
     
     @objc private func searchButtonClicked() {
@@ -86,12 +84,8 @@ final class MapViewController: BaseViewController {
             present(NetworkMonitor.shared.showNetworkAlert(), animated: true)
         } else if locationManager.authorizationStatus == .denied {
             showRequestServiceAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
-        } 
-    
+        }
     }
-    
-   
-    
 }
 
 extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -165,22 +159,23 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         
         updateCamera(latLang: markers[Int(currentIndex)].position)
     }
-    
-    
 }
+
 extension MapViewController {
     
-    private func requestLocation(lat: Double, lng: Double) {
-        RequestSearchAPIManager.shared.requestAPI(type: RegionInfo.self, router: Router.region(lon: lng, lat: lat)) { region in
+    private func requestLocation(lat: Double, lon: Double) {
+        RequestSearchAPIManager.shared.requestAPI(type: RegionInfo.self, router: Router.region(lon: lon, lat: lat)) { region in
             switch region {
             case .success(let success):
-                self.regionData = success.results[0].region.toDomain()
-                self.requestStore(region: success.results[0].region.toDomain())
+                let result = success.results.first?.region.toDomain() ?? RegionVO(firstArea: "", secondArea: "", thirdArea: "")
+                
+                self.regionData = result
+                self.requestStore(region: result)
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
         }
-        updateCamera(latLang: NMGLatLng(lat: lat, lng: lng))
+        updateCamera(latLang: NMGLatLng(lat: lat, lng: lon))
     }
     
     private func requestStore(region: RegionVO) {
@@ -244,7 +239,7 @@ extension MapViewController {
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
             
-            requestLocation(lat: 37.571323, lng: 126.977511)
+            requestLocation(lat: 37.571323, lon: 126.977511)
             
             showRequestServiceAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
             
@@ -252,24 +247,20 @@ extension MapViewController {
             locationManager.distanceFilter = 100000
             locationManager.startUpdatingLocation()
             
-            
         default: print("default")
         }
     }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let coordinate = locations.last?.coordinate  else { return }
-      
+        
         locationManager.stopUpdatingLocation()
-   
-        requestLocation(lat: coordinate.latitude, lng: coordinate.longitude)
+        
+        requestLocation(lat: coordinate.latitude, lon: coordinate.longitude)
     }
-    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         showCautionAlert(title: "사용자의 위치를 가져오지 못했습니다.")
@@ -278,5 +269,4 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkUserDeviceLocationServiceAuthorization()
     }
-    
 }

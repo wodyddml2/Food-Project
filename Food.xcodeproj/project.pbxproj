@@ -527,6 +527,15 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		63D80DA529BC9BFA003EF871 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
+				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		63FDE35428C62D5F00257D18 = {
 			isa = PBXGroup;
 			children = (
@@ -543,8 +552,7 @@
 			isa = PBXGroup;
 			children = (
 				634EFCFA28F51D5D009D2512 /* Food.entitlements */,
-				63FDE36028C62D5F00257D18 /* AppDelegate.swift */,
-				63FDE36228C62D5F00257D18 /* SceneDelegate.swift */,
+				63D80DA529BC9BFA003EF871 /* Application */,
 				635D472B29B892E600C08D80 /* Domain */,
 				635D472329B889CC00C08D80 /* Network */,
 				638C029128F68F8100174F0B /* Presentation */,
