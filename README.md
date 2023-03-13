@@ -58,6 +58,7 @@
 >
 - **MVVM** 패턴을 이용한 비즈니스 로직 분리
 - **RxSwift**, **RxCocoa**를 이용해 데이터 스트림을 비동기적인 흐름으로 처리
+- SwiftyJSON 제거 후 **Codable**을 이용해 encoding, decoding 처리
 
 <br/><br/>
 ## 📝 개발 공수 
@@ -226,6 +227,11 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
 
 - 2022.12.12 업데이트
 - IQKeyboard를 적용하여 키보드 window를 내릴 시 임의로 올린 화면이 깨지는 부분 수정
+
+**1.1.5**
+
+- 2023.03.09 업데이트
+- SwiftyJSON 제거, Codable 적용
 
 <br/><br/>
 ## 🔥 프로젝트 회고
