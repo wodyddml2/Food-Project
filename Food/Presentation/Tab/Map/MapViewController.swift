@@ -171,15 +171,16 @@ extension MapViewController {
                 
                 self.regionData = result
                 self.requestStore(region: result)
-            case .failure(let failure):
-                print(failure.localizedDescription)
+            case .failure(_):
+                self.showCautionAlert(title: "정보를 불러지 못했습니다.")
             }
         }
         updateCamera(latLang: NMGLatLng(lat: lat, lng: lon))
     }
     
     private func requestStore(region: RegionVO) {
-        RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1)) { result in
+        RequestSearchAPIManager.shared.requestAPI(type: StoreInfo.self, router: Router.store(query: "\(region.firstArea) \(region.secondArea) \(region.thirdArea) 맛집", page: 1)) { [weak self] result in
+            guard let self = self else {return}
             switch result {
             case .success(let success):
                 self.storeData = success.documents.map({ $0.toDomain() })
@@ -212,8 +213,8 @@ extension MapViewController {
                     self.mainView.mapView.positionMode = .direction
                     self.mainView.mapCollectionView.reloadData()
                 }
-            case .failure(let failure):
-                print(failure)
+            case .failure( _ ):
+                self.showCautionAlert(title: "정보를 불러지 못했습니다.")
             }
         }
     }

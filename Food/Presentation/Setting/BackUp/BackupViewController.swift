@@ -117,14 +117,12 @@ final class BackupViewController: BaseViewController {
         // 파일의 url 배열에 담아준다.
         urlPaths.append(contentsOf: [memoFile, categoryFile, wishlistFile, imageFile])
         // 백업 파일 압축: URL
-        do {
-            let zipFilePath = try Zip.quickZipFiles(urlPaths, fileName: currentTime)
-            showActivityViewController(date: currentTime)
-            fetchZipFile()
-            tableView.reloadData()
-        } catch {
-            showCautionAlert(title: "압축 실패")
-        }
+        
+        
+        showActivityViewController(date: currentTime)
+        fetchZipFile()
+        tableView.reloadData()
+        
     }
     
     // ActivityViewController
@@ -328,7 +326,7 @@ extension BackupViewController: UIDocumentPickerDelegate {
                     try FileManager.default.copyItem(at: selectedFileURL, to: sandBoxFileURL)
                     
                     let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent)
-      
+                    
                     try Zip.unzipFile(fileURL, destination: path, overwrite: true, password: nil, progress: { progress in
                         print("progress: \(progress)")
                     }, fileOutputHandler: { unzippedFile in
