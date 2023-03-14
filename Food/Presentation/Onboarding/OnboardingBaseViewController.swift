@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class OnboardingPageViewController: BaseViewController {
+final class OnboardingBaseViewController: BaseViewController {
     
     private var pageViewControllerList: [UIViewController] = []
     
@@ -44,9 +44,18 @@ final class OnboardingPageViewController: BaseViewController {
     }
     
     private func createPageViewController() {
-        let firstVC = FirstViewController()
-        let secondVC = SecondViewController()
-        let thirdVC = ThirdViewController()
+        let firstVC = OnboardingViewController(
+            imageText: "first",
+            titleText: "주변의 맛집을 검색해보세요",
+            introText: "지도와 검색을 통해 주변의 맛집과 방문하고자하는 음식점을 찾아볼 수 있습니다")
+        let secondVC = OnboardingViewController(
+            imageText: "second",
+            titleText: "나만의 찜 리스트에 구성해보세요",
+            introText: "지도와 검색으로 찾아본 맛집을 나중에 찾아가기 쉽게 저장할 수 있습니다")
+        let thirdVC = OnboardingViewController(
+            imageText: "third",
+            titleText: "맛집을 메모에 기록해보세요",
+            introText: "나만의 맛집을 기록으로 남기고 얼마나 방문했는지 한 눈에 살펴볼 수 있습니다")
         pageViewControllerList = [firstVC, secondVC, thirdVC]
     }
     
@@ -66,7 +75,6 @@ final class OnboardingPageViewController: BaseViewController {
             pageContorl.currentPage += 1
             pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
         } else {
-            
             UserDefaults.standard.set(true, forKey: "onboarding")
             
             transition(TabViewController(), transitionStyle: .presentFull)
@@ -105,7 +113,7 @@ final class OnboardingPageViewController: BaseViewController {
     
 }
 
-extension OnboardingPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension OnboardingBaseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else { return nil }

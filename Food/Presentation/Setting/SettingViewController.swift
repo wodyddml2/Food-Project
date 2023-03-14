@@ -42,7 +42,6 @@ final class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
     }
     
     override func configureUI() {
@@ -58,7 +57,6 @@ final class SettingViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
-    
 }
 
 extension SettingViewController {
