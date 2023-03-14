@@ -118,11 +118,9 @@ final class BackupViewController: BaseViewController {
         urlPaths.append(contentsOf: [memoFile, categoryFile, wishlistFile, imageFile])
         // 백업 파일 압축: URL
         
-        
         showActivityViewController(date: currentTime)
         fetchZipFile()
         tableView.reloadData()
-        
     }
     
     // ActivityViewController

@@ -11,13 +11,11 @@ import NMapsMap
 
 final class MapView: BaseView {
  
-    lazy var mapView: NMFMapView = {
+    let mapView: NMFMapView = {
         let view = NMFMapView()
-       
         return view
     }()
     
-
     let currentLocationView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         view.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -35,31 +33,36 @@ final class MapView: BaseView {
         return view
     }()
     
-    let currentLocationButton: UIButton = {
-        let view = UIButton()
-        
+    let currentLocationButton = UIButton()
+    
+    lazy var mapCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        view.showsHorizontalScrollIndicator = false
+        view.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
+        view.collectionViewLayout = collectionViewLayout()
+        view.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
         return view
     }()
     
-    let mapCollectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        return view
-    }()
+    private func collectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+        layout.minimumLineSpacing = 20
+        return layout
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureUI() {
-        
         [mapView, mapCollectionView,currentLocationView, currentLocationImageView, currentLocationButton].forEach {
             self.addSubview($0)
         }
     }
     
     override func setConstraints() {
-       
         mapView.snp.makeConstraints { make in
             make.edges.equalTo(self.safeAreaLayoutGuide)
         }

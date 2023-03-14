@@ -56,13 +56,8 @@ final class MapViewController: BaseViewController {
     }
     
     private func mapCollectionViewSetup() {
-        mainView.mapCollectionView.showsHorizontalScrollIndicator = false
         mainView.mapCollectionView.delegate = self
         mainView.mapCollectionView.dataSource = self
-        mainView.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.reusableIdentifier)
-        mainView.mapCollectionView.collectionViewLayout = mapCollectionViewLayout()
-        mainView.mapCollectionView.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0)
-        
     }
     
     @objc private func searchButtonClicked() {
@@ -104,14 +99,6 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: mainView.mapCollectionView.frame.size.width / 1.4, height: mainView.mapCollectionView.frame.size.height / 1.1)
-    }
-    
-    private func mapCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
-        layout.minimumLineSpacing = 20
-        return layout
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

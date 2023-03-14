@@ -248,8 +248,8 @@
 		63258C4228CDC6A7007638DC /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				6362579D29C0759300C5985D /* Cell */,
 				63258C4328CDC6B1007638DC /* MapViewController.swift */,
-				6329217B28D0AC6C000DC3E5 /* MapCollectionViewCell.swift */,
 				6329217928D0A79E000DC3E5 /* MapView.swift */,
 			);
 			path = Map;
@@ -390,6 +390,14 @@
 				63AD53B928E467C200CAF193 /* NetworkMonitor.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		6362579D29C0759300C5985D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6329217B28D0AC6C000DC3E5 /* MapCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		6380C24628E2002D00518679 /* Category */ = {
