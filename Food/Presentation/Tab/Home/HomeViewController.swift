@@ -45,8 +45,6 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,10 +84,8 @@ final class HomeViewController: BaseViewController {
     }
     
     override func configureUI() {
-        bannerCollectionSetup()
-        memoListTableViewSetup()
+        adoptionOfDelegate()
         bannerTimer()
-        
     }
     
     private func navigationSet() {
@@ -100,23 +96,12 @@ final class HomeViewController: BaseViewController {
         navigationItem.title = "홈"
     }
     
-    private func bannerCollectionSetup() {
+    private func adoptionOfDelegate() {
         mainView.bannerCollectionView.delegate = self
         mainView.bannerCollectionView.dataSource = self
-        mainView.bannerCollectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
-        mainView.bannerCollectionView.isPagingEnabled = true
-        mainView.bannerCollectionView.showsHorizontalScrollIndicator = false  
-        mainView.bannerCollectionView.collectionViewLayout = bannerCollectionViewLayout()
-    }
-    
-    private func memoListTableViewSetup() {
+        
         mainView.memoListTableView.delegate = self
         mainView.memoListTableView.dataSource = self
-        mainView.memoListTableView.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
-        mainView.memoListTableView.register(MemoListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MemoListTableHeaderView.reusableIdentifier)
-        mainView.memoListTableView.showsVerticalScrollIndicator = false
-        mainView.memoListTableView.bounces = false
-        mainView.memoListTableView.backgroundColor = .background
     }
     
     @objc func wishListButtonClicked() {
@@ -207,13 +192,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             transition(vc, transitionStyle: .present)
         }
     }
-    private func bannerCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.scrollDirection = .horizontal
-        return layout
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == mainView.bannerCollectionView {
@@ -263,13 +242,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.memoListCollectionView.delegate = self
-        cell.memoListCollectionView.dataSource = self
-        cell.memoListCollectionView.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
-        cell.memoListCollectionView.collectionViewLayout = memoListCollectionViewLayout()
+        cell.collectionView.delegate = self
+        cell.collectionView.dataSource = self
+
+        cell.collectionView.collectionViewLayout = collectionViewLayout()
         
-        cell.memoListMoreButton.tag = indexPath.section
-        cell.memoListMoreButton.addTarget(self, action: #selector(memoListMoreButtonClicked(sender:)), for: .touchUpInside)
+        cell.moreButton.tag = indexPath.section
+        cell.moreButton.addTarget(self, action: #selector(moreButtonClicked(sender:)), for: .touchUpInside)
         
         if tasks.isEmpty {
             mainView.memoListTableView.separatorStyle = .none
@@ -279,15 +258,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.itemHidden(color: .white, hidden: false)
         }
         
-        cell.memoListCollectionView.tag = indexPath.section
+        cell.collectionView.tag = indexPath.section
         
-        cell.memoListCollectionView.reloadData()
+        cell.collectionView.reloadData()
         
         return cell
     }
     
     
-    @objc func memoListMoreButtonClicked(sender: UIButton) {
+    @objc func moreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
         vc.viewModel.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
         vc.viewModel.categoryKey = tasks[sender.tag][0].storeCategory
@@ -299,7 +278,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return tasks.isEmpty ? UIScreen.main.bounds.height / 3 : 190
     }
     
-    private func memoListCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func collectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8

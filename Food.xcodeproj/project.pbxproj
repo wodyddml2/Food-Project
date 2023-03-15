@@ -219,10 +219,8 @@
 			children = (
 				63258C3B28CDBC3D007638DC /* HomeViewController.swift */,
 				63258C4B28CDCF1A007638DC /* HomeView.swift */,
-				63258C4D28CDD266007638DC /* BannerCollectionViewCell.swift */,
-				6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */,
+				63C4EC6C29C1AC8F005BB6EE /* Cells */,
 				63D4B36E28DEF58B001681EE /* MemoListTableHeaderView.swift */,
-				6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -498,6 +496,16 @@
 				6371861028EED0A800BCBF91 /* UIColor+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		63C4EC6C29C1AC8F005BB6EE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				63258C4D28CDD266007638DC /* BannerCollectionViewCell.swift */,
+				6354092F28D0732800D03CAD /* MemoListTableViewCell.swift */,
+				6354093128D0733500D03CAD /* MemoListCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		63C9B2072964193D009E908E /* View */ = {

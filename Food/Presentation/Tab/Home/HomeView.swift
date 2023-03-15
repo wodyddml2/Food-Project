@@ -9,19 +9,35 @@ import UIKit
 
 final class HomeView: BaseView {
     
-    let bannerCollectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
+    lazy var bannerCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+        view.isPagingEnabled = true
+        view.showsHorizontalScrollIndicator = false
+        view.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
         return view
     }()
     
     let memoListTableView: UITableView = {
         let view = UITableView()
         view.separatorStyle = .singleLine
+        view.register(MemoListTableViewCell.self, forCellReuseIdentifier: MemoListTableViewCell.reusableIdentifier)
+        view.register(MemoListTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MemoListTableHeaderView.reusableIdentifier)
+        view.showsVerticalScrollIndicator = false
+        view.bounces = false
+        view.backgroundColor = .background
         return view
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+    }
+    
+    private func collectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        return layout
     }
     
     override func configureUI() {

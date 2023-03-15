@@ -9,39 +9,33 @@ import UIKit
 
 final class MemoListTableViewCell: BaseTableViewCell {
     
-    let memoListCollectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        
+        view.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier)
         view.showsHorizontalScrollIndicator = false
         return view
     }()
     
-    let memoListMoreLabel: UILabel = {
+    let moreLabel: UILabel = {
         let view = UILabel()
         view.text = "더보기"
         view.font = .gothicNeo(.SemiBold, size: 14)
         return view
     }()
-    let memoListMoreImageView: UIImageView = {
+    
+    let rightImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "chevron.right")
         view.tintColor = .black
         return view
     }()
-    var memoListMoreButton: UIButton = {
-        let view = UIButton()
-        
-        return view
-    }()
     
-    // 잠재적인 성능 문제를 방지하려면 콘텐츠와 관련이 없는 셀의 속성만 재설정해야한다.
+    var moreButton = UIButton()
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        memoListCollectionView.reloadData()
+        collectionView.reloadData()
     }
-    
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,7 +43,7 @@ final class MemoListTableViewCell: BaseTableViewCell {
     }
     
     override func configureUI() {
-        [memoListCollectionView,memoListMoreLabel,memoListMoreImageView,memoListMoreButton].forEach {
+        [collectionView,moreLabel,rightImageView,moreButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -59,35 +53,34 @@ final class MemoListTableViewCell: BaseTableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
     override func setConstraints() {
-        memoListCollectionView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self)
             make.height.equalTo(self).multipliedBy(0.8)
         }
         
-        memoListMoreImageView.snp.makeConstraints { make in
-            make.top.equalTo(memoListCollectionView.snp.bottom).offset(4)
+        rightImageView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(4)
             make.trailing.equalTo(-8)
             make.height.equalTo(14)
             make.width.equalTo(11)
         }
-        memoListMoreLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(memoListMoreImageView)
-            make.trailing.equalTo(memoListMoreImageView.snp.leading).offset(-4)
+        moreLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(rightImageView)
+            make.trailing.equalTo(rightImageView.snp.leading).offset(-4)
         }
         
-        memoListMoreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(memoListMoreImageView.snp.trailing)
-            make.leading.equalTo(memoListMoreLabel.snp.leading)
-            make.top.bottom.equalTo(memoListMoreImageView)
+        moreButton.snp.makeConstraints { make in
+            make.trailing.equalTo(rightImageView.snp.trailing)
+            make.leading.equalTo(moreLabel.snp.leading)
+            make.top.bottom.equalTo(rightImageView)
         }
         
     }
     
     func itemHidden(color: UIColor, hidden: Bool) {
         backgroundColor = color
-        memoListMoreButton.isHidden = hidden
-        memoListMoreImageView.isHidden = hidden
-        memoListMoreLabel.isHidden = hidden
+        moreButton.isHidden = hidden
+        rightImageView.isHidden = hidden
+        moreLabel.isHidden = hidden
     }
-    
 }
