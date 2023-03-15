@@ -77,7 +77,6 @@
 		63D700EE28D5ECF1006E10B7 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */; };
 		63D700F028D62C7D006E10B7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */; };
 		63D8891F28D729A6002EDC7C /* UserMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8891E28D729A6002EDC7C /* UserMemo.swift */; };
-		63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8892028D73022002EDC7C /* UIButton+Extension.swift */; };
 		63F6153328D4E6230062C9FA /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F6153228D4E6230062C9FA /* DetailView.swift */; };
 		63F888C128EDAA6D005361D1 /* DocumentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F888C028EDAA6D005361D1 /* DocumentFile.swift */; };
 		63FDE36128C62D5F00257D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FDE36028C62D5F00257D18 /* AppDelegate.swift */; };
@@ -158,7 +157,6 @@
 		63D700ED28D5ECF1006E10B7 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 		63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		63D8891E28D729A6002EDC7C /* UserMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMemo.swift; sourceTree = "<group>"; };
-		63D8892028D73022002EDC7C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		63F6153228D4E6230062C9FA /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		63F888C028EDAA6D005361D1 /* DocumentFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFile.swift; sourceTree = "<group>"; };
 		63FDE36028C62D5F00257D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -495,7 +493,6 @@
 			children = (
 				63D700EF28D62C7C006E10B7 /* UIViewController+Extension.swift */,
 				63D4B37028DF556B001681EE /* UIView+Extension.swift */,
-				63D8892028D73022002EDC7C /* UIButton+Extension.swift */,
 				635011AA28F5A64500E2E6FF /* UITextView+Extension.swift */,
 				6371861228EED53500BCBF91 /* UIFont+Custom.swift */,
 				6371861028EED0A800BCBF91 /* UIColor+Extension.swift */,
@@ -744,7 +741,6 @@
 				63F888C128EDAA6D005361D1 /* DocumentFile.swift in Sources */,
 				63C9B20A2964196F009E908E /* SubMemoViewModel.swift in Sources */,
 				63261AEA28D3089E005E8501 /* APIManager.swift in Sources */,
-				63D8892128D73022002EDC7C /* UIButton+Extension.swift in Sources */,
 				63FDE37C28C62EFA00257D18 /* BaseCollectionViewCell.swift in Sources */,
 				63A0A31B28DC55E5002D01EA /* BackupTableViewCell.swift in Sources */,
 				635AB0A329B8B89B00AF549D /* StoreVO.swift in Sources */,

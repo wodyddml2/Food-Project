@@ -22,7 +22,6 @@ class DocumentManager {
     
     private init() { }
     
-    
     func documentDirectoryPath() -> URL? {
         guard let documentDiretory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
