@@ -29,4 +29,9 @@ final class MemoListTableHeaderView: UITableViewHeaderFooterView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
+    func headerConfig(color: UIColor = .background, text: String? = nil) {
+        categoryLabel.text = text
+        contentView.backgroundColor = color
+    }
 }

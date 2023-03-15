@@ -241,7 +241,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.reusableIdentifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
-        
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self
 
@@ -265,7 +264,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
     @objc func moreButtonClicked(sender: UIButton) {
         let vc = SubMemoViewController()
         vc.viewModel.category = categoryRepository.fetchCategory(category: tasks[sender.tag][0].storeCategory)[0].category
@@ -276,6 +274,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tasks.isEmpty ? UIScreen.main.bounds.height / 3 : 190
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else {
+            return nil
+        }
+        
+        if tasks.isEmpty {
+            header.headerConfig()
+        } else {
+            header.headerConfig(color: .white, text: categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category)
+        }
+        
+        return header
     }
     
     private func collectionViewLayout() -> UICollectionViewFlowLayout {
@@ -289,24 +301,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         return layout
     }
-    
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else {
-            return nil
-        }
-        
-        if tasks.isEmpty {
-            header.categoryLabel.text = nil
-            header.contentView.backgroundColor = .background
-        } else {
-            header.categoryLabel.text =
-            categoryRepository.fetchCategory(category: tasks[section][0].storeCategory)[0].category
-            header.contentView.backgroundColor = .white
-        }
-        
-        return header
-    }
-    
 }
 
