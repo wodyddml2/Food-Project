@@ -20,6 +20,5 @@ extension UITextView {
             text = placeholderText
             textColor = .lightGray
         }
-        
     }
 }
