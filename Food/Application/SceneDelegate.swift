@@ -15,16 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        if UserDefaults.standard.bool(forKey: "onboarding") {
-           
-            let vc = TabViewController()
-            window?.rootViewController = vc
-            
-        } else {
-            let vc = OnboardingBaseViewController()
-            window?.rootViewController = vc
-        }
+        var vc: UIViewController?
         
+        if UserDefaults.standard.bool(forKey: "onboarding") {
+            vc = TabViewController()
+        } else {
+            vc = OnboardingBaseViewController()
+        }
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
     

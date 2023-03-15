@@ -233,7 +233,6 @@
 			isa = PBXGroup;
 			children = (
 				63258C4028CDC6A3007638DC /* TabViewController.swift */,
-				63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */,
 				63258C3E28CDC630007638DC /* Home */,
 				634C57A728D1D7600067B44F /* Memo */,
 				63258C4228CDC6A7007638DC /* Map */,
@@ -416,6 +415,7 @@
 		638C028D28F68D9500174F0B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				63AD53BB28E4C3EB00CAF193 /* NotNetworkViewController.swift */,
 				6329217D28D0BA75000DC3E5 /* PopUp */,
 				63FDE37728C62EE300257D18 /* BaseViewController.swift */,
 				63FDE37D28C62F0000257D18 /* BaseView.swift */,
