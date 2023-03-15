@@ -128,58 +128,61 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         if collectionView == mainView.bannerCollectionView {
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.reusableIdentifier, for: indexPath) as? BannerCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            
-            if let randomBanner = randomBanner {
-                if randomBanner.count >= 3 {
-                    
-                    bannerCell.bannerImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
-                    bannerCell.bannerIntroLable.text = randomBanner[indexPath.item].storeName
-                } else {
-                    bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
-                    bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
-                }
-            } else {
-                bannerCell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
-                bannerCell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
-            }
-            
+            bannerCollectionCell(bannerCell, indexPath: indexPath)
             return bannerCell
         } else {
             guard let memoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoListCollectionViewCell.reusableIdentifier, for: indexPath) as? MemoListCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            if tasks.isEmpty {
-                memoCell.memoImageView.image = nil
-                memoCell.memoLabel.snp.remakeConstraints { make in
-                    make.center.equalTo(memoCell)
-                }
-                memoCell.memoLabel.text = "메모를 작성해주세요 :)"
-                
-            } else {
-                memoCell.memoLabel.snp.remakeConstraints { make in
-                    make.centerX.equalTo(memoCell.memoImageView)
-                    make.leading.lessThanOrEqualTo(memoCell.memoImageView).offset(4)
-                    make.trailing.lessThanOrEqualTo(memoCell.memoImageView).offset(-4)
-                    make.top.equalTo(memoCell.memoImageView.snp.bottom).offset(8)
-                    make.bottom.equalTo(-8)
-                }
-                if tasks.count == 1 {
-                    memoCell.memoLabel.text = tasks[0][indexPath.item].storeName
-                    memoCell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
-                } else {
-                    memoCell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
-                    memoCell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
-                }
-            }
-            
+            memoCollectionCell(memoCell, collectionView: collectionView, indexPath: indexPath)
             return memoCell
         }
-        
+    }
+    
+    private func bannerCollectionCell(_ cell: BannerCollectionViewCell, indexPath: IndexPath) {
+        if let randomBanner = randomBanner {
+            if randomBanner.count >= 3 {
+                
+                cell.bannerImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(randomBanner[indexPath.item].objectId).jpg")
+                cell.bannerIntroLable.text = randomBanner[indexPath.item].storeName
+            } else {
+                cell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
+                cell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+            }
+        } else {
+            cell.bannerImageView.image = bannerInfo.bannerList[indexPath.item].image
+            cell.bannerIntroLable.text = bannerInfo.bannerList[indexPath.item].text
+        }
+    }
+    
+    private func memoCollectionCell(_ cell: MemoListCollectionViewCell, collectionView: UICollectionView, indexPath: IndexPath) {
+        if tasks.isEmpty {
+            cell.memoImageView.image = nil
+            cell.memoLabel.snp.remakeConstraints { make in
+                make.center.equalTo(cell)
+            }
+            cell.memoLabel.text = "메모를 작성해주세요 :)"
+            
+        } else {
+            cell.memoLabel.snp.remakeConstraints { make in
+                make.centerX.equalTo(cell.memoImageView)
+                make.leading.lessThanOrEqualTo(cell.memoImageView).offset(4)
+                make.trailing.lessThanOrEqualTo(cell.memoImageView).offset(-4)
+                make.top.equalTo(cell.memoImageView.snp.bottom).offset(8)
+                make.bottom.equalTo(-8)
+            }
+            if tasks.count == 1 {
+                cell.memoLabel.text = tasks[0][indexPath.item].storeName
+                cell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[0][indexPath.item].objectId).jpg")
+            } else {
+                cell.memoLabel.text = tasks[collectionView.tag][indexPath.item].storeName
+                cell.memoImageView.image = DocumentManager.shared.loadImageFromDocument(fileName: "\(tasks[collectionView.tag][indexPath.item].objectId).jpg")
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -192,7 +195,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             transition(vc, transitionStyle: .present)
         }
     }
-
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == mainView.bannerCollectionView {
@@ -277,9 +279,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else {
-            return nil
-        }
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MemoListTableHeaderView.reusableIdentifier) as? MemoListTableHeaderView else { return nil }
         
         if tasks.isEmpty {
             header.headerConfig()
@@ -302,4 +302,3 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return layout
     }
 }
-
